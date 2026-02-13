@@ -490,6 +490,7 @@ struct NaviKokeDamageState : public NaviState {
 	int mState;          // _18
 	Creature* mCreature; // _1C
 	bool _20;            // _20
+	u8 mEscapeInputs;
 };
 
 struct NaviNukuAdjustStateArg : public StateArg {
@@ -720,6 +721,8 @@ struct NaviStuckState : public NaviState {
 };
 
 struct NaviThrowInitArg : public StateArg {
+	NaviThrowInitArg(Piki* piki) { mPiki = piki; }
+
 	Piki* mPiki; // _00
 };
 
@@ -733,6 +736,9 @@ struct NaviThrowState : public NaviState, virtual public SysShape::MotionListene
 	virtual void exec(Navi*);                                 // _0C
 	virtual void cleanup(Navi*);                              // _10
 	virtual void onKeyEvent(const SysShape::KeyEvent& event); // _4C (weak)
+
+	Piki* findNearestColorPiki(Navi* navi, int color);
+	void sortPikis(Navi* navi);
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -761,6 +767,7 @@ struct NaviThrowWaitState : public NaviState, virtual public SysShape::MotionLis
 	void lockHangPiki(Navi*);
 	Piki* findNearestColorPiki(Navi*, int);
 	void sortPikis(Navi*);
+	Piki* getSwitchPiki(Navi* navi);
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
@@ -811,6 +818,9 @@ struct NaviWalkState : public NaviState {
 	void initAI_escape(Navi*);
 	void execAI_escape(Navi*);
 	void blendVelocity(Navi*, Vector3f&);
+
+	Piki* findNearestColorPiki(Navi*, int);
+	void sortPikis(Navi*);
 
 	// _00     = VTBL
 	// _00-_10 = NaviState

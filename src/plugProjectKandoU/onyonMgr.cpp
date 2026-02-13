@@ -1242,61 +1242,59 @@ void Onyon::onKeyEvent_Onyon(SysShape::KeyEvent const& event)
 			switch (animid) {
 			case 1: // shoot out seeds
 				if (m_toBirth) {
-					int shootcount = m_toBirth / 2;
-					if (shootcount <= 0) {
-						shootcount = 1;
+					if (gameSystem && gameSystem->m_mode == GSM_VERSUS_MODE) {
+						// versus mode onion counts
+						int reds  = GameStat::getMapPikmins(Red);
+						int blues = GameStat::getMapPikmins(Blue);
+						if (m_onyonType == ONYON_TYPE_BLUE && blues >= 50) {
+							m_toBirth--;
+							return;
+						} else if (m_onyonType == ONYON_TYPE_RED && reds >= 50) {
+							m_toBirth--;
+							return;
+						}
 					}
 
-					for (int i = 0; i < shootcount; i++) {
-						if (gameSystem && gameSystem->m_mode == GSM_VERSUS_MODE) {
-							// versus mode onion counts
-							int reds  = GameStat::getMapPikmins(Red);
-							int blues = GameStat::getMapPikmins(Blue);
-							if (m_onyonType == ONYON_TYPE_BLUE && blues >= 50) {
-								m_toBirth--;
-								continue;
-							} else if (m_onyonType == ONYON_TYPE_RED && reds >= 50) {
-								m_toBirth--;
-								continue;
-							}
+					ItemPikihead::Item* obj = static_cast<ItemPikihead::Item*>(ItemPikihead::mgr->birth());
+					if (obj) {
+						m_pikminType = m_onyonType;
+						ItemPikihead::InitArg arg((EPikiKind)m_pikminType, Vector3f::zero);
+						obj->init(&arg);
+						m_toBirth--;
+						BirthMgr::inc(obj->m_color);
+						doEmit(obj, false);
+
+					} else { // returned pikihead is null, 100 pikmin limit must be reached
+						if (gameSystem->m_flags & 0x20 && !playData->isDemoFlag(DEMO_Max_Pikmin_On_Field)) {
+							playData->setDemoFlag(DEMO_Max_Pikmin_On_Field);
+
+							// if wild pikmin exist, play 95 pikmin CS, otherwise play 100 pikmin CS
+							char* movieName = (GameStat::zikatuPikis > 0) ? (char*)"g16_95_pikmin" : (char*)"g16_100_pikmin";
+							MoviePlayArg arg(movieName, nullptr, gameSystem->m_section->_C8, 0);
+							arg.m_origin = getPosition();
+							arg.m_angle  = getFaceDir();
+							movie_begin(0);
+							moviePlayer->play(arg);
 						}
 
-						ItemPikihead::Item* obj = static_cast<ItemPikihead::Item*>(ItemPikihead::mgr->birth());
-						if (obj) {
-							m_pikminType = m_onyonType;
-							ItemPikihead::InitArg arg((EPikiKind)m_pikminType, Vector3f::zero);
-							obj->init(&arg);
-							m_toBirth--;
-							BirthMgr::inc(obj->m_color);
-							doEmit(obj, false);
-
-						} else { // returned pikihead is null, 100 pikmin limit must be reached
-							if (gameSystem->m_flags & 0x20 && !playData->isDemoFlag(DEMO_Max_Pikmin_On_Field)) {
-								playData->setDemoFlag(DEMO_Max_Pikmin_On_Field);
-
-								// if wild pikmin exist, play 95 pikmin CS, otherwise play 100 pikmin CS
-								char* movieName = (GameStat::zikatuPikis > 0) ? (char*)"g16_95_pikmin" : (char*)"g16_100_pikmin";
-								MoviePlayArg arg(movieName, nullptr, gameSystem->m_section->_C8, 0);
-								arg.m_origin = getPosition();
-								arg.m_angle  = getFaceDir();
-								movie_begin(0);
-								moviePlayer->play(arg);
-							}
-
-							m_pikminType = m_onyonType;
-							int& count   = playData->m_pikiContainer.getCount(m_pikminType, Leaf);
-							count++;
-							BirthMgr::inc(m_onyonType);
-							m_toBirth--;
-						}
+						m_pikminType = m_onyonType;
+						int& count   = playData->m_pikiContainer.getCount(m_pikminType, Leaf);
+						count++;
+						BirthMgr::inc(m_onyonType);
+						m_toBirth--;
 					}
 				} else {
 					m_animator.m_flags |= 2;
 				}
 				break;
 
+			case 0:
 			case 2:
 				startWaitMotion();
+				if (m_onyonType <= ONYON_TYPE_YELLOW && m_toBirth) {
+					SysShape::MotionListener* mlisten = this;
+					m_animator.startAnim(1, mlisten);
+				}
 				break;
 			}
 		}
@@ -1385,20 +1383,16 @@ void Onyon::makeTrMatrix()
 	}
 
 	if (m_isReleasingPikis) {
-		if (m_releasePikisTimer <= 0.0f) {
-			if (exitPiki()) {
-				m_pikisToWithdraw--;
-				if (!((int)m_pikisToWithdraw > 0)) {
-					m_isReleasingPikis = 0;
-				}
-				m_releasePikisTimer = (randFloat() * 0.1f + 0.2f) * 0.05f;
-			} else {
-
-				m_pikisToWithdraw  = 0;
+		// remove the timer, just release pikmin once a frame
+		if (exitPiki()) {
+			m_pikisToWithdraw--;
+			if (!((int)m_pikisToWithdraw > 0)) {
 				m_isReleasingPikis = 0;
 			}
 		} else {
-			m_releasePikisTimer -= sys->m_deltaTime;
+
+			m_pikisToWithdraw  = 0;
+			m_isReleasingPikis = 0;
 		}
 	}
 }
@@ -2047,7 +2041,7 @@ ItemOnyon::Mgr::Mgr()
 	m_onyons[ONYON_TYPE_BLUE]   = nullptr;
 	m_ufo                       = nullptr;
 	m_pod                       = nullptr;
-	BaseItemMgr::m_itemName         = "Onyon";
+	BaseItemMgr::m_itemName     = "Onyon";
 	m_modelData                 = new J3DModelData*[3];
 	m_animMgrFiles[0]           = nullptr;
 	m_animMgrFiles[1]           = nullptr;

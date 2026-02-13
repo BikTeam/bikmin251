@@ -83,4 +83,10 @@ inline f32 clamp(f32 val, f32 limit)
 	return val;
 }
 
+inline Vector3f getDirection(f32 angle)
+{
+	Vector3f vec = Vector3f(sinf(angle), 0.0f, cosf(angle));
+	return vec;
+}
+
 #endif

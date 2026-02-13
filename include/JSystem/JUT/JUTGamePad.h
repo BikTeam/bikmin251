@@ -16,6 +16,9 @@ struct JUTGamePad : public JKRDisposer {
 		PRESS_DPAD_RIGHT = 0x2,
 		PRESS_DPAD_DOWN  = 0x4,
 		PRESS_DPAD_UP    = 0x8,
+		
+		PRESS_DPAD_UPDOWN    = (PRESS_DPAD_DOWN | PRESS_DPAD_UP),
+
 		PRESS_Z          = 0x10,
 		PRESS_R          = 0x20,
 		PRESS_L          = 0x40,

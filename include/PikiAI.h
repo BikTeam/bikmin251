@@ -572,7 +572,6 @@ struct ActFormationInitArg : public CreatureActionArg {
 	bool m_doUseTouchCooldown; // _09, if true, pikmin cant be c-sticked into things for 45 frames upon joining
 };
 
-
 struct ActFormation : public Action, virtual Game::SlotChangeListener, virtual SysShape::MotionListener {
 	ActFormation(Game::Piki* p);
 
@@ -621,6 +620,13 @@ struct ActFormation : public Action, virtual Game::SlotChangeListener, virtual S
 };
 
 struct ActFreeArg : public ActionArg {
+	ActFreeArg(f32 radius, Vector3f& goal, u8 gather)
+	{
+		_14 = radius;
+		_08 = goal;
+		_04 = gather;
+	}
+
 	virtual char* getName(); // _08 (weak)
 
 	// _00 = VTBL

@@ -130,6 +130,10 @@ struct Vector3 {
 
 	inline T sqrMagnitude() const;
 
+	inline T qLength2D() const;
+	inline T qLength() const;
+	inline T qNormalise();
+
 	static inline T getFlatDirectionFromTo(Vector3& from, Vector3& to);
 
 	float length() const;
@@ -204,6 +208,12 @@ inline f32 Vector3f::length2D() const
 	} else {
 		return 0.0f;
 	}
+}
+
+template <typename T>
+inline T Vector3<T>::qLength2D() const
+{
+	return pikmin2_sqrtf(this->sqrMagnitude2D());
 }
 
 template <>
@@ -413,5 +423,25 @@ inline void addAccel(Vector3f& outputVec, const Vector3f& inputVec, f32 massRati
 	outputVec.x += inputVec.x * (groundFactor * fps * massRatio);
 	outputVec.z += inputVec.z * (groundFactor * fps * massRatio);
 	outputVec.y += inputVec.y * (airFactor * fps * massRatio);
+}
+
+template <typename T>
+inline T Vector3<T>::qLength() const
+{
+	return pikmin2_sqrtf(this->sqrMagnitude());
+}
+
+template <typename T>
+inline T Vector3<T>::qNormalise()
+{
+	T length = this->qLength();
+	if (length > 0.0f) {
+		T len = 1.0f / length;
+		this->x *= len;
+		this->y *= len;
+		this->z *= len;
+		return length;
+	}
+	return 0.0f;
 }
 #endif

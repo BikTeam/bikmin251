@@ -3158,29 +3158,29 @@ platCallback__Q26PikiAI6ActionFPQ24Game4PikiRQ24Game9PlatEvent:
 platCallback__Q24Game9PikiStateFPQ24Game4PikiRQ24Game9PlatEvent:
 /* 80149C68 00146BA8  4E 80 00 20 */	blr 
 
-.global ignoreAtari__Q24Game4PikiFPQ24Game8Creature
-ignoreAtari__Q24Game4PikiFPQ24Game8Creature:
-/* 80149C6C 00146BAC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 80149C70 00146BB0  7C 08 02 A6 */	mflr r0
-/* 80149C74 00146BB4  7C 66 1B 78 */	mr r6, r3
-/* 80149C78 00146BB8  7C 85 23 78 */	mr r5, r4
-/* 80149C7C 00146BBC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 80149C80 00146BC0  38 00 00 00 */	li r0, 0
-/* 80149C84 00146BC4  80 63 02 90 */	lwz r3, 0x290(r3)
-/* 80149C88 00146BC8  28 03 00 00 */	cmplwi r3, 0
-/* 80149C8C 00146BCC  41 82 00 1C */	beq .L_80149CA8
-/* 80149C90 00146BD0  81 83 00 00 */	lwz r12, 0(r3)
-/* 80149C94 00146BD4  7C C4 33 78 */	mr r4, r6
-/* 80149C98 00146BD8  81 8C 00 20 */	lwz r12, 0x20(r12)
-/* 80149C9C 00146BDC  7D 89 03 A6 */	mtctr r12
-/* 80149CA0 00146BE0  4E 80 04 21 */	bctrl 
-/* 80149CA4 00146BE4  7C 60 1B 78 */	mr r0, r3
-.L_80149CA8:
-/* 80149CA8 00146BE8  7C 03 03 78 */	mr r3, r0
-/* 80149CAC 00146BEC  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 80149CB0 00146BF0  7C 08 03 A6 */	mtlr r0
-/* 80149CB4 00146BF4  38 21 00 10 */	addi r1, r1, 0x10
-/* 80149CB8 00146BF8  4E 80 00 20 */	blr 
+# .global ignoreAtari__Q24Game4PikiFPQ24Game8Creature
+# ignoreAtari__Q24Game4PikiFPQ24Game8Creature:
+# /* 80149C6C 00146BAC  94 21 FF F0 */	stwu r1, -0x10(r1)
+# /* 80149C70 00146BB0  7C 08 02 A6 */	mflr r0
+# /* 80149C74 00146BB4  7C 66 1B 78 */	mr r6, r3
+# /* 80149C78 00146BB8  7C 85 23 78 */	mr r5, r4
+# /* 80149C7C 00146BBC  90 01 00 14 */	stw r0, 0x14(r1)
+# /* 80149C80 00146BC0  38 00 00 00 */	li r0, 0
+# /* 80149C84 00146BC4  80 63 02 90 */	lwz r3, 0x290(r3)
+# /* 80149C88 00146BC8  28 03 00 00 */	cmplwi r3, 0
+# /* 80149C8C 00146BCC  41 82 00 1C */	beq .L_80149CA8
+# /* 80149C90 00146BD0  81 83 00 00 */	lwz r12, 0(r3)
+# /* 80149C94 00146BD4  7C C4 33 78 */	mr r4, r6
+# /* 80149C98 00146BD8  81 8C 00 20 */	lwz r12, 0x20(r12)
+# /* 80149C9C 00146BDC  7D 89 03 A6 */	mtctr r12
+# /* 80149CA0 00146BE0  4E 80 04 21 */	bctrl 
+# /* 80149CA4 00146BE4  7C 60 1B 78 */	mr r0, r3
+# .L_80149CA8:
+# /* 80149CA8 00146BE8  7C 03 03 78 */	mr r3, r0
+# /* 80149CAC 00146BEC  80 01 00 14 */	lwz r0, 0x14(r1)
+# /* 80149CB0 00146BF0  7C 08 03 A6 */	mtlr r0
+# /* 80149CB4 00146BF4  38 21 00 10 */	addi r1, r1, 0x10
+# /* 80149CB8 00146BF8  4E 80 00 20 */	blr 
 
 .global ignoreAtari__Q24Game9PikiStateFPQ24Game4PikiPQ24Game8Creature
 ignoreAtari__Q24Game9PikiStateFPQ24Game4PikiPQ24Game8Creature:

@@ -1098,6 +1098,10 @@ MODDING:=\
 	$(BUILD_DIR)/src/moddingU/titanDweevil.o\
 	$(BUILD_DIR)/src/moddingU/crewmate.o\
 	$(BUILD_DIR)/src/moddingU/queenMongus.o\
+	$(BUILD_DIR)/src/moddingU/typeSwitch.o\
+	$(BUILD_DIR)/src/moddingU/shakeGetup.o\
+	$(BUILD_DIR)/src/moddingU/pikmin1StyleSwarm.o\
+	$(BUILD_DIR)/src/moddingU/pelletGoalPlus.o\
 	$(BUILD_DIR)/src/plugProjectDroughtU/GoHereMap.o\
 	$(BUILD_DIR)/src/plugProjectDroughtU/GoHereNavi.o\
 	$(BUILD_DIR)/src/plugProjectDroughtU/FastPathfinder.o\
