@@ -9,11 +9,13 @@
 #include "Drought/Pathfinder.h"
 #include "Game/CPlate.h"
 #include "PSSystem/PSSystemIF.h"
+#include "Game/gameStat.h"
+#include "TwoPlayer.h"
 
-namespace Game
+namespace Game {
+
+bool CheckAllPikisBlue(Navi* navi)
 {
-
-bool CheckAllPikisBlue(Navi* navi) {
 	Iterator<Creature> iterator(navi->m_cPlateMgr);
 	CI_LOOP(iterator)
 	{
@@ -58,19 +60,22 @@ void NaviFSM::init(Navi* navi)
 	registerState(new NaviClimbState);
 	registerState(new NaviPathMoveState);
 	// added state
-    registerState(new NaviGoHereState);
+	registerState(new NaviGoHereState);
 }
 
-void NaviGoHereState::init(Navi* navi, StateArg* arg) {
-    P2ASSERT(arg);
-    NaviGoHereStateArg* goHereArg = static_cast<NaviGoHereStateArg*>(arg);
+void NaviGoHereState::init(Navi* navi, StateArg* arg)
+{
+	P2ASSERT(arg);
+	NaviGoHereStateArg* goHereArg = static_cast<NaviGoHereStateArg*>(arg);
 
 	navi->startMotion(IPikiAnims::WALK, IPikiAnims::WALK, nullptr, nullptr);
 
-    mPosition            = goHereArg->mPosition;
-	mPath                = goHereArg->mPath;
-    mCurrNode            = goHereArg->mPath->mRoot;
+	mPosition = goHereArg->mPosition;
+	mPath     = goHereArg->mPath;
+	mCurrNode = goHereArg->mPath->mRoot;
 
+	mCurrWalkSpeed = calcMinPikiSpeed(navi);
+	mCurrPikiCount = GameStat::formationPikis.getTotal(navi->m_naviIndex);
 }
 
 // usually inlined, plays the navi's voice line when swapped
@@ -97,53 +102,78 @@ void NaviState::playChangeVoice(Navi* navi)
 	}
 }
 
-void NaviGoHereState::exec(Navi* navi) {
-    bool done = false;
+void NaviGoHereState::exec(Navi* navi)
+{
+	bool done = false;
 
 	if (gameSystem && gameSystem->m_isFrozen) {
 		navi->m_velocity = 0.0f;
 		return;
 	}
 
-    if (mCurrNode) {
-        execMove(navi);
-    }
-    else {
-        done = execMoveGoal(navi);
-    }
+	int formationPikiCount = GameStat::formationPikis.getTotal(navi->m_naviIndex);
+	if (formationPikiCount != mCurrPikiCount) {
+		mCurrWalkSpeed = calcMinPikiSpeed(navi);
+		mCurrPikiCount = formationPikiCount;
+	}
 
-    if (navi->m_padinput) {
+	navi->m_cPlateMgr->shrink();
+
+	if (mCurrNode) {
+		execMove(navi);
+	} else {
+		done = execMoveGoal(navi);
+	}
+
+	if (navi->m_padinput) {
 		navi->m_cursor->update(navi->m_velocity, false);
 
-        if (!gameSystem->paused_soft() && moviePlayer->m_demoState == 0 && navi->m_padinput->isButtonDown(JUTGamePad::PRESS_B)) {
-            done = true;
-        }
+		if (!gameSystem->paused_soft() && moviePlayer->m_demoState == 0 && navi->m_padinput->isButtonDown(JUTGamePad::PRESS_B)) {
+			done = true;
+		}
 
 		// swaps captains
-        if (!gameSystem->paused_soft() && moviePlayer->m_demoState == 0 && !gameSystem->isMultiplayerMode() &&
-            navi->m_padinput->isButtonDown(JUTGamePad::PRESS_Y) && playData->isDemoFlag(DEMO_Unlock_Captain_Switch)) {
+		if (navi->m_padinput && navi->m_padinput->isButtonDown(JUTGamePad::PRESS_Y)) {
+			if (gameSystem->isMultiplayerMode() || TwoPlayer::twoPlayerActive) {
+				navi->releasePikis(nullptr, true);
+			} else if (!gameSystem->paused_soft() && moviePlayer->m_demoState == 0 && playData->isDemoFlag(DEMO_Unlock_Captain_Switch)) {
+				swapNavi(navi);
+			}
+		}
+	}
 
-            Navi* currNavi = naviMgr->getAt(1 - navi->m_naviIndex);
-            int currID     = currNavi->getStateID();
-
-            if (currNavi->isAlive() && currID != NSID_Nuku && currID != NSID_NukuAdjust && currID != NSID_Punch) {
-                gameSystem->m_section->pmTogglePlayer();
-
-                playChangeVoice(currNavi);
-
-                currNavi->getStateID(); // commented out code probably.
-
-                if (currNavi->m_currentState->needYChangeMotion()) {
-                    currNavi->m_fsm->transit(currNavi, NSID_Change, nullptr);
-                }
-            }
-        }
-    }
-
-    if (done) {
+	if (done) {
 		navi->GoHereSuccess();
-        transit(navi, NSID_Walk, nullptr);
-    }
+		transit(navi, NSID_Walk, nullptr);
+	}
+}
+
+// calculates the minimum speed of pikmin in party
+f32 NaviGoHereState::calcMinPikiSpeed(Navi* navi)
+{
+	f32 minSpeed = 128000.0f;
+
+	Iterator<Creature> iterator(navi->m_cPlateMgr);
+	CI_LOOP(iterator)
+	{
+		Piki* piki    = static_cast<Piki*>(*iterator);
+		f32 pikiSpeed = piki->getSpeed(1.0f);
+		if (minSpeed > pikiSpeed) {
+			minSpeed = pikiSpeed;
+		}
+	}
+
+	NaviParms* parms = static_cast<NaviParms*>(navi->m_parms);
+	f32 walkSpeed    = parms->m_naviParms.m_p004.m_value;
+	if (navi->getOlimarData()->hasItem(OlimarData::ODII_RepugnantAppendage)) {
+		walkSpeed = parms->m_naviParms.m_q006.m_value;
+	}
+
+	if (minSpeed > walkSpeed) {
+		minSpeed = walkSpeed;
+	}
+
+	return minSpeed;
 }
 
 // moves the navi to the nearest waypoint
@@ -155,80 +185,73 @@ bool NaviGoHereState::execMove(Navi* navi)
 	Vector3f naviPos = navi->getPosition();
 	naviPos.y        = 0.0f;
 	Vector3f diff    = wpPos - naviPos;
-	f32 dist = _normaliseXZ(diff);
+	f32 dist         = _normaliseXZ(diff);
 
 	if (dist < wp->m_radius) {
 		mCurrNode = mCurrNode->m_next;
 
-        if (mCurrNode) {
-            WayPoint* nextWp = mapMgr->m_routeMgr->getWayPoint(mCurrNode->mWpIdx);
-			bool wpClosed = nextWp->m_flags & (WPF_Closed);
-			bool wpWater = nextWp->m_flags & (WPF_Water) && !CheckAllPikisBlue(navi);
-            if (wpClosed || wpWater) {
-                mPosition = wp->getPosition();
-                mCurrNode = nullptr;
-				
+		if (mCurrNode) {
+			WayPoint* nextWp = mapMgr->m_routeMgr->getWayPoint(mCurrNode->mWpIdx);
+			bool wpClosed    = nextWp->m_flags & (WPF_Closed);
+			bool wpWater     = nextWp->m_flags & (WPF_Water) && !CheckAllPikisBlue(navi);
+			if (wpClosed || wpWater) {
+				mPosition = wp->getPosition();
+				mCurrNode = nullptr;
+
 				navi->GoHereInterupted();
 				if (wpWater) {
 					navi->GoHereInteruptWater();
-				}
-				else {
+				} else {
 					navi->GoHereInteruptBlocked();
 				}
-            }
-        }
+			}
+		}
 
-        return true;
-	}
-	
-    navi->makeCStick(true);
-
-    navi->m_faceDir += 0.2f * angDist(JMath::atanTable_.atan2_(diff.x, diff.z), navi->m_faceDir);
-    navi->m_faceDir = roundAng(navi->m_faceDir);
-
-	NaviParms* parms = static_cast<NaviParms*>(navi->m_parms);
-	f32 speed = parms->m_naviParms.m_p004.m_value;
-	if (navi->getOlimarData()->hasItem(OlimarData::ODII_RepugnantAppendage)) {
-		speed = parms->m_naviParms.m_q006.m_value;
+		return true;
 	}
 
-	navi->m_velocity.x = diff.x * speed;
-	navi->m_velocity.z = diff.z * speed;
+	navi->makeCStick(true);
+
+	navi->m_faceDir += 0.2f * angDist(JMath::atanTable_.atan2_(diff.x, diff.z), navi->m_faceDir);
+	navi->m_faceDir = roundAng(navi->m_faceDir);
+
+	navi->m_velocity.x = diff.x * mCurrWalkSpeed;
+	navi->m_velocity.z = diff.z * mCurrWalkSpeed;
 	return false;
 }
 
 // moves the navi to its final target destination
-bool NaviGoHereState::execMoveGoal(Navi* navi) {
-    Vector3f goalPos = mPosition;
+bool NaviGoHereState::execMoveGoal(Navi* navi)
+{
+	Vector3f goalPos = mPosition;
 	goalPos.y        = 0.0f;
 	Vector3f naviPos = navi->getPosition();
 	naviPos.y        = 0.0f;
 	Vector3f diff    = goalPos - naviPos;
-	f32 dist = _normaliseXZ(diff);
+	f32 dist         = _normaliseXZ(diff);
 
 	if (dist < 15.0f) {
 		return true;
 	}
-	
-    navi->makeCStick(true);
 
-    
-    navi->m_faceDir += 0.2f * angDist(JMath::atanTable_.atan2_(diff.x, diff.z), navi->m_faceDir);
-    navi->m_faceDir = roundAng(navi->m_faceDir);
+	navi->makeCStick(true);
 
-	navi->m_velocity.x = diff.x * 150.0f;
-	navi->m_velocity.z = diff.z * 150.0f;
+	navi->m_faceDir += 0.2f * angDist(JMath::atanTable_.atan2_(diff.x, diff.z), navi->m_faceDir);
+	navi->m_faceDir = roundAng(navi->m_faceDir);
+
+	navi->m_velocity.x = diff.x * mCurrWalkSpeed;
+	navi->m_velocity.z = diff.z * mCurrWalkSpeed;
 	return false;
 }
 
-void NaviGoHereState::cleanup(Navi* navi) {
+void NaviGoHereState::cleanup(Navi* navi)
+{
 	delete mPath;
 	mPath     = nullptr;
 	mCurrNode = nullptr;
 }
 
-
-void Navi::GoHereSuccess() 
+void Navi::GoHereSuccess()
 {
 	if (m_naviIndex == 0) {
 		PSSystem::spSysIF->playSystemSe(PSSE_PL_BIKU_ORIMA, 0);
@@ -239,10 +262,7 @@ void Navi::GoHereSuccess()
 	}
 }
 
-void Navi::GoHereInterupted() 
-{
-	PSSystem::spSysIF->playSystemSe(PSSE_SY_MENU_ERROR, 0);
-}
+void Navi::GoHereInterupted() { PSSystem::spSysIF->playSystemSe(PSSE_SY_MENU_ERROR, 0); }
 
 void Navi::GoHereInteruptBlocked() { }
 

@@ -876,7 +876,7 @@ lbl_801A2FD0:
  * Address:	801A3050
  * Size:	00018C
  */
-void PikiAI::ActEnter::execSuck(void)
+int PikiAI::ActEnter::execSuck(void)
 {
 	/*
 	stwu     r1, -0x20(r1)

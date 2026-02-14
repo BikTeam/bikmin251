@@ -20,7 +20,7 @@ void NaviKokeDamageState::exec(Navi* navi)
 		if (mState == 1) {
 			f32 dt = sys->m_deltaTime;
 			if (mEscapeInputs > 0) {
-				dt *= mEscapeInputs;
+				dt *= mEscapeInputs * 0.25f;
 			}
 
 			mTimer -= dt;

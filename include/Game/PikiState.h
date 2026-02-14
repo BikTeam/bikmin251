@@ -435,7 +435,15 @@ struct PikiFlyingState : public PikiState {
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
-	u8 _10[0x24]; // _10, unknown
+	f32 mSlowFallWaitTimer;      // _10
+	u8 mIsFlowerPiki;            // _14
+	u8 mUnusedVal;               // _15
+	u8 _16[0x2];                 // _16, unknown/padding
+	u8 _18[0x4];                 // _18, unknown
+	Vector3f mVelocityDirection; // _1C
+	f32 mDirectionalSpeed;       // _28
+	f32 mHalfDirectionalSpeed;   // _2C
+	int mFrameCounter;           // _30
 };
 
 struct FountainonStateArg : public StateArg {

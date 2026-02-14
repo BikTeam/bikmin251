@@ -80,6 +80,31 @@ struct ActTeki;
 struct ActTransport;
 struct ActWeed;
 
+enum PikiBrainAction {
+	ACT_NULL      = -1,
+	ACT_Formation = 0,
+	ACT_Free      = 1,
+	ACT_Enter     = 2,
+	ACT_Exit      = 3,
+	ACT_Transport = 4,
+	ACT_Attack    = 5,
+	ACT_BreakGate = 6,
+	ACT_BreakRock = 7,
+	ACT_Crop      = 8,
+	ACT_Weed      = 9,
+	ACT_Bridge    = 10,
+	ACT_Teki      = 11,
+	ACT_Rescue    = 12,
+	ACT_Battle    = 13,
+	ACT_ActionCount, // total number of actions
+};
+
+enum ActionExitCode {
+	ACTEXEC_Success  = 0, // action is finished and completed successfully
+	ACTEXEC_Continue = 1, // action is unfinshed
+	ACTEXEC_Fail     = 2, // action is finished and failed
+};
+
 struct ActionArg {
 	virtual char* getName() // _08 (weak)
 	{
@@ -383,6 +408,13 @@ struct ActBridge : public Action, virtual SysShape::MotionListener {
 };
 
 struct ClimbActionArg : public ActionArg {
+	inline ClimbActionArg(CollPart* collPart, f32 speed, u8 isClimbTowards)
+	    : m_collPart(collPart)
+	    , _08(speed)
+	    , _0C(isClimbTowards)
+	{
+	}
+	
 	virtual char* getName(); // _08 (weak)
 
 	// _00 = VTBL
@@ -443,6 +475,17 @@ struct ActCrop : public Action, virtual SysShape::MotionListener {
 };
 
 struct ActEnter : public Action, virtual SysShape::MotionListener {
+		enum EnterState {
+		// states for entering onyon
+		ENTER_OnyonBegin = 0,
+		ENTER_OnyonClimb = 1,
+
+		// states for entering ship
+		ENTER_ShipGoto = 2,
+		ENTER_ShipStay = 3,
+		ENTER_ShipSuck = 4,
+	};
+	
 	ActEnter(Game::Piki* p);
 
 	virtual void init(ActionArg* settings);                   // _08
@@ -451,9 +494,9 @@ struct ActEnter : public Action, virtual SysShape::MotionListener {
 	virtual void onKeyEvent(const SysShape::KeyEvent& event); // _3C (weak)
 
 	void initStay();
-	void execStay();
+	int execStay();
 	void initSuck();
-	void execSuck();
+	int execSuck();
 
 	// _00     = VTBL
 	// _00-_0C = Action
@@ -481,6 +524,9 @@ struct ActExit : public Action {
 	virtual void init(ActionArg* settings); // _08
 	virtual int exec();                     // _0C
 	virtual void cleanup();                 // _10
+
+	void initOnyon();
+	void initUfo();
 
 	// _00     = VTBL
 	// _00-_0C = Action

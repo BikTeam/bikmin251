@@ -7,6 +7,11 @@
 #include "Game/Entities/ItemHoney.h"
 #include "types.h"
 #include "Game/Entities/PelletOtakara.h"
+#include "PikiAI.h"
+#include "Game/gameStat.h"
+#include "efx/TPk.h"
+#include "Game/PikiMgr.h"
+#include "PSM/Navi.h"
 
 namespace Game {
 
@@ -45,7 +50,7 @@ void PikiAbsorbState::init(Piki* piki, StateArg* stateArg)
 
 // allow pikmin to be whistled out of drinking nectar
 bool PikiAbsorbState::callable()
-{	
+{
 	if (mHasAbsorbed == true) {
 		if (mPiki->m_happaKind != Flower) {
 			mPiki->m_happaKind = Flower;
@@ -75,7 +80,7 @@ void PikiGrowupState::init(Piki* piki, StateArg* stateArg)
 	mPiki = piki;
 }
 
-// allow pikmin to be whistled out of growup 
+// allow pikmin to be whistled out of growup
 bool PikiGrowupState::callable()
 {
 	if (mPiki->m_happaKind != Flower) {
@@ -126,10 +131,93 @@ void PikiPanicState::exec(Piki* piki)
 	}
 }
 
+/**
+ * @note Address: 0x8018CE00
+ * @note Size: 0x180
+ */
+void PikiLookAtState::exec(Piki* piki)
+{
+	piki->m_velocity = Vector3f(0.0f);
+	switch (_18) {
+	case 0:
+		_14 -= sys->m_deltaTime;
+		if (_14 < 0.0f) {
+			_14 = 0.0f;
+			// immediately inc formationPiki count
+			GameStat::formationPikis.inc(piki);
+			piki->startMotion(IPikiAnims::KIZUKU, IPikiAnims::KIZUKU, this, nullptr);
+			_18 = 1;
+		}
+		break;
+
+	case 1:
+		if (!piki->assertMotion(IPikiAnims::KIZUKU)) {
+			_18 = 2;
+		}
+		break;
+
+	case 2:
+		if (piki->m_navi) {
+			PikiAI::ActFormationInitArg initArg(piki->m_navi);
+			initArg.m_doUseTouchCooldown = true;
+
+			// then dec formationPikis to prevent inc'ing twice
+			GameStat::formationPikis.dec(piki);
+			piki->m_brain->start(PikiAI::ACT_Formation, &initArg);
+
+			transit(piki, PIKISTATE_Walk, nullptr);
+		} else {
+			transit(piki, PIKISTATE_Walk, nullptr);
+		}
+		break;
+	}
+}
+
+void PikiFlyingState::init(Piki* piki, StateArg* stateArg)
+{
+	piki->startMotion(IPikiAnims::ROLLJUMP, IPikiAnims::ROLLJUMP, nullptr, nullptr);
+
+	Navi* navi = piki->m_navi;
+	if (navi) {
+		if (piki->m_pikiKind == Bulbmin) {
+			navi->m_soundObj->stopSound(PSSE_PK_HAPPA_THROW_WAIT, 0);
+		} else {
+			navi->m_soundObj->stopSound(PSSE_PK_VC_THROW_WAIT, 0);
+		}
+	}
+
+	piki->m_soundObj->startFreePikiSound(PSSE_PK_VC_THROWN, 90, 0);
+
+	mIsFlowerPiki = 0;
+	mFrameCounter = 0;
+	mUnusedVal    = 0;
+	piki->setMoveVelocity(false);
+
+	efx::TPkEffect* effectsObj = piki->m_effectsObj;
+	effectsObj->createNage_(effectsObj->_10, effectsObj->_1C->m_matrix.mtxView);
+	piki->m_updateContext._09 = true;
+
+	// immediately dec formationPikis
+	GameStat::formationPikis.dec(piki);
+}
+
+/**
+ * @note Address: 0x8018FAB4
+ * @note Size: 0x68
+ */
+void PikiFlyingState::cleanup(Piki* piki)
+{
+	// then inc it upon cleanup to prevent dec'ing twice
+	GameStat::formationPikis.inc(piki);
+	
+	piki->m_updateContext._09 = false;
+	piki->setMoveVelocity(true);
+	piki->m_effectsObj->killNage_();
+	piki->setDebugCollision(false);
+}
+
 // this is the funniest shit ever, note to anyone who sees this
 // this is the only thing standing between bobu and the end of the universe
-bool test() {
-	return true;
-}
+bool test() { return true; }
 
 } // namespace Game

@@ -25,6 +25,7 @@
 #include "Screen/Game2DMgr.h"
 #include "utilityU.h"
 #include "JSystem/JUT/JUTGamePad.h"
+#include "TwoPlayer.h"
 
 namespace Game {
 
@@ -63,9 +64,9 @@ void Navi::findNextThrowPiki()
 	}
 }
 
-bool Navi::releasePikis() { return releasePikis(nullptr); }
+bool Navi::releasePikis() { return releasePikis(nullptr, false); }
 
-bool Navi::releasePikis(Piki* discriminator)
+bool Navi::releasePikis(Piki* discriminator, bool doSplitHalf)
 {
 	if (!gameSystem->isFlag(2)) {
 		return false;
@@ -80,12 +81,14 @@ bool Navi::releasePikis(Piki* discriminator)
 	InteractKaisan act(this);
 	loozy->stimulate(act);
 
-	s32 pikis = 0;
+	u32 pikis = 0;
 	Piki* baseBuffer[100];
-	Piki** buffer  = baseBuffer;
-	s32 happaPikis = 0;
+	Piki** buffer = baseBuffer;
+
+	u32 happaPikis = 0;
 	Piki* happaBuffer[100];
 	bool isSeenDifferentType = false;
+
 	Iterator<Creature> iterator(m_cPlateMgr);
 	CI_LOOP(iterator)
 	{
@@ -129,8 +132,16 @@ bool Navi::releasePikis(Piki* discriminator)
 		position[i] = 0;
 		number[i]   = 0;
 	}
+
+	int sortCount = 0;
+	Piki* sortedBuffer[100];
 	for (int cColor = 0; cColor < 8; cColor++) {
 		for (int i = 0; i < pikis; i++) {
+			// // sort by color
+			if (doSplitHalf && cColor == buffer[i]->m_pikiKind) {
+				sortedBuffer[sortCount++] = buffer[i];
+			}
+
 			if (cColor != Yellow) {
 				if (cColor == buffer[i]->m_pikiKind) {
 					number[cColor]++;
@@ -141,6 +152,20 @@ bool Navi::releasePikis(Piki* discriminator)
 				position[Yellow] += buffer[i]->getPosition();
 			}
 		}
+	}
+
+	if (doSplitHalf) {
+		// there can only be at most 50 within this array
+		int count = 0;
+		Piki* splitBuffer[50];
+		for (int i = 0; i < pikis; i++) {
+			if (i % 2 == 0) {
+				splitBuffer[count++] = sortedBuffer[i];
+			}
+		}
+
+		pikis /= 2;
+		buffer = splitBuffer;
 	}
 
 	f32 distList[8];
@@ -199,6 +224,7 @@ bool Navi::releasePikis(Piki* discriminator)
 		buffer[i]->m_brain->start(1, &arg);
 	}
 	m_disbandTimer = 60;
+
 	return true;
 }
 
@@ -331,19 +357,12 @@ void NaviWalkState::exec(Navi* navi)
 				mDismissTimer = 0;
 			}
 
-			if (!gameSystem->paused_soft() && moviePlayer->m_demoState == 0 && !gameSystem->isMultiplayerMode()
-			    && navi->m_padinput->isButtonDown(JUTGamePad::PRESS_Y) && playData->isDemoFlag(DEMO_Unlock_Captain_Switch)) {
-				Navi* otherNavi  = naviMgr->getAt(1 - navi->m_naviIndex);
-				int otherStateID = otherNavi->getStateID();
-
-				if (otherNavi->isAlive() && otherStateID != NSID_Punch) {
-					gameSystem->m_section->pmTogglePlayer();
-
-					playChangeVoice(otherNavi);
-
-					if (otherNavi->m_currentState->needYChangeMotion()) {
-						otherNavi->m_fsm->transit(otherNavi, NSID_Change, nullptr);
-					}
+			if (navi->m_padinput && navi->m_padinput->isButtonDown(JUTGamePad::PRESS_Y)) {
+				if (gameSystem->isMultiplayerMode() || TwoPlayer::twoPlayerActive) {
+					navi->releasePikis(nullptr, true);
+				} else if (!gameSystem->paused_soft() && moviePlayer->m_demoState == 0
+				           && playData->isDemoFlag(DEMO_Unlock_Captain_Switch)) {
+					swapNavi(navi);
 				}
 			}
 		}
@@ -556,7 +575,7 @@ void NaviThrowWaitState::exec(Navi* navi)
 		}
 	}
 	if (navi->m_padinput->isButtonDown(JUTGamePad::PRESS_X)) {
-		navi->releasePikis(mHeldPiki);
+		navi->releasePikis(mHeldPiki, false);
 	}
 
 	navi->m_nextThrowPiki = mHeldPiki;
@@ -808,6 +827,27 @@ void NaviThrowState::sortPikis(Navi* navi)
 				act->startSort();
 			}
 		}
+	}
+}
+
+/**
+ * @note Address: 0x801800B4
+ * @note Size: 0xAC
+ */
+void NaviChangeState::exec(Navi* navi)
+{
+	if (TwoPlayer::twoPlayerActive) {
+		transit(navi, NSID_Walk, nullptr);
+		return;
+	}
+
+	if (navi->isMovieActor()) {
+		transit(navi, NSID_Walk, nullptr);
+	}
+	navi->m_velocity = Vector3f(0.0f);
+
+	if (mIsFinished == true) {
+		transit(navi, NSID_Walk, nullptr);
 	}
 }
 

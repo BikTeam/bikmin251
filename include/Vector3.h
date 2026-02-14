@@ -129,19 +129,21 @@ struct Vector3 {
 	inline T dot(const Vector3& other);
 
 	inline T sqrMagnitude() const;
-
+	
 	inline T qLength2D() const;
 	inline T qLength() const;
 	inline T qNormalise();
-
+	
 	static inline T getFlatDirectionFromTo(Vector3& from, Vector3& to);
-
+	
+	T sqrDistance2D(Vector3&);
+	
 	float length() const;
 	float length2D() const;
 	float distance(Vector3&);
 	float sqrDistance(Vector3&);
 	float normalise();
-
+	
 	void read(Stream&);
 	void write(Stream&);
 
@@ -444,4 +446,14 @@ inline T Vector3<T>::qNormalise()
 	}
 	return 0.0f;
 }
+
+template <>
+inline f32 Vector3f::sqrDistance2D(Vector3f& them)
+{
+	f32 diffX = this->x - them.x;
+	f32 diffZ = this->z - them.z;
+
+	return SQUARE(diffX) + SQUARE(diffZ);
+}
+
 #endif

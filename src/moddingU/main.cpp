@@ -22,6 +22,7 @@
 #include "mod.h"
 #include "og/Screen/PikminCounter.h"
 #include "Game/Navi.h"
+#include "Game/NaviParms.h"
 #include "Game/PikiState.h"
 #include "Game/NaviState.h"
 #include "TwoPlayer.h"
@@ -136,6 +137,33 @@ void setLowGravity(void)
 		_aiConstants->m_gravity.m_data = (backupGravity * 0.4f);
 	} else {
 		_aiConstants->m_gravity.m_data = backupGravity;
+	}
+}
+
+void Navi::platCallback(PlatEvent& plat)
+{
+	Creature* obj = plat.m_item;
+	if (plat.m_instance->m_id.match('elec', '*')) {
+		if (!playData->m_olimarData->hasItem(OlimarData::ODII_DreamMaterial)) {
+			Vector3f origin = plat.m_instance->_B8->getColumn(2);
+			Vector3f objPos = obj->getPosition();
+			if (((m_shadowParam.m_position.x - objPos.x) * origin.x + ((m_shadowParam.m_position.y - objPos.y) * origin.y)
+			     + (m_shadowParam.m_position.z - objPos.z) * origin.z)
+			    < 0.0f) {
+				origin.x *= -1.0f;
+				origin.z *= -1.0f;
+			}
+			Vector3f mag(200.0f * origin.x, 150.0f, origin.z * 200.0f);
+			NaviFlickArg arg(obj, mag, naviMgr->m_naviParms->m_naviParms.m_q010.m_value);
+			transit(NSID_Flick, &arg);
+		}
+
+		return;
+	}
+
+	// shrink on scale blocks and bridges
+	if (plat.m_instance->m_id.match('finl', '*') || plat.m_instance->m_id.match('down', '*')) {
+		m_cPlateMgr->shrink();
 	}
 }
 

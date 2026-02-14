@@ -2634,7 +2634,7 @@ lbl_80148F48:
  * Address:	80148F50
  * Size:	0000C8
  */
-void Piki::getSpeed(float)
+f32 Piki::getSpeed(float)
 {
 	/*
 	stwu     r1, -0x20(r1)

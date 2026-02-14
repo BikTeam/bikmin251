@@ -395,39 +395,39 @@ __vt__Q26PikiAI10ActCropArg:
 	.4byte 0
 	.4byte 0
 	.4byte getName__Q26PikiAI10ActCropArgFv
-.global __vt__Q24Game15PikiFlyingState
-__vt__Q24Game15PikiFlyingState:
-	.4byte 0
-	.4byte 0
-	.4byte init__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ24Game8StateArg
-	.4byte exec__Q24Game15PikiFlyingStateFPQ24Game4Piki
-	.4byte cleanup__Q24Game15PikiFlyingStateFPQ24Game4Piki
-	.4byte "resume__Q24Game22FSMState<Q24Game4Piki>FPQ24Game4Piki"
-	.4byte "restart__Q24Game22FSMState<Q24Game4Piki>FPQ24Game4Piki"
-	.4byte "transit__Q24Game22FSMState<Q24Game4Piki>FPQ24Game4PikiiPQ24Game8StateArg"
-	.4byte ignoreAtari__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ24Game8Creature
-	.4byte bounceCallback__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ23Sys8Triangle
-	.4byte collisionCallback__Q24Game15PikiFlyingStateFPQ24Game4PikiRQ24Game9CollEvent
-	.4byte platCallback__Q24Game9PikiStateFPQ24Game4PikiRQ24Game9PlatEvent
-	.4byte onKeyEvent__Q24Game9PikiStateFPQ24Game4PikiRCQ28SysShape8KeyEvent
-	.4byte getInfo__Q24Game9PikiStateFPc
-	.4byte outWaterCallback__Q24Game9PikiStateFPQ24Game4Piki
-	.4byte "wallCallback__Q24Game9PikiStateFPQ24Game4PikiR10Vector3<f>"
-	.4byte invincible__Q24Game9PikiStateFPQ24Game4Piki
-	.4byte callable__Q24Game15PikiFlyingStateFv
-	.4byte aiActive__Q24Game9PikiStateFv
-	.4byte dopable__Q24Game9PikiStateFv
-	.4byte releasable__Q24Game9PikiStateFv
-	.4byte throwable__Q24Game9PikiStateFv
-	.4byte dead__Q24Game9PikiStateFv
-	.4byte battleOK__Q24Game9PikiStateFv
-	.4byte pressable__Q24Game9PikiStateFv
-	.4byte transittable__Q24Game9PikiStateFi
-	.4byte soft_transittable__Q24Game9PikiStateFi
-	.4byte onFlute__Q24Game9PikiStateFPQ24Game4PikiPQ24Game4Navi
-	.4byte dump__Q24Game9PikiStateFv
-	.4byte stopEffect__Q24Game15PikiFlyingStateFv
-	.4byte restartEffect__Q24Game15PikiFlyingStateFv
+# .global __vt__Q24Game15PikiFlyingState
+# __vt__Q24Game15PikiFlyingState:
+# 	.4byte 0
+# 	.4byte 0
+# 	.4byte init__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ24Game8StateArg
+# 	.4byte exec__Q24Game15PikiFlyingStateFPQ24Game4Piki
+# 	.4byte cleanup__Q24Game15PikiFlyingStateFPQ24Game4Piki
+# 	.4byte "resume__Q24Game22FSMState<Q24Game4Piki>FPQ24Game4Piki"
+# 	.4byte "restart__Q24Game22FSMState<Q24Game4Piki>FPQ24Game4Piki"
+# 	.4byte "transit__Q24Game22FSMState<Q24Game4Piki>FPQ24Game4PikiiPQ24Game8StateArg"
+# 	.4byte ignoreAtari__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ24Game8Creature
+# 	.4byte bounceCallback__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ23Sys8Triangle
+# 	.4byte collisionCallback__Q24Game15PikiFlyingStateFPQ24Game4PikiRQ24Game9CollEvent
+# 	.4byte platCallback__Q24Game9PikiStateFPQ24Game4PikiRQ24Game9PlatEvent
+# 	.4byte onKeyEvent__Q24Game9PikiStateFPQ24Game4PikiRCQ28SysShape8KeyEvent
+# 	.4byte getInfo__Q24Game9PikiStateFPc
+# 	.4byte outWaterCallback__Q24Game9PikiStateFPQ24Game4Piki
+# 	.4byte "wallCallback__Q24Game9PikiStateFPQ24Game4PikiR10Vector3<f>"
+# 	.4byte invincible__Q24Game9PikiStateFPQ24Game4Piki
+# 	.4byte callable__Q24Game15PikiFlyingStateFv
+# 	.4byte aiActive__Q24Game9PikiStateFv
+# 	.4byte dopable__Q24Game9PikiStateFv
+# 	.4byte releasable__Q24Game9PikiStateFv
+# 	.4byte throwable__Q24Game9PikiStateFv
+# 	.4byte dead__Q24Game9PikiStateFv
+# 	.4byte battleOK__Q24Game9PikiStateFv
+# 	.4byte pressable__Q24Game9PikiStateFv
+# 	.4byte transittable__Q24Game9PikiStateFi
+# 	.4byte soft_transittable__Q24Game9PikiStateFi
+# 	.4byte onFlute__Q24Game9PikiStateFPQ24Game4PikiPQ24Game4Navi
+# 	.4byte dump__Q24Game9PikiStateFv
+# 	.4byte stopEffect__Q24Game15PikiFlyingStateFv
+# 	.4byte restartEffect__Q24Game15PikiFlyingStateFv
 .global __vt__Q24Game16PikiSuikomiState
 __vt__Q24Game16PikiSuikomiState:
 	.4byte 0
@@ -5262,111 +5262,111 @@ init__Q24Game15PikiLookAtStateFPQ24Game4PikiPQ24Game8StateArg:
 onFlute__Q24Game15PikiLookAtStateFPQ24Game4PikiPQ24Game4Navi:
 /* 8018CDFC 00189D3C  4E 80 00 20 */	blr 
 
-.global exec__Q24Game15PikiLookAtStateFPQ24Game4Piki
-exec__Q24Game15PikiLookAtStateFPQ24Game4Piki:
-/* 8018CE00 00189D40  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 8018CE04 00189D44  7C 08 02 A6 */	mflr r0
-/* 8018CE08 00189D48  C0 42 AA 80 */	lfs f2, lbl_80518DE0@sda21(r2)
-/* 8018CE0C 00189D4C  90 01 00 24 */	stw r0, 0x24(r1)
-/* 8018CE10 00189D50  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 8018CE14 00189D54  7C 9F 23 78 */	mr r31, r4
-/* 8018CE18 00189D58  93 C1 00 18 */	stw r30, 0x18(r1)
-/* 8018CE1C 00189D5C  7C 7E 1B 78 */	mr r30, r3
-/* 8018CE20 00189D60  D0 44 01 E4 */	stfs f2, 0x1e4(r4)
-/* 8018CE24 00189D64  D0 44 01 E8 */	stfs f2, 0x1e8(r4)
-/* 8018CE28 00189D68  D0 44 01 EC */	stfs f2, 0x1ec(r4)
-/* 8018CE2C 00189D6C  A0 03 00 18 */	lhz r0, 0x18(r3)
-/* 8018CE30 00189D70  2C 00 00 01 */	cmpwi r0, 1
-/* 8018CE34 00189D74  41 82 00 80 */	beq .L_8018CEB4
-/* 8018CE38 00189D78  40 80 00 10 */	bge .L_8018CE48
-/* 8018CE3C 00189D7C  2C 00 00 00 */	cmpwi r0, 0
-/* 8018CE40 00189D80  40 80 00 14 */	bge .L_8018CE54
-/* 8018CE44 00189D84  48 00 01 24 */	b .L_8018CF68
-.L_8018CE48:
-/* 8018CE48 00189D88  2C 00 00 03 */	cmpwi r0, 3
-/* 8018CE4C 00189D8C  40 80 01 1C */	bge .L_8018CF68
-/* 8018CE50 00189D90  48 00 00 84 */	b .L_8018CED4
-.L_8018CE54:
-/* 8018CE54 00189D94  80 6D 9A EC */	lwz r3, sys@sda21(r13)
-/* 8018CE58 00189D98  C0 3E 00 14 */	lfs f1, 0x14(r30)
-/* 8018CE5C 00189D9C  C0 03 00 54 */	lfs f0, 0x54(r3)
-/* 8018CE60 00189DA0  EC 01 00 28 */	fsubs f0, f1, f0
-/* 8018CE64 00189DA4  D0 1E 00 14 */	stfs f0, 0x14(r30)
-/* 8018CE68 00189DA8  C0 1E 00 14 */	lfs f0, 0x14(r30)
-/* 8018CE6C 00189DAC  FC 00 10 40 */	fcmpo cr0, f0, f2
-/* 8018CE70 00189DB0  40 80 00 F8 */	bge .L_8018CF68
-/* 8018CE74 00189DB4  28 1E 00 00 */	cmplwi r30, 0
-/* 8018CE78 00189DB8  D0 5E 00 14 */	stfs f2, 0x14(r30)
-/* 8018CE7C 00189DBC  7F C6 F3 78 */	mr r6, r30
-/* 8018CE80 00189DC0  41 82 00 08 */	beq .L_8018CE88
-/* 8018CE84 00189DC4  80 DE 00 10 */	lwz r6, 0x10(r30)
-.L_8018CE88:
-/* 8018CE88 00189DC8  81 9F 00 00 */	lwz r12, 0(r31)
-/* 8018CE8C 00189DCC  7F E3 FB 78 */	mr r3, r31
-/* 8018CE90 00189DD0  38 80 00 20 */	li r4, 0x20
-/* 8018CE94 00189DD4  38 A0 00 20 */	li r5, 0x20
-/* 8018CE98 00189DD8  81 8C 02 08 */	lwz r12, 0x208(r12)
-/* 8018CE9C 00189DDC  38 E0 00 00 */	li r7, 0
-/* 8018CEA0 00189DE0  7D 89 03 A6 */	mtctr r12
-/* 8018CEA4 00189DE4  4E 80 04 21 */	bctrl 
-/* 8018CEA8 00189DE8  38 00 00 01 */	li r0, 1
-/* 8018CEAC 00189DEC  B0 1E 00 18 */	sth r0, 0x18(r30)
-/* 8018CEB0 00189DF0  48 00 00 B8 */	b .L_8018CF68
-.L_8018CEB4:
-/* 8018CEB4 00189DF4  7F E3 FB 78 */	mr r3, r31
-/* 8018CEB8 00189DF8  38 80 00 20 */	li r4, 0x20
-/* 8018CEBC 00189DFC  4B FB 00 71 */	bl assertMotion__Q24Game8FakePikiFi
-/* 8018CEC0 00189E00  54 60 06 3F */	clrlwi. r0, r3, 0x18
-/* 8018CEC4 00189E04  40 82 00 A4 */	bne .L_8018CF68
-/* 8018CEC8 00189E08  38 00 00 02 */	li r0, 2
-/* 8018CECC 00189E0C  B0 1E 00 18 */	sth r0, 0x18(r30)
-/* 8018CED0 00189E10  48 00 00 98 */	b .L_8018CF68
-.L_8018CED4:
-/* 8018CED4 00189E14  81 1F 02 C4 */	lwz r8, 0x2c4(r31)
-/* 8018CED8 00189E18  28 08 00 00 */	cmplwi r8, 0
-/* 8018CEDC 00189E1C  41 82 00 74 */	beq .L_8018CF50
-/* 8018CEE0 00189E20  3C 80 80 4B */	lis r4, __vt__Q26PikiAI9ActionArg@ha
-/* 8018CEE4 00189E24  38 60 00 00 */	li r3, 0
-/* 8018CEE8 00189E28  38 04 05 30 */	addi r0, r4, __vt__Q26PikiAI9ActionArg@l
-/* 8018CEEC 00189E2C  3C 80 80 4B */	lis r4, __vt__Q26PikiAI17CreatureActionArg@ha
-/* 8018CEF0 00189E30  90 01 00 08 */	stw r0, 8(r1)
-/* 8018CEF4 00189E34  38 E4 05 24 */	addi r7, r4, __vt__Q26PikiAI17CreatureActionArg@l
-/* 8018CEF8 00189E38  3C 80 80 4B */	lis r4, __vt__Q26PikiAI19ActFormationInitArg@ha
-/* 8018CEFC 00189E3C  38 00 00 01 */	li r0, 1
-/* 8018CF00 00189E40  98 61 00 11 */	stb r3, 0x11(r1)
-/* 8018CF04 00189E44  38 C4 0D 44 */	addi r6, r4, __vt__Q26PikiAI19ActFormationInitArg@l
-/* 8018CF08 00189E48  38 A1 00 08 */	addi r5, r1, 8
-/* 8018CF0C 00189E4C  38 80 00 00 */	li r4, 0
-/* 8018CF10 00189E50  90 E1 00 08 */	stw r7, 8(r1)
-/* 8018CF14 00189E54  91 01 00 0C */	stw r8, 0xc(r1)
-/* 8018CF18 00189E58  90 C1 00 08 */	stw r6, 8(r1)
-/* 8018CF1C 00189E5C  98 61 00 10 */	stb r3, 0x10(r1)
-/* 8018CF20 00189E60  98 01 00 11 */	stb r0, 0x11(r1)
-/* 8018CF24 00189E64  80 7F 02 94 */	lwz r3, 0x294(r31)
-/* 8018CF28 00189E68  48 00 A0 6D */	bl start__Q26PikiAI5BrainFiPQ26PikiAI9ActionArg
-/* 8018CF2C 00189E6C  7F C3 F3 78 */	mr r3, r30
-/* 8018CF30 00189E70  7F E4 FB 78 */	mr r4, r31
-/* 8018CF34 00189E74  81 9E 00 00 */	lwz r12, 0(r30)
-/* 8018CF38 00189E78  38 A0 00 00 */	li r5, 0
-/* 8018CF3C 00189E7C  38 C0 00 00 */	li r6, 0
-/* 8018CF40 00189E80  81 8C 00 1C */	lwz r12, 0x1c(r12)
-/* 8018CF44 00189E84  7D 89 03 A6 */	mtctr r12
-/* 8018CF48 00189E88  4E 80 04 21 */	bctrl 
-/* 8018CF4C 00189E8C  48 00 00 1C */	b .L_8018CF68
-.L_8018CF50:
-/* 8018CF50 00189E90  81 83 00 00 */	lwz r12, 0(r3)
-/* 8018CF54 00189E94  38 A0 00 00 */	li r5, 0
-/* 8018CF58 00189E98  38 C0 00 00 */	li r6, 0
-/* 8018CF5C 00189E9C  81 8C 00 1C */	lwz r12, 0x1c(r12)
-/* 8018CF60 00189EA0  7D 89 03 A6 */	mtctr r12
-/* 8018CF64 00189EA4  4E 80 04 21 */	bctrl 
-.L_8018CF68:
-/* 8018CF68 00189EA8  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 8018CF6C 00189EAC  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 8018CF70 00189EB0  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 8018CF74 00189EB4  7C 08 03 A6 */	mtlr r0
-/* 8018CF78 00189EB8  38 21 00 20 */	addi r1, r1, 0x20
-/* 8018CF7C 00189EBC  4E 80 00 20 */	blr 
+# .global exec__Q24Game15PikiLookAtStateFPQ24Game4Piki
+# exec__Q24Game15PikiLookAtStateFPQ24Game4Piki:
+# /* 8018CE00 00189D40  94 21 FF E0 */	stwu r1, -0x20(r1)
+# /* 8018CE04 00189D44  7C 08 02 A6 */	mflr r0
+# /* 8018CE08 00189D48  C0 42 AA 80 */	lfs f2, lbl_80518DE0@sda21(r2)
+# /* 8018CE0C 00189D4C  90 01 00 24 */	stw r0, 0x24(r1)
+# /* 8018CE10 00189D50  93 E1 00 1C */	stw r31, 0x1c(r1)
+# /* 8018CE14 00189D54  7C 9F 23 78 */	mr r31, r4
+# /* 8018CE18 00189D58  93 C1 00 18 */	stw r30, 0x18(r1)
+# /* 8018CE1C 00189D5C  7C 7E 1B 78 */	mr r30, r3
+# /* 8018CE20 00189D60  D0 44 01 E4 */	stfs f2, 0x1e4(r4)
+# /* 8018CE24 00189D64  D0 44 01 E8 */	stfs f2, 0x1e8(r4)
+# /* 8018CE28 00189D68  D0 44 01 EC */	stfs f2, 0x1ec(r4)
+# /* 8018CE2C 00189D6C  A0 03 00 18 */	lhz r0, 0x18(r3)
+# /* 8018CE30 00189D70  2C 00 00 01 */	cmpwi r0, 1
+# /* 8018CE34 00189D74  41 82 00 80 */	beq .L_8018CEB4
+# /* 8018CE38 00189D78  40 80 00 10 */	bge .L_8018CE48
+# /* 8018CE3C 00189D7C  2C 00 00 00 */	cmpwi r0, 0
+# /* 8018CE40 00189D80  40 80 00 14 */	bge .L_8018CE54
+# /* 8018CE44 00189D84  48 00 01 24 */	b .L_8018CF68
+# .L_8018CE48:
+# /* 8018CE48 00189D88  2C 00 00 03 */	cmpwi r0, 3
+# /* 8018CE4C 00189D8C  40 80 01 1C */	bge .L_8018CF68
+# /* 8018CE50 00189D90  48 00 00 84 */	b .L_8018CED4
+# .L_8018CE54:
+# /* 8018CE54 00189D94  80 6D 9A EC */	lwz r3, sys@sda21(r13)
+# /* 8018CE58 00189D98  C0 3E 00 14 */	lfs f1, 0x14(r30)
+# /* 8018CE5C 00189D9C  C0 03 00 54 */	lfs f0, 0x54(r3)
+# /* 8018CE60 00189DA0  EC 01 00 28 */	fsubs f0, f1, f0
+# /* 8018CE64 00189DA4  D0 1E 00 14 */	stfs f0, 0x14(r30)
+# /* 8018CE68 00189DA8  C0 1E 00 14 */	lfs f0, 0x14(r30)
+# /* 8018CE6C 00189DAC  FC 00 10 40 */	fcmpo cr0, f0, f2
+# /* 8018CE70 00189DB0  40 80 00 F8 */	bge .L_8018CF68
+# /* 8018CE74 00189DB4  28 1E 00 00 */	cmplwi r30, 0
+# /* 8018CE78 00189DB8  D0 5E 00 14 */	stfs f2, 0x14(r30)
+# /* 8018CE7C 00189DBC  7F C6 F3 78 */	mr r6, r30
+# /* 8018CE80 00189DC0  41 82 00 08 */	beq .L_8018CE88
+# /* 8018CE84 00189DC4  80 DE 00 10 */	lwz r6, 0x10(r30)
+# .L_8018CE88:
+# /* 8018CE88 00189DC8  81 9F 00 00 */	lwz r12, 0(r31)
+# /* 8018CE8C 00189DCC  7F E3 FB 78 */	mr r3, r31
+# /* 8018CE90 00189DD0  38 80 00 20 */	li r4, 0x20
+# /* 8018CE94 00189DD4  38 A0 00 20 */	li r5, 0x20
+# /* 8018CE98 00189DD8  81 8C 02 08 */	lwz r12, 0x208(r12)
+# /* 8018CE9C 00189DDC  38 E0 00 00 */	li r7, 0
+# /* 8018CEA0 00189DE0  7D 89 03 A6 */	mtctr r12
+# /* 8018CEA4 00189DE4  4E 80 04 21 */	bctrl 
+# /* 8018CEA8 00189DE8  38 00 00 01 */	li r0, 1
+# /* 8018CEAC 00189DEC  B0 1E 00 18 */	sth r0, 0x18(r30)
+# /* 8018CEB0 00189DF0  48 00 00 B8 */	b .L_8018CF68
+# .L_8018CEB4:
+# /* 8018CEB4 00189DF4  7F E3 FB 78 */	mr r3, r31
+# /* 8018CEB8 00189DF8  38 80 00 20 */	li r4, 0x20
+# /* 8018CEBC 00189DFC  4B FB 00 71 */	bl assertMotion__Q24Game8FakePikiFi
+# /* 8018CEC0 00189E00  54 60 06 3F */	clrlwi. r0, r3, 0x18
+# /* 8018CEC4 00189E04  40 82 00 A4 */	bne .L_8018CF68
+# /* 8018CEC8 00189E08  38 00 00 02 */	li r0, 2
+# /* 8018CECC 00189E0C  B0 1E 00 18 */	sth r0, 0x18(r30)
+# /* 8018CED0 00189E10  48 00 00 98 */	b .L_8018CF68
+# .L_8018CED4:
+# /* 8018CED4 00189E14  81 1F 02 C4 */	lwz r8, 0x2c4(r31)
+# /* 8018CED8 00189E18  28 08 00 00 */	cmplwi r8, 0
+# /* 8018CEDC 00189E1C  41 82 00 74 */	beq .L_8018CF50
+# /* 8018CEE0 00189E20  3C 80 80 4B */	lis r4, __vt__Q26PikiAI9ActionArg@ha
+# /* 8018CEE4 00189E24  38 60 00 00 */	li r3, 0
+# /* 8018CEE8 00189E28  38 04 05 30 */	addi r0, r4, __vt__Q26PikiAI9ActionArg@l
+# /* 8018CEEC 00189E2C  3C 80 80 4B */	lis r4, __vt__Q26PikiAI17CreatureActionArg@ha
+# /* 8018CEF0 00189E30  90 01 00 08 */	stw r0, 8(r1)
+# /* 8018CEF4 00189E34  38 E4 05 24 */	addi r7, r4, __vt__Q26PikiAI17CreatureActionArg@l
+# /* 8018CEF8 00189E38  3C 80 80 4B */	lis r4, __vt__Q26PikiAI19ActFormationInitArg@ha
+# /* 8018CEFC 00189E3C  38 00 00 01 */	li r0, 1
+# /* 8018CF00 00189E40  98 61 00 11 */	stb r3, 0x11(r1)
+# /* 8018CF04 00189E44  38 C4 0D 44 */	addi r6, r4, __vt__Q26PikiAI19ActFormationInitArg@l
+# /* 8018CF08 00189E48  38 A1 00 08 */	addi r5, r1, 8
+# /* 8018CF0C 00189E4C  38 80 00 00 */	li r4, 0
+# /* 8018CF10 00189E50  90 E1 00 08 */	stw r7, 8(r1)
+# /* 8018CF14 00189E54  91 01 00 0C */	stw r8, 0xc(r1)
+# /* 8018CF18 00189E58  90 C1 00 08 */	stw r6, 8(r1)
+# /* 8018CF1C 00189E5C  98 61 00 10 */	stb r3, 0x10(r1)
+# /* 8018CF20 00189E60  98 01 00 11 */	stb r0, 0x11(r1)
+# /* 8018CF24 00189E64  80 7F 02 94 */	lwz r3, 0x294(r31)
+# /* 8018CF28 00189E68  48 00 A0 6D */	bl start__Q26PikiAI5BrainFiPQ26PikiAI9ActionArg
+# /* 8018CF2C 00189E6C  7F C3 F3 78 */	mr r3, r30
+# /* 8018CF30 00189E70  7F E4 FB 78 */	mr r4, r31
+# /* 8018CF34 00189E74  81 9E 00 00 */	lwz r12, 0(r30)
+# /* 8018CF38 00189E78  38 A0 00 00 */	li r5, 0
+# /* 8018CF3C 00189E7C  38 C0 00 00 */	li r6, 0
+# /* 8018CF40 00189E80  81 8C 00 1C */	lwz r12, 0x1c(r12)
+# /* 8018CF44 00189E84  7D 89 03 A6 */	mtctr r12
+# /* 8018CF48 00189E88  4E 80 04 21 */	bctrl 
+# /* 8018CF4C 00189E8C  48 00 00 1C */	b .L_8018CF68
+# .L_8018CF50:
+# /* 8018CF50 00189E90  81 83 00 00 */	lwz r12, 0(r3)
+# /* 8018CF54 00189E94  38 A0 00 00 */	li r5, 0
+# /* 8018CF58 00189E98  38 C0 00 00 */	li r6, 0
+# /* 8018CF5C 00189E9C  81 8C 00 1C */	lwz r12, 0x1c(r12)
+# /* 8018CF60 00189EA0  7D 89 03 A6 */	mtctr r12
+# /* 8018CF64 00189EA4  4E 80 04 21 */	bctrl 
+# .L_8018CF68:
+# /* 8018CF68 00189EA8  80 01 00 24 */	lwz r0, 0x24(r1)
+# /* 8018CF6C 00189EAC  83 E1 00 1C */	lwz r31, 0x1c(r1)
+# /* 8018CF70 00189EB0  83 C1 00 18 */	lwz r30, 0x18(r1)
+# /* 8018CF74 00189EB4  7C 08 03 A6 */	mtlr r0
+# /* 8018CF78 00189EB8  38 21 00 20 */	addi r1, r1, 0x20
+# /* 8018CF7C 00189EBC  4E 80 00 20 */	blr 
 
 .global onKeyEvent__Q24Game15PikiLookAtStateFRCQ28SysShape8KeyEvent
 onKeyEvent__Q24Game15PikiLookAtStateFRCQ28SysShape8KeyEvent:
@@ -6288,22 +6288,22 @@ exec__Q24Game16PikiHipDropStateFPQ24Game4Piki:
 /* 8018DF48 0018AE88  38 21 01 20 */	addi r1, r1, 0x120
 /* 8018DF4C 0018AE8C  4E 80 00 20 */	blr 
 
-.global cleanup__Q24Game16PikiHipDropStateFPQ24Game4Piki
-cleanup__Q24Game16PikiHipDropStateFPQ24Game4Piki:
-/* 8018DF50 0018AE90  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8018DF54 0018AE94  7C 08 02 A6 */	mflr r0
-/* 8018DF58 0018AE98  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8018DF5C 0018AE9C  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8018DF60 0018AEA0  7C 9F 23 78 */	mr r31, r4
-/* 8018DF64 0018AEA4  80 64 02 58 */	lwz r3, 0x258(r4)
-/* 8018DF68 0018AEA8  48 22 AD 41 */	bl killBlackDown___Q23efx9TPkEffectFv
-/* 8018DF6C 0018AEAC  38 00 00 00 */	li r0, 0
-/* 8018DF70 0018AEB0  98 1F 01 35 */	stb r0, 0x135(r31)
-/* 8018DF74 0018AEB4  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8018DF78 0018AEB8  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8018DF7C 0018AEBC  7C 08 03 A6 */	mtlr r0
-/* 8018DF80 0018AEC0  38 21 00 10 */	addi r1, r1, 0x10
-/* 8018DF84 0018AEC4  4E 80 00 20 */	blr 
+# .global cleanup__Q24Game16PikiHipDropStateFPQ24Game4Piki
+# cleanup__Q24Game16PikiHipDropStateFPQ24Game4Piki:
+# /* 8018DF50 0018AE90  94 21 FF F0 */	stwu r1, -0x10(r1)
+# /* 8018DF54 0018AE94  7C 08 02 A6 */	mflr r0
+# /* 8018DF58 0018AE98  90 01 00 14 */	stw r0, 0x14(r1)
+# /* 8018DF5C 0018AE9C  93 E1 00 0C */	stw r31, 0xc(r1)
+# /* 8018DF60 0018AEA0  7C 9F 23 78 */	mr r31, r4
+# /* 8018DF64 0018AEA4  80 64 02 58 */	lwz r3, 0x258(r4)
+# /* 8018DF68 0018AEA8  48 22 AD 41 */	bl killBlackDown___Q23efx9TPkEffectFv
+# /* 8018DF6C 0018AEAC  38 00 00 00 */	li r0, 0
+# /* 8018DF70 0018AEB0  98 1F 01 35 */	stb r0, 0x135(r31)
+# /* 8018DF74 0018AEB4  80 01 00 14 */	lwz r0, 0x14(r1)
+# /* 8018DF78 0018AEB8  83 E1 00 0C */	lwz r31, 0xc(r1)
+# /* 8018DF7C 0018AEBC  7C 08 03 A6 */	mtlr r0
+# /* 8018DF80 0018AEC0  38 21 00 10 */	addi r1, r1, 0x10
+# /* 8018DF84 0018AEC4  4E 80 00 20 */	blr 
 
 .global onKeyEvent__Q24Game16PikiHipDropStateFPQ24Game4PikiRCQ28SysShape8KeyEvent
 onKeyEvent__Q24Game16PikiHipDropStateFPQ24Game4PikiRCQ28SysShape8KeyEvent:
@@ -7586,84 +7586,84 @@ stopEffect__Q24Game15PikiFlyingStateFv:
 restartEffect__Q24Game15PikiFlyingStateFv:
 /* 8018F1B8 0018C0F8  4E 80 00 20 */	blr 
 
-.global init__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ24Game8StateArg
-init__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ24Game8StateArg:
-/* 8018F1BC 0018C0FC  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8018F1C0 0018C100  7C 08 02 A6 */	mflr r0
-/* 8018F1C4 0018C104  38 A0 00 23 */	li r5, 0x23
-/* 8018F1C8 0018C108  38 C0 00 00 */	li r6, 0
-/* 8018F1CC 0018C10C  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8018F1D0 0018C110  38 E0 00 00 */	li r7, 0
-/* 8018F1D4 0018C114  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8018F1D8 0018C118  7C 9F 23 78 */	mr r31, r4
-/* 8018F1DC 0018C11C  38 80 00 23 */	li r4, 0x23
-/* 8018F1E0 0018C120  93 C1 00 08 */	stw r30, 8(r1)
-/* 8018F1E4 0018C124  7C 7E 1B 78 */	mr r30, r3
-/* 8018F1E8 0018C128  7F E3 FB 78 */	mr r3, r31
-/* 8018F1EC 0018C12C  81 9F 00 00 */	lwz r12, 0(r31)
-/* 8018F1F0 0018C130  81 8C 02 08 */	lwz r12, 0x208(r12)
-/* 8018F1F4 0018C134  7D 89 03 A6 */	mtctr r12
-/* 8018F1F8 0018C138  4E 80 04 21 */	bctrl 
-/* 8018F1FC 0018C13C  80 7F 02 C4 */	lwz r3, 0x2c4(r31)
-/* 8018F200 0018C140  28 03 00 00 */	cmplwi r3, 0
-/* 8018F204 0018C144  41 82 00 4C */	beq .L_8018F250
-/* 8018F208 0018C148  88 1F 02 B8 */	lbz r0, 0x2b8(r31)
-/* 8018F20C 0018C14C  2C 00 00 05 */	cmpwi r0, 5
-/* 8018F210 0018C150  40 82 00 24 */	bne .L_8018F234
-/* 8018F214 0018C154  80 63 02 6C */	lwz r3, 0x26c(r3)
-/* 8018F218 0018C158  38 80 28 6B */	li r4, 0x286b
-/* 8018F21C 0018C15C  85 83 00 30 */	lwzu r12, 0x30(r3)
-/* 8018F220 0018C160  38 A0 00 00 */	li r5, 0
-/* 8018F224 0018C164  81 8C 00 1C */	lwz r12, 0x1c(r12)
-/* 8018F228 0018C168  7D 89 03 A6 */	mtctr r12
-/* 8018F22C 0018C16C  4E 80 04 21 */	bctrl 
-/* 8018F230 0018C170  48 00 00 20 */	b .L_8018F250
-.L_8018F234:
-/* 8018F234 0018C174  80 63 02 6C */	lwz r3, 0x26c(r3)
-/* 8018F238 0018C178  38 80 28 02 */	li r4, 0x2802
-/* 8018F23C 0018C17C  85 83 00 30 */	lwzu r12, 0x30(r3)
-/* 8018F240 0018C180  38 A0 00 00 */	li r5, 0
-/* 8018F244 0018C184  81 8C 00 1C */	lwz r12, 0x1c(r12)
-/* 8018F248 0018C188  7D 89 03 A6 */	mtctr r12
-/* 8018F24C 0018C18C  4E 80 04 21 */	bctrl 
-.L_8018F250:
-/* 8018F250 0018C190  80 7F 02 50 */	lwz r3, 0x250(r31)
-/* 8018F254 0018C194  38 80 28 03 */	li r4, 0x2803
-/* 8018F258 0018C198  38 A0 00 5A */	li r5, 0x5a
-/* 8018F25C 0018C19C  38 C0 00 00 */	li r6, 0
-/* 8018F260 0018C1A0  48 2D 33 21 */	bl startFreePikiSound__Q23PSM4PikiFUlUlUl
-/* 8018F264 0018C1A4  38 00 00 00 */	li r0, 0
-/* 8018F268 0018C1A8  7F E3 FB 78 */	mr r3, r31
-/* 8018F26C 0018C1AC  98 1E 00 14 */	stb r0, 0x14(r30)
-/* 8018F270 0018C1B0  38 80 00 00 */	li r4, 0
-/* 8018F274 0018C1B4  90 1E 00 30 */	stw r0, 0x30(r30)
-/* 8018F278 0018C1B8  98 1E 00 15 */	stb r0, 0x15(r30)
-/* 8018F27C 0018C1BC  81 9F 00 00 */	lwz r12, 0(r31)
-/* 8018F280 0018C1C0  81 8C 01 E8 */	lwz r12, 0x1e8(r12)
-/* 8018F284 0018C1C4  7D 89 03 A6 */	mtctr r12
-/* 8018F288 0018C1C8  4E 80 04 21 */	bctrl 
-/* 8018F28C 0018C1CC  80 7F 02 58 */	lwz r3, 0x258(r31)
-/* 8018F290 0018C1D0  80 83 00 10 */	lwz r4, 0x10(r3)
-/* 8018F294 0018C1D4  80 A3 00 1C */	lwz r5, 0x1c(r3)
-/* 8018F298 0018C1D8  48 22 96 9D */	bl "createNage___Q23efx9TPkEffectFP10Vector3<f>PA4_f"
-/* 8018F29C 0018C1DC  38 00 00 01 */	li r0, 1
-/* 8018F2A0 0018C1E0  98 1F 01 35 */	stb r0, 0x135(r31)
-/* 8018F2A4 0018C1E4  88 0D 92 F0 */	lbz r0, throwPikiDebug__Q24Game7PikiMgr@sda21(r13)
-/* 8018F2A8 0018C1E8  28 00 00 00 */	cmplwi r0, 0
-/* 8018F2AC 0018C1EC  41 82 00 1C */	beq .L_8018F2C8
-/* 8018F2B0 0018C1F0  7F E3 FB 78 */	mr r3, r31
-/* 8018F2B4 0018C1F4  38 80 00 01 */	li r4, 1
-/* 8018F2B8 0018C1F8  81 9F 00 00 */	lwz r12, 0(r31)
-/* 8018F2BC 0018C1FC  81 8C 00 DC */	lwz r12, 0xdc(r12)
-/* 8018F2C0 0018C200  7D 89 03 A6 */	mtctr r12
-/* 8018F2C4 0018C204  4E 80 04 21 */	bctrl 
-.L_8018F2C8:
-/* 8018F2C8 0018C208  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8018F2CC 0018C20C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8018F2D0 0018C210  83 C1 00 08 */	lwz r30, 8(r1)
-/* 8018F2D4 0018C214  7C 08 03 A6 */	mtlr r0
-/* 8018F2D8 0018C218  38 21 00 10 */	addi r1, r1, 0x10
-/* 8018F2DC 0018C21C  4E 80 00 20 */	blr 
+# .global init__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ24Game8StateArg
+# init__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ24Game8StateArg:
+# /* 8018F1BC 0018C0FC  94 21 FF F0 */	stwu r1, -0x10(r1)
+# /* 8018F1C0 0018C100  7C 08 02 A6 */	mflr r0
+# /* 8018F1C4 0018C104  38 A0 00 23 */	li r5, 0x23
+# /* 8018F1C8 0018C108  38 C0 00 00 */	li r6, 0
+# /* 8018F1CC 0018C10C  90 01 00 14 */	stw r0, 0x14(r1)
+# /* 8018F1D0 0018C110  38 E0 00 00 */	li r7, 0
+# /* 8018F1D4 0018C114  93 E1 00 0C */	stw r31, 0xc(r1)
+# /* 8018F1D8 0018C118  7C 9F 23 78 */	mr r31, r4
+# /* 8018F1DC 0018C11C  38 80 00 23 */	li r4, 0x23
+# /* 8018F1E0 0018C120  93 C1 00 08 */	stw r30, 8(r1)
+# /* 8018F1E4 0018C124  7C 7E 1B 78 */	mr r30, r3
+# /* 8018F1E8 0018C128  7F E3 FB 78 */	mr r3, r31
+# /* 8018F1EC 0018C12C  81 9F 00 00 */	lwz r12, 0(r31)
+# /* 8018F1F0 0018C130  81 8C 02 08 */	lwz r12, 0x208(r12)
+# /* 8018F1F4 0018C134  7D 89 03 A6 */	mtctr r12
+# /* 8018F1F8 0018C138  4E 80 04 21 */	bctrl 
+# /* 8018F1FC 0018C13C  80 7F 02 C4 */	lwz r3, 0x2c4(r31)
+# /* 8018F200 0018C140  28 03 00 00 */	cmplwi r3, 0
+# /* 8018F204 0018C144  41 82 00 4C */	beq .L_8018F250
+# /* 8018F208 0018C148  88 1F 02 B8 */	lbz r0, 0x2b8(r31)
+# /* 8018F20C 0018C14C  2C 00 00 05 */	cmpwi r0, 5
+# /* 8018F210 0018C150  40 82 00 24 */	bne .L_8018F234
+# /* 8018F214 0018C154  80 63 02 6C */	lwz r3, 0x26c(r3)
+# /* 8018F218 0018C158  38 80 28 6B */	li r4, 0x286b
+# /* 8018F21C 0018C15C  85 83 00 30 */	lwzu r12, 0x30(r3)
+# /* 8018F220 0018C160  38 A0 00 00 */	li r5, 0
+# /* 8018F224 0018C164  81 8C 00 1C */	lwz r12, 0x1c(r12)
+# /* 8018F228 0018C168  7D 89 03 A6 */	mtctr r12
+# /* 8018F22C 0018C16C  4E 80 04 21 */	bctrl 
+# /* 8018F230 0018C170  48 00 00 20 */	b .L_8018F250
+# .L_8018F234:
+# /* 8018F234 0018C174  80 63 02 6C */	lwz r3, 0x26c(r3)
+# /* 8018F238 0018C178  38 80 28 02 */	li r4, 0x2802
+# /* 8018F23C 0018C17C  85 83 00 30 */	lwzu r12, 0x30(r3)
+# /* 8018F240 0018C180  38 A0 00 00 */	li r5, 0
+# /* 8018F244 0018C184  81 8C 00 1C */	lwz r12, 0x1c(r12)
+# /* 8018F248 0018C188  7D 89 03 A6 */	mtctr r12
+# /* 8018F24C 0018C18C  4E 80 04 21 */	bctrl 
+# .L_8018F250:
+# /* 8018F250 0018C190  80 7F 02 50 */	lwz r3, 0x250(r31)
+# /* 8018F254 0018C194  38 80 28 03 */	li r4, 0x2803
+# /* 8018F258 0018C198  38 A0 00 5A */	li r5, 0x5a
+# /* 8018F25C 0018C19C  38 C0 00 00 */	li r6, 0
+# /* 8018F260 0018C1A0  48 2D 33 21 */	bl startFreePikiSound__Q23PSM4PikiFUlUlUl
+# /* 8018F264 0018C1A4  38 00 00 00 */	li r0, 0
+# /* 8018F268 0018C1A8  7F E3 FB 78 */	mr r3, r31
+# /* 8018F26C 0018C1AC  98 1E 00 14 */	stb r0, 0x14(r30)
+# /* 8018F270 0018C1B0  38 80 00 00 */	li r4, 0
+# /* 8018F274 0018C1B4  90 1E 00 30 */	stw r0, 0x30(r30)
+# /* 8018F278 0018C1B8  98 1E 00 15 */	stb r0, 0x15(r30)
+# /* 8018F27C 0018C1BC  81 9F 00 00 */	lwz r12, 0(r31)
+# /* 8018F280 0018C1C0  81 8C 01 E8 */	lwz r12, 0x1e8(r12)
+# /* 8018F284 0018C1C4  7D 89 03 A6 */	mtctr r12
+# /* 8018F288 0018C1C8  4E 80 04 21 */	bctrl 
+# /* 8018F28C 0018C1CC  80 7F 02 58 */	lwz r3, 0x258(r31)
+# /* 8018F290 0018C1D0  80 83 00 10 */	lwz r4, 0x10(r3)
+# /* 8018F294 0018C1D4  80 A3 00 1C */	lwz r5, 0x1c(r3)
+# /* 8018F298 0018C1D8  48 22 96 9D */	bl "createNage___Q23efx9TPkEffectFP10Vector3<f>PA4_f"
+# /* 8018F29C 0018C1DC  38 00 00 01 */	li r0, 1
+# /* 8018F2A0 0018C1E0  98 1F 01 35 */	stb r0, 0x135(r31)
+# /* 8018F2A4 0018C1E4  88 0D 92 F0 */	lbz r0, throwPikiDebug__Q24Game7PikiMgr@sda21(r13)
+# /* 8018F2A8 0018C1E8  28 00 00 00 */	cmplwi r0, 0
+# /* 8018F2AC 0018C1EC  41 82 00 1C */	beq .L_8018F2C8
+# /* 8018F2B0 0018C1F0  7F E3 FB 78 */	mr r3, r31
+# /* 8018F2B4 0018C1F4  38 80 00 01 */	li r4, 1
+# /* 8018F2B8 0018C1F8  81 9F 00 00 */	lwz r12, 0(r31)
+# /* 8018F2BC 0018C1FC  81 8C 00 DC */	lwz r12, 0xdc(r12)
+# /* 8018F2C0 0018C200  7D 89 03 A6 */	mtctr r12
+# /* 8018F2C4 0018C204  4E 80 04 21 */	bctrl 
+# .L_8018F2C8:
+# /* 8018F2C8 0018C208  80 01 00 14 */	lwz r0, 0x14(r1)
+# /* 8018F2CC 0018C20C  83 E1 00 0C */	lwz r31, 0xc(r1)
+# /* 8018F2D0 0018C210  83 C1 00 08 */	lwz r30, 8(r1)
+# /* 8018F2D4 0018C214  7C 08 03 A6 */	mtlr r0
+# /* 8018F2D8 0018C218  38 21 00 10 */	addi r1, r1, 0x10
+# /* 8018F2DC 0018C21C  4E 80 00 20 */	blr 
 
 .global bounceCallback__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ23Sys8Triangle
 bounceCallback__Q24Game15PikiFlyingStateFPQ24Game4PikiPQ23Sys8Triangle:
@@ -8205,34 +8205,34 @@ exec__Q24Game15PikiFlyingStateFPQ24Game4Piki:
 /* 8018FAAC 0018C9EC  38 21 00 60 */	addi r1, r1, 0x60
 /* 8018FAB0 0018C9F0  4E 80 00 20 */	blr 
 
-.global cleanup__Q24Game15PikiFlyingStateFPQ24Game4Piki
-cleanup__Q24Game15PikiFlyingStateFPQ24Game4Piki:
-/* 8018FAB4 0018C9F4  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8018FAB8 0018C9F8  7C 08 02 A6 */	mflr r0
-/* 8018FABC 0018C9FC  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8018FAC0 0018CA00  38 00 00 00 */	li r0, 0
-/* 8018FAC4 0018CA04  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 8018FAC8 0018CA08  7C 9F 23 78 */	mr r31, r4
-/* 8018FACC 0018CA0C  7F E3 FB 78 */	mr r3, r31
-/* 8018FAD0 0018CA10  98 04 01 35 */	stb r0, 0x135(r4)
-/* 8018FAD4 0018CA14  38 80 00 01 */	li r4, 1
-/* 8018FAD8 0018CA18  81 9F 00 00 */	lwz r12, 0(r31)
-/* 8018FADC 0018CA1C  81 8C 01 E8 */	lwz r12, 0x1e8(r12)
-/* 8018FAE0 0018CA20  7D 89 03 A6 */	mtctr r12
-/* 8018FAE4 0018CA24  4E 80 04 21 */	bctrl 
-/* 8018FAE8 0018CA28  80 7F 02 58 */	lwz r3, 0x258(r31)
-/* 8018FAEC 0018CA2C  48 22 8F 41 */	bl killNage___Q23efx9TPkEffectFv
-/* 8018FAF0 0018CA30  7F E3 FB 78 */	mr r3, r31
-/* 8018FAF4 0018CA34  38 80 00 00 */	li r4, 0
-/* 8018FAF8 0018CA38  81 9F 00 00 */	lwz r12, 0(r31)
-/* 8018FAFC 0018CA3C  81 8C 00 DC */	lwz r12, 0xdc(r12)
-/* 8018FB00 0018CA40  7D 89 03 A6 */	mtctr r12
-/* 8018FB04 0018CA44  4E 80 04 21 */	bctrl 
-/* 8018FB08 0018CA48  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8018FB0C 0018CA4C  83 E1 00 0C */	lwz r31, 0xc(r1)
-/* 8018FB10 0018CA50  7C 08 03 A6 */	mtlr r0
-/* 8018FB14 0018CA54  38 21 00 10 */	addi r1, r1, 0x10
-/* 8018FB18 0018CA58  4E 80 00 20 */	blr 
+# .global cleanup__Q24Game15PikiFlyingStateFPQ24Game4Piki
+# cleanup__Q24Game15PikiFlyingStateFPQ24Game4Piki:
+# /* 8018FAB4 0018C9F4  94 21 FF F0 */	stwu r1, -0x10(r1)
+# /* 8018FAB8 0018C9F8  7C 08 02 A6 */	mflr r0
+# /* 8018FABC 0018C9FC  90 01 00 14 */	stw r0, 0x14(r1)
+# /* 8018FAC0 0018CA00  38 00 00 00 */	li r0, 0
+# /* 8018FAC4 0018CA04  93 E1 00 0C */	stw r31, 0xc(r1)
+# /* 8018FAC8 0018CA08  7C 9F 23 78 */	mr r31, r4
+# /* 8018FACC 0018CA0C  7F E3 FB 78 */	mr r3, r31
+# /* 8018FAD0 0018CA10  98 04 01 35 */	stb r0, 0x135(r4)
+# /* 8018FAD4 0018CA14  38 80 00 01 */	li r4, 1
+# /* 8018FAD8 0018CA18  81 9F 00 00 */	lwz r12, 0(r31)
+# /* 8018FADC 0018CA1C  81 8C 01 E8 */	lwz r12, 0x1e8(r12)
+# /* 8018FAE0 0018CA20  7D 89 03 A6 */	mtctr r12
+# /* 8018FAE4 0018CA24  4E 80 04 21 */	bctrl 
+# /* 8018FAE8 0018CA28  80 7F 02 58 */	lwz r3, 0x258(r31)
+# /* 8018FAEC 0018CA2C  48 22 8F 41 */	bl killNage___Q23efx9TPkEffectFv
+# /* 8018FAF0 0018CA30  7F E3 FB 78 */	mr r3, r31
+# /* 8018FAF4 0018CA34  38 80 00 00 */	li r4, 0
+# /* 8018FAF8 0018CA38  81 9F 00 00 */	lwz r12, 0(r31)
+# /* 8018FAFC 0018CA3C  81 8C 00 DC */	lwz r12, 0xdc(r12)
+# /* 8018FB00 0018CA40  7D 89 03 A6 */	mtctr r12
+# /* 8018FB04 0018CA44  4E 80 04 21 */	bctrl 
+# /* 8018FB08 0018CA48  80 01 00 14 */	lwz r0, 0x14(r1)
+# /* 8018FB0C 0018CA4C  83 E1 00 0C */	lwz r31, 0xc(r1)
+# /* 8018FB10 0018CA50  7C 08 03 A6 */	mtlr r0
+# /* 8018FB14 0018CA54  38 21 00 10 */	addi r1, r1, 0x10
+# /* 8018FB18 0018CA58  4E 80 00 20 */	blr 
 
 .global init__Q24Game14PikiFlickStateFPQ24Game4PikiPQ24Game8StateArg
 init__Q24Game14PikiFlickStateFPQ24Game4PikiPQ24Game8StateArg:

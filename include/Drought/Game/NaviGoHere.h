@@ -41,12 +41,15 @@ struct NaviGoHereState : public NaviState {
 
 	bool execMove(Navi*);
 	bool execMoveGoal(Navi*);
+	f32 calcMinPikiSpeed(Navi*);
 
 	// _00     = VTBL
 	// _00-_10 = NaviState
 	Vector3f mPosition;       // _14
 	Drought::PathNode* mCurrNode;
 	Drought::Path* mPath;
+	f32 mCurrWalkSpeed;
+	u32 mCurrPikiCount;
 };
     
 } // namespace Game

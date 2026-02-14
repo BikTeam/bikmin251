@@ -9,6 +9,8 @@
 #include "Game/generalEnemyMgr.h"
 #include "Game/EnemyIterator.h"
 #include "PSM/Navi.h"
+#include "TwoPlayer.h"
+#include "Game/CPlate.h"
 
 namespace Game {
 
@@ -130,9 +132,12 @@ void NaviNukuState::exec(Navi* navi)
 		return;
 	}
 
-	if (navi->m_padinput && !gameSystem->paused_soft() && moviePlayer->m_demoState == 0 && !gameSystem->isMultiplayerMode()
-	    && navi->m_padinput->isButtonDown(JUTGamePad::PRESS_Y) && playData->isDemoFlag(DEMO_Unlock_Captain_Switch)) {
-		swapNavi(navi);
+	if (navi->m_padinput && navi->m_padinput->isButtonDown(JUTGamePad::PRESS_Y)) {
+		if (gameSystem->isMultiplayerMode() || TwoPlayer::twoPlayerActive) {
+			navi->releasePikis(nullptr, true);
+		} else if (!gameSystem->paused_soft() && moviePlayer->m_demoState == 0 && playData->isDemoFlag(DEMO_Unlock_Captain_Switch)) {
+			swapNavi(navi);
+		}
 	}
 }
 

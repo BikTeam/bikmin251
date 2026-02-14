@@ -162,7 +162,7 @@ struct Navi : public FakePiki, virtual public PelletView {
 	void ogGetNextThrowPiki();
 	bool procActionButton();
 	bool releasePikis();
-	bool releasePikis(Piki*);
+	bool releasePikis(Piki*, bool);
 	void reviseController(Vector3f&);
 	void set_movie_draw(bool);
 	void setDeadLaydown();
