@@ -42,7 +42,7 @@ typedef enum EPikiKind {
 	Blue                = 0,
 	Red                 = 1,
 	Yellow              = 2,
-	OnyonCount          = 2,
+	OnyonCount          = 3,
 	Purple              = 3,
 	White               = 4,
 	LastStoredPikiColor = White,
