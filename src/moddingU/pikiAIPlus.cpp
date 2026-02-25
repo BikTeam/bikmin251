@@ -4,6 +4,8 @@
 #include "Game/Entities/ItemOnyon.h"
 #include "Game/Navi.h"
 #include "Game/Footmark.h"
+#include "Game/gameStat.h"
+#include "Game/CPlate.h"
 
 namespace PikiAI {
 
@@ -40,7 +42,7 @@ int ActEnter::exec()
 		f32 climbingHeight = m_parent->_104.y;
 		if (climbingHeight < 0.25f) {
 			climbingHeight /= 0.25f;
-			m_baseScale      = m_parent->getBaseScale() * climbingHeight;
+			m_baseScale       = m_parent->getBaseScale() * climbingHeight;
 			m_parent->m_scale = m_baseScale;
 		}
 		if (climbResult == ACTEXEC_Success) {
@@ -80,7 +82,7 @@ int ActEnter::exec()
 void ActExit::init(ActionArg* arg)
 {
 	ActCropArg* cropArg = static_cast<ActCropArg*>(arg);
-	m_creature           = cropArg->m_creature;
+	m_creature          = cropArg->m_creature;
 
 	if (m_creature->m_objectTypeID == OBJTYPE_Onyon) {
 		initOnyon();
@@ -95,8 +97,8 @@ void ActExit::initOnyon()
 {
 	m_parent->startMotion(Game::IPikiAnims::WALK, Game::IPikiAnims::WALK, nullptr, nullptr);
 	m_parent->m_velocity = Vector3f(0.0f);
-	int randFoot             = 3.0f * randFloat();
-	m_onyonLeg                = static_cast<Game::Onyon*>(m_creature)->getLegPart(randFoot);
+	int randFoot         = 3.0f * randFloat();
+	m_onyonLeg           = static_cast<Game::Onyon*>(m_creature)->getLegPart(randFoot);
 
 	ClimbActionArg climbArg(m_onyonLeg, m_parent->getParms()->m_pikiParms.m_p003.m_value, false);
 	m_parent->setPosition(m_onyonLeg->m_position, false);
@@ -104,7 +106,7 @@ void ActExit::initOnyon()
 	m_climb->init(&climbArg);
 
 	m_parent->startSound(m_creature, PSSE_PK_VC_ONY_EXIT, true);
-	m_parent->m_scale                              = Vector3f::zero;
+	m_parent->m_scale                             = Vector3f::zero;
 	m_parent->m_mainMatrix.m_matrix.structView.xx = 0.0f;
 	m_parent->m_mainMatrix.m_matrix.structView.yx = 0.0f;
 	m_parent->m_mainMatrix.m_matrix.structView.zx = 0.0f;
@@ -150,7 +152,7 @@ int ActExit::exec()
 	f32 climbingHeight = m_parent->_104.y;
 	if (climbingHeight < 0.25f) {
 		climbingHeight /= 0.25f;
-		m_baseScale      = m_parent->getBaseScale() * climbingHeight;
+		m_baseScale       = m_parent->getBaseScale() * climbingHeight;
 		m_parent->m_scale = m_baseScale;
 	}
 	if (climbResult == ACTEXEC_Success) {
@@ -169,8 +171,8 @@ void ActExit::cleanup()
 		return;
 	}
 
-	f32 climbY      = m_parent->_104.y;
-	m_baseScale      = m_parent->getBaseScale();
+	f32 climbY        = m_parent->_104.y;
+	m_baseScale       = m_parent->getBaseScale();
 	m_parent->m_scale = Vector3f(m_baseScale);
 	m_parent->endStick();
 	m_parent->setMoveRotation(true);
@@ -204,6 +206,98 @@ Game::Navi* Brain::searchOrima()
 	}
 
 	return targetPlayer;
+}
+
+/**
+ * @note Address: 0x8019CE7C
+ * @note Size: 0x1B4
+ */
+void ActFormation::init(ActionArg* initArg)
+{
+	ActFormationInitArg* formationArg = static_cast<ActFormationInitArg*>(initArg);
+	P2ASSERTLINE(267, formationArg);
+	m_nextAIType = 1;
+
+	Game::Navi* currNavi = m_parent->m_navi;
+
+	m_navi = m_parent->m_navi;
+
+	if (!formationArg->m_doExternalCount) {
+		Game::GameStat::formationPikis.inc(m_parent);
+	}
+
+	m_initArg.m_creature           = formationArg->m_creature;
+	m_initArg.m_isDemoFollow       = formationArg->m_isDemoFollow;
+	m_initArg.m_doUseTouchCooldown = formationArg->m_doUseTouchCooldown;
+	m_initArg.m_doExternalCount    = false;
+
+	if (m_initArg.m_doUseTouchCooldown) {
+		_38 = 45;
+	} else {
+		_38 = 0;
+	}
+
+	Game::Navi* initNavi = static_cast<Game::Navi*>(formationArg->m_creature);
+	bool initCheck       = formationArg->m_isDemoFollow;
+
+	if (!initNavi) {
+		m_formationSlotID = -1;
+		return;
+	}
+
+	_2A = 5;
+	_2C = 5;
+	_2E = 0;
+	_60 = false;
+	_61 = false;
+
+	m_cPlate          = initNavi->m_cPlateMgr;
+	m_formationSlotID = m_cPlate->getSlot(m_parent, this, initCheck);
+	if (m_formationSlotID == -1 && initCheck) {
+		JUT_PANICLINE(330, "slot id is -1");
+	}
+
+	m_parent->startMotion(Game::IPikiAnims::RUN2, Game::IPikiAnims::RUN2, nullptr, nullptr);
+
+	_30 = false;
+	_31 = 0;
+	_28 = 0;
+	_4C = 0;
+	_50 = 0.0f;
+	_54 = 0;
+	_3C = nullptr;
+
+	m_parent->setPastel(false);
+	_40 = 0;
+	_48 = -1;
+	m_parent->setFreeLightEffect(false);
+}
+
+/**
+ * @note Address: 0x8019D5DC
+ * @note Size: 0xA4
+ */
+void ActFormation::cleanup()
+{
+	m_parent->setGasInvincible(0);
+	m_parent->setMoveRotation(true);
+
+	Game::Navi* currNavi = m_parent->m_navi;
+
+	m_parent->m_navi = m_navi;
+
+	if (!m_initArg.m_doExternalCount) {
+		Game::GameStat::formationPikis.dec(m_parent);
+	}
+
+	m_parent->m_navi = currNavi;
+
+	if (m_formationSlotID != -1) {
+		m_cPlate->releaseSlot(m_parent, m_formationSlotID);
+	}
+
+	m_cPlate          = nullptr;
+	m_formationSlotID = -1;
 }
 
 } // namespace PikiAI

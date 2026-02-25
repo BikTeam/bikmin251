@@ -8205,34 +8205,34 @@ exec__Q24Game15PikiFlyingStateFPQ24Game4Piki:
 /* 8018FAAC 0018C9EC  38 21 00 60 */	addi r1, r1, 0x60
 /* 8018FAB0 0018C9F0  4E 80 00 20 */	blr 
 
-# .global cleanup__Q24Game15PikiFlyingStateFPQ24Game4Piki
-# cleanup__Q24Game15PikiFlyingStateFPQ24Game4Piki:
-# /* 8018FAB4 0018C9F4  94 21 FF F0 */	stwu r1, -0x10(r1)
-# /* 8018FAB8 0018C9F8  7C 08 02 A6 */	mflr r0
-# /* 8018FABC 0018C9FC  90 01 00 14 */	stw r0, 0x14(r1)
-# /* 8018FAC0 0018CA00  38 00 00 00 */	li r0, 0
-# /* 8018FAC4 0018CA04  93 E1 00 0C */	stw r31, 0xc(r1)
-# /* 8018FAC8 0018CA08  7C 9F 23 78 */	mr r31, r4
-# /* 8018FACC 0018CA0C  7F E3 FB 78 */	mr r3, r31
-# /* 8018FAD0 0018CA10  98 04 01 35 */	stb r0, 0x135(r4)
-# /* 8018FAD4 0018CA14  38 80 00 01 */	li r4, 1
-# /* 8018FAD8 0018CA18  81 9F 00 00 */	lwz r12, 0(r31)
-# /* 8018FADC 0018CA1C  81 8C 01 E8 */	lwz r12, 0x1e8(r12)
-# /* 8018FAE0 0018CA20  7D 89 03 A6 */	mtctr r12
-# /* 8018FAE4 0018CA24  4E 80 04 21 */	bctrl 
-# /* 8018FAE8 0018CA28  80 7F 02 58 */	lwz r3, 0x258(r31)
-# /* 8018FAEC 0018CA2C  48 22 8F 41 */	bl killNage___Q23efx9TPkEffectFv
-# /* 8018FAF0 0018CA30  7F E3 FB 78 */	mr r3, r31
-# /* 8018FAF4 0018CA34  38 80 00 00 */	li r4, 0
-# /* 8018FAF8 0018CA38  81 9F 00 00 */	lwz r12, 0(r31)
-# /* 8018FAFC 0018CA3C  81 8C 00 DC */	lwz r12, 0xdc(r12)
-# /* 8018FB00 0018CA40  7D 89 03 A6 */	mtctr r12
-# /* 8018FB04 0018CA44  4E 80 04 21 */	bctrl 
-# /* 8018FB08 0018CA48  80 01 00 14 */	lwz r0, 0x14(r1)
-# /* 8018FB0C 0018CA4C  83 E1 00 0C */	lwz r31, 0xc(r1)
-# /* 8018FB10 0018CA50  7C 08 03 A6 */	mtlr r0
-# /* 8018FB14 0018CA54  38 21 00 10 */	addi r1, r1, 0x10
-# /* 8018FB18 0018CA58  4E 80 00 20 */	blr 
+.global cleanup__Q24Game15PikiFlyingStateFPQ24Game4Piki
+cleanup__Q24Game15PikiFlyingStateFPQ24Game4Piki:
+/* 8018FAB4 0018C9F4  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 8018FAB8 0018C9F8  7C 08 02 A6 */	mflr r0
+/* 8018FABC 0018C9FC  90 01 00 14 */	stw r0, 0x14(r1)
+/* 8018FAC0 0018CA00  38 00 00 00 */	li r0, 0
+/* 8018FAC4 0018CA04  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 8018FAC8 0018CA08  7C 9F 23 78 */	mr r31, r4
+/* 8018FACC 0018CA0C  7F E3 FB 78 */	mr r3, r31
+/* 8018FAD0 0018CA10  98 04 01 35 */	stb r0, 0x135(r4)
+/* 8018FAD4 0018CA14  38 80 00 01 */	li r4, 1
+/* 8018FAD8 0018CA18  81 9F 00 00 */	lwz r12, 0(r31)
+/* 8018FADC 0018CA1C  81 8C 01 E8 */	lwz r12, 0x1e8(r12)
+/* 8018FAE0 0018CA20  7D 89 03 A6 */	mtctr r12
+/* 8018FAE4 0018CA24  4E 80 04 21 */	bctrl 
+/* 8018FAE8 0018CA28  80 7F 02 58 */	lwz r3, 0x258(r31)
+/* 8018FAEC 0018CA2C  48 22 8F 41 */	bl killNage___Q23efx9TPkEffectFv
+/* 8018FAF0 0018CA30  7F E3 FB 78 */	mr r3, r31
+/* 8018FAF4 0018CA34  38 80 00 00 */	li r4, 0
+/* 8018FAF8 0018CA38  81 9F 00 00 */	lwz r12, 0(r31)
+/* 8018FAFC 0018CA3C  81 8C 00 DC */	lwz r12, 0xdc(r12)
+/* 8018FB00 0018CA40  7D 89 03 A6 */	mtctr r12
+/* 8018FB04 0018CA44  4E 80 04 21 */	bctrl 
+/* 8018FB08 0018CA48  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 8018FB0C 0018CA4C  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 8018FB10 0018CA50  7C 08 03 A6 */	mtlr r0
+/* 8018FB14 0018CA54  38 21 00 10 */	addi r1, r1, 0x10
+/* 8018FB18 0018CA58  4E 80 00 20 */	blr 
 
 .global init__Q24Game14PikiFlickStateFPQ24Game4PikiPQ24Game8StateArg
 init__Q24Game14PikiFlickStateFPQ24Game4PikiPQ24Game8StateArg:

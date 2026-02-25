@@ -2578,7 +2578,10 @@ beq .L_8021F814
 /* 80220010 0021CF50  D3 C1 02 28 */	stfs f30, 0x228(r1)
 /* 80220014 0021CF54  D3 E1 02 2C */	stfs f31, 0x22c(r1)
 /* 80220018 0021CF58  D0 01 02 30 */	stfs f0, 0x230(r1)
-/* 8022001C 0021CF5C  48 00 0D E9 */	bl test__4GameFv
+
+# Forces the "louie pellet found" cutscene to always play
+/* 8022001C 0021CF5C  48 00 0D E9 */	bl forceBobuPelletCutscene__4GameFv
+
 /* 80220020 0021CF60  28 03 00 00 */	cmplwi r3, 0
 /* 80220024 0021CF64  41 82 00 9C */	beq .L_802200C0
 /* 80220028 0021CF68  38 61 04 6C */	addi r3, r1, 0x46c

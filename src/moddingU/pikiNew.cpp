@@ -160,9 +160,8 @@ void PikiLookAtState::exec(Piki* piki)
 		if (piki->m_navi) {
 			PikiAI::ActFormationInitArg initArg(piki->m_navi);
 			initArg.m_doUseTouchCooldown = true;
+			initArg.m_doExternalCount    = true;
 
-			// then dec formationPikis to prevent inc'ing twice
-			GameStat::formationPikis.dec(piki);
 			piki->m_brain->start(PikiAI::ACT_Formation, &initArg);
 
 			transit(piki, PIKISTATE_Walk, nullptr);
@@ -199,25 +198,18 @@ void PikiFlyingState::init(Piki* piki, StateArg* stateArg)
 
 	// immediately dec formationPikis
 	GameStat::formationPikis.dec(piki);
-}
 
-/**
- * @note Address: 0x8018FAB4
- * @note Size: 0x68
- */
-void PikiFlyingState::cleanup(Piki* piki)
-{
-	// then inc it upon cleanup to prevent dec'ing twice
-	GameStat::formationPikis.inc(piki);
-	
-	piki->m_updateContext._09 = false;
-	piki->setMoveVelocity(true);
-	piki->m_effectsObj->killNage_();
-	piki->setDebugCollision(false);
+	// prevent action from updating count
+	PikiAI::Action* action = piki->m_brain->getCurrAction();
+	if (piki->m_brain->m_actionId == PikiAI::ACT_Formation && action != nullptr) {
+		PikiAI::ActFormation* formation        = static_cast<PikiAI::ActFormation*>(action);
+		formation->m_initArg.m_doExternalCount = true;
+	}
 }
 
 // this is the funniest shit ever, note to anyone who sees this
 // this is the only thing standing between bobu and the end of the universe
-bool test() { return true; }
+// navi_demoCheck.s: demoCheck__Q24Game4NaviFv @8022001C
+bool forceBobuPelletCutscene() { return true; }
 
 } // namespace Game
