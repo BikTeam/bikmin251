@@ -158,10 +158,10 @@ void PikiLookAtState::exec(Piki* piki)
 
 	case 2:
 		if (piki->m_navi) {
+			piki->m_doStateFormationCount = true;
+
 			PikiAI::ActFormationInitArg initArg(piki->m_navi);
 			initArg.m_doUseTouchCooldown = true;
-			initArg.m_doExternalCount    = true;
-
 			piki->m_brain->start(PikiAI::ACT_Formation, &initArg);
 
 			transit(piki, PIKISTATE_Walk, nullptr);
@@ -198,13 +198,12 @@ void PikiFlyingState::init(Piki* piki, StateArg* stateArg)
 
 	// immediately dec formationPikis
 	GameStat::formationPikis.dec(piki);
+	piki->m_doStateFormationCount = true;
+}
 
-	// prevent action from updating count
-	PikiAI::Action* action = piki->m_brain->getCurrAction();
-	if (piki->m_brain->m_actionId == PikiAI::ACT_Formation && action != nullptr) {
-		PikiAI::ActFormation* formation        = static_cast<PikiAI::ActFormation*>(action);
-		formation->m_initArg.m_doExternalCount = true;
-	}
+void Piki::initNewFields() 
+{
+	m_doStateFormationCount = false;
 }
 
 // this is the funniest shit ever, note to anyone who sees this

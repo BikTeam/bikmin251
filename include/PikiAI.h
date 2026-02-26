@@ -599,7 +599,6 @@ struct ActFormationInitArg : public CreatureActionArg {
 	    : CreatureActionArg(navi)
 	    , m_isDemoFollow(b1)
 	    , m_doUseTouchCooldown(false)
-		, m_doExternalCount(false)
 	{
 	}
 
@@ -610,7 +609,6 @@ struct ActFormationInitArg : public CreatureActionArg {
 	inline ActFormationInitArg(Game::Creature* navi) // used to match ActFormation::ActFormation(Game::Piki*)
 	    : CreatureActionArg(navi)
 	    , m_isDemoFollow(false)
-		, m_doExternalCount(false)
 	{
 	}
 
@@ -618,7 +616,6 @@ struct ActFormationInitArg : public CreatureActionArg {
 	// _00-_08 = CreatureActionArg, Creature* = Navi*
 	bool m_isDemoFollow;       // _08, dont check if the piki is too far away? true for dayend/geyser demo
 	bool m_doUseTouchCooldown; // _09, if true, pikmin cant be c-sticked into things for 45 frames upon joining
-	bool m_doExternalCount; // if true, doesn't update formationPikis within the Action
 };
 
 struct ActFormation : public Action, virtual Game::SlotChangeListener, virtual SysShape::MotionListener {

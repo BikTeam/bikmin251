@@ -1006,6 +1006,11 @@ onInit__Q24Game4PikiFPQ24Game15CreatureInitArg:
 /* 801480AC 00144FEC  D0 1D 02 88 */	stfs f0, 0x288(r29)
 /* 801480B0 00144FF0  B0 1D 02 84 */	sth r0, 0x284(r29)
 /* 801480B4 00144FF4  48 00 1C 71 */	bl setDopeEffect__Q24Game4PikiFb
+
+# MODDED: init new piki fields
+mr r3, r29
+bl initNewFields__Q24Game4PikiFv
+
 /* 801480B8 00144FF8  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 801480BC 00144FFC  83 E1 00 1C */	lwz r31, 0x1c(r1)
 /* 801480C0 00145000  83 C1 00 18 */	lwz r30, 0x18(r1)

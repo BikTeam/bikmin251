@@ -222,14 +222,14 @@ void ActFormation::init(ActionArg* initArg)
 
 	m_navi = m_parent->m_navi;
 
-	if (!formationArg->m_doExternalCount) {
+	if (!m_parent->m_doStateFormationCount) {
 		Game::GameStat::formationPikis.inc(m_parent);
 	}
+	m_parent->m_doStateFormationCount = false;
 
 	m_initArg.m_creature           = formationArg->m_creature;
 	m_initArg.m_isDemoFollow       = formationArg->m_isDemoFollow;
 	m_initArg.m_doUseTouchCooldown = formationArg->m_doUseTouchCooldown;
-	m_initArg.m_doExternalCount    = false;
 
 	if (m_initArg.m_doUseTouchCooldown) {
 		_38 = 45;
@@ -286,9 +286,10 @@ void ActFormation::cleanup()
 
 	m_parent->m_navi = m_navi;
 
-	if (!m_initArg.m_doExternalCount) {
+	if (!m_parent->m_doStateFormationCount) {
 		Game::GameStat::formationPikis.dec(m_parent);
 	}
+	m_parent->m_doStateFormationCount = false;
 
 	m_parent->m_navi = currNavi;
 
