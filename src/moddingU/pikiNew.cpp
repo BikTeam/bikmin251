@@ -144,6 +144,7 @@ void PikiLookAtState::exec(Piki* piki)
 		if (_14 < 0.0f) {
 			_14 = 0.0f;
 			// immediately inc formationPiki count
+			piki->m_doStateFormationCount = true;
 			GameStat::formationPikis.inc(piki);
 			piki->startMotion(IPikiAnims::KIZUKU, IPikiAnims::KIZUKU, this, nullptr);
 			_18 = 1;
@@ -158,8 +159,6 @@ void PikiLookAtState::exec(Piki* piki)
 
 	case 2:
 		if (piki->m_navi) {
-			piki->m_doStateFormationCount = true;
-
 			PikiAI::ActFormationInitArg initArg(piki->m_navi);
 			initArg.m_doUseTouchCooldown = true;
 			piki->m_brain->start(PikiAI::ACT_Formation, &initArg);
@@ -197,8 +196,8 @@ void PikiFlyingState::init(Piki* piki, StateArg* stateArg)
 	piki->m_updateContext._09 = true;
 
 	// immediately dec formationPikis
-	GameStat::formationPikis.dec(piki);
 	piki->m_doStateFormationCount = true;
+	GameStat::formationPikis.dec(piki);
 }
 
 void Piki::initNewFields() 
