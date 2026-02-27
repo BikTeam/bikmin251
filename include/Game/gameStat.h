@@ -31,6 +31,15 @@ struct PikiNaviCounter {
 	void inc(Piki*);
 	void dec(Piki*);
 
+	inline operator int()
+	{
+		int total = 0;
+		for (int i = 0; i < PikiColorCount; i++) {
+			total += m_counter[i];
+		}
+		return total;
+	}
+
 	inline int getTotal(int naviID)
 	{
 		P2ASSERTBOUNDSLINE(115, 0, naviID, 7);

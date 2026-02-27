@@ -6,6 +6,8 @@
 #include "Game/Footmark.h"
 #include "Game/gameStat.h"
 #include "Game/CPlate.h"
+#include "Game/PikiState.h"
+#include "Game/PikiMgr.h"
 
 namespace PikiAI {
 
@@ -208,6 +210,26 @@ Game::Navi* Brain::searchOrima()
 	return targetPlayer;
 }
 
+int getNaviPikiCount(Game::Navi* navi)
+{
+	if (navi->m_cPlateMgr == nullptr) {
+		return 0;
+	}
+
+	u32 count = 0;
+	Iterator<Game::Piki> iter(Game::pikiMgr);
+	CI_LOOP(iter)
+	{
+		Game::Piki* piki = *iter;
+		if (piki->m_navi == navi && piki->isPiki() && piki->getStateID() != Game::PIKISTATE_Flying
+		    && piki->getStateID() != Game::PIKISTATE_HipDrop) {
+			count++;
+		}
+	}
+
+	return count;
+}
+
 /**
  * @note Address: 0x8019CE7C
  * @note Size: 0x1B4
@@ -224,6 +246,12 @@ void ActFormation::init(ActionArg* initArg)
 
 	if (!m_parent->m_doStateFormationCount) {
 		Game::GameStat::formationPikis.inc(m_parent);
+	}
+	int naviPikiCount      = getNaviPikiCount(currNavi);
+	int formationPikiCount = Game::GameStat::formationPikis.m_counter[currNavi->m_naviIndex];
+	if (naviPikiCount != formationPikiCount) {
+		OSReport("INIT formation count mismatch! naviCount: %i, formationCount: %i, flag: %i, pikistate: %i\n", naviPikiCount,
+		         formationPikiCount, m_parent->m_doStateFormationCount, m_parent->getStateID());
 	}
 	m_parent->m_doStateFormationCount = false;
 
@@ -288,6 +316,12 @@ void ActFormation::cleanup()
 
 	if (!m_parent->m_doStateFormationCount) {
 		Game::GameStat::formationPikis.dec(m_parent);
+	}
+	int naviPikiCount      = getNaviPikiCount(currNavi);
+	int formationPikiCount = Game::GameStat::formationPikis.m_counter[currNavi->m_naviIndex];
+	if (naviPikiCount != formationPikiCount) {
+		OSReport("CLEANUP formation count mismatch! naviCount: %i, formationCount: %i, flag: %i, pikistate: %i\n", naviPikiCount,
+		         formationPikiCount, m_parent->m_doStateFormationCount, m_parent->getStateID());
 	}
 	m_parent->m_doStateFormationCount = false;
 
