@@ -24,11 +24,6 @@ void NaviState::swapNavi(Navi* navi)
 
 		playChangeVoice(otherNavi);
 
-		if (otherNavi->getStateID() == NSID_Follow) {
-			InteractFue whistle(otherNavi, 0, 0);
-			navi->stimulate(whistle);
-		}
-
 		if (otherNavi->m_currentState->needYChangeMotion()) {
 			otherNavi->m_fsm->transit(otherNavi, NSID_Change, nullptr);
 		}

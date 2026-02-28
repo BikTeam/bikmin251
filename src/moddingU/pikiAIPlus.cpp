@@ -210,25 +210,40 @@ Game::Navi* Brain::searchOrima()
 	return targetPlayer;
 }
 
-int getNaviPikiCount(Game::Navi* navi)
+#if FALSE
+int getNaviPikiCount(Game::Navi* navi, bool useCplate)
 {
-	if (navi->m_cPlateMgr == nullptr) {
-		return 0;
+	u32 count = 0;
+	if (useCplate) {
+		if (navi->m_cPlateMgr == nullptr) {
+			return 0;
+		}
+
+		Iterator<Game::Creature> iter(navi->m_cPlateMgr);
+		CI_LOOP(iter)
+		{
+			Game::Piki* piki = static_cast<Game::Piki*>(*iter);
+			if (piki->isPiki() && piki->m_currentState->callable()) {
+				count++;
+			}
+		}
+
+		return count;
 	}
 
-	u32 count = 0;
 	Iterator<Game::Piki> iter(Game::pikiMgr);
 	CI_LOOP(iter)
 	{
 		Game::Piki* piki = *iter;
-		if (piki->m_navi == navi && piki->isPiki() && piki->getStateID() != Game::PIKISTATE_Flying
-		    && piki->getStateID() != Game::PIKISTATE_HipDrop) {
+		if (piki->m_navi == navi && piki->isPiki() && (piki->m_currentState->callable() || piki->getStateID() == Game::PIKISTATE_LookAt)
+		    && piki->getCurrActionID() != ACT_Transport) {
 			count++;
 		}
 	}
 
 	return count;
 }
+#endif
 
 /**
  * @note Address: 0x8019CE7C
@@ -247,12 +262,17 @@ void ActFormation::init(ActionArg* initArg)
 	if (!m_parent->m_doStateFormationCount) {
 		Game::GameStat::formationPikis.inc(m_parent);
 	}
-	int naviPikiCount      = getNaviPikiCount(currNavi);
+
+#if FALSE
+	OSReport("currState %i\n", m_parent->getStateID());
+	int naviPikiCount      = getNaviPikiCount(currNavi, false);
 	int formationPikiCount = Game::GameStat::formationPikis.m_counter[currNavi->m_naviIndex];
 	if (naviPikiCount != formationPikiCount) {
-		OSReport("INIT formation count mismatch! naviCount: %i, formationCount: %i, flag: %i, pikistate: %i\n", naviPikiCount,
-		         formationPikiCount, m_parent->m_doStateFormationCount, m_parent->getStateID());
+		OSReport("INIT formation count mismatch! naviCount: %i, formationCount: %i, flag: %i\n", naviPikiCount, formationPikiCount,
+		         m_parent->m_doStateFormationCount);
 	}
+#endif
+
 	m_parent->m_doStateFormationCount = false;
 
 	m_initArg.m_creature           = formationArg->m_creature;
@@ -317,12 +337,6 @@ void ActFormation::cleanup()
 	if (!m_parent->m_doStateFormationCount) {
 		Game::GameStat::formationPikis.dec(m_parent);
 	}
-	int naviPikiCount      = getNaviPikiCount(currNavi);
-	int formationPikiCount = Game::GameStat::formationPikis.m_counter[currNavi->m_naviIndex];
-	if (naviPikiCount != formationPikiCount) {
-		OSReport("CLEANUP formation count mismatch! naviCount: %i, formationCount: %i, flag: %i, pikistate: %i\n", naviPikiCount,
-		         formationPikiCount, m_parent->m_doStateFormationCount, m_parent->getStateID());
-	}
 	m_parent->m_doStateFormationCount = false;
 
 	m_parent->m_navi = currNavi;
@@ -330,6 +344,15 @@ void ActFormation::cleanup()
 	if (m_formationSlotID != -1) {
 		m_cPlate->releaseSlot(m_parent, m_formationSlotID);
 	}
+
+#if FALSE
+	int naviPikiCount      = getNaviPikiCount(currNavi, true);
+	int formationPikiCount = Game::GameStat::formationPikis.m_counter[currNavi->m_naviIndex];
+	if (naviPikiCount != formationPikiCount) {
+		OSReport("CLEANUP formation count mismatch! naviCount: %i, formationCount: %i, flag: %i\n", naviPikiCount, formationPikiCount,
+		         m_parent->m_doStateFormationCount);
+	}
+#endif
 
 	m_cPlate          = nullptr;
 	m_formationSlotID = -1;

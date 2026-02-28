@@ -144,8 +144,10 @@ void PikiLookAtState::exec(Piki* piki)
 		if (_14 < 0.0f) {
 			_14 = 0.0f;
 			// immediately inc formationPiki count
-			piki->m_doStateFormationCount = true;
-			GameStat::formationPikis.inc(piki);
+			if (!piki->m_doStateFormationCount) {
+				piki->m_doStateFormationCount = true;
+				GameStat::formationPikis.inc(piki);
+			}
 			piki->startMotion(IPikiAnims::KIZUKU, IPikiAnims::KIZUKU, this, nullptr);
 			_18 = 1;
 		}
@@ -196,8 +198,10 @@ void PikiFlyingState::init(Piki* piki, StateArg* stateArg)
 	piki->m_updateContext._09 = true;
 
 	// immediately dec formationPikis
-	piki->m_doStateFormationCount = true;
-	GameStat::formationPikis.dec(piki);
+	if (!piki->m_doStateFormationCount) {
+		piki->m_doStateFormationCount = true;
+		GameStat::formationPikis.dec(piki);
+	}
 }
 
 void Piki::initNewFields() 
