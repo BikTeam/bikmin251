@@ -26,6 +26,7 @@
 #include "utilityU.h"
 #include "JSystem/JUT/JUTGamePad.h"
 #include "TwoPlayer.h"
+#include "Game/SingleGameSection.h"
 
 namespace Game {
 
@@ -237,6 +238,13 @@ void NaviWalkState::exec(Navi* navi)
 	if (navi->isAlive()) {
 		navi->control();
 		navi->findNextThrowPiki();
+
+		if (gameSystem && gameSystem->m_inCave && gameSystem->isStoryMode()) {
+			SingleGameSection* section = static_cast<SingleGameSection*>(gameSystem->m_section);
+			if (section && section->getCaveID() == 'y_03' && section->m_currentFloor == 0) {
+				navi->m_cPlateMgr->shrink();
+			}
+		}
 
 		if (!navi->m_padinput && !navi->isMovieActor()) {
 			if (mAIState == WALKAI_Control) {
