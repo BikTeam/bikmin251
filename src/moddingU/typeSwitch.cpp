@@ -239,6 +239,7 @@ void NaviWalkState::exec(Navi* navi)
 		navi->control();
 		navi->findNextThrowPiki();
 
+		// Vent Chamber floor 1 uses shrunk cplate
 		if (gameSystem && gameSystem->m_inCave && gameSystem->isStoryMode()) {
 			SingleGameSection* section = static_cast<SingleGameSection*>(gameSystem->m_section);
 			if (section && section->getCaveID() == 'y_03' && section->m_currentFloor == 0) {

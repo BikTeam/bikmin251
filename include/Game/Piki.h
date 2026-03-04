@@ -235,8 +235,7 @@ struct Piki : public FakePiki {
 	Vector3f _26C;                     // _26C
 	SysShape::Joint* m_happaJoint1;    // _278
 	::efx::Context* m_effectsContext;  // _27C
-	u8 _280[3];                        // _280
-	bool m_doStateFormationCount;      // if true, doesn't update formationPikis within the Action
+	u8 _280[4];                        // _280
 	short m_isDoped;                   // _284
 	f32 m_dopeTime;                    // _288
 	PikiFSM* m_fsm;                    // _28C

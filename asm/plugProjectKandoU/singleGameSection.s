@@ -7239,12 +7239,20 @@ updateMainMapScreen__Q24Game17SingleGameSectionFv:
 /* 8015590C 0015284C  41 82 00 08 */	beq .L_80155914
 /* 80155910 00152850  A3 E3 02 DC */	lhz r31, 0x2dc(r3)
 .L_80155914:
-/* 80155914 00152854  3C 60 80 51 */	lis r3, formationPikis__Q24Game8GameStat@ha
-/* 80155918 00152858  85 83 22 EC */	lwzu r12, formationPikis__Q24Game8GameStat@l(r3)
-/* 8015591C 0015285C  81 8C 00 08 */	lwz r12, 8(r12)
-/* 80155920 00152860  7D 89 03 A6 */	mtctr r12
-/* 80155924 00152864  4E 80 04 21 */	bctrl 
-/* 80155928 00152868  90 61 00 58 */	stw r3, 0x58(r1)
+
+# Olimar (Navi 0) 
+li r4, 0
+lwz r3, naviMgr__4Game@sda21(r13)
+lwz r12, 0(r3)
+lwz r12, 0x24(r12)
+mtctr r12
+bctrl 
+mr r29, r3
+
+# Olimar Disp Data
+bl getFormationPikis__Q24Game4NaviFv
+stw r3, 0x58(r1)
+
 /* 8015592C 0015286C  38 80 00 01 */	li r4, 1
 /* 80155930 00152870  80 6D 94 90 */	lwz r3, playData__4Game@sda21(r13)
 /* 80155934 00152874  48 09 2A A5 */	bl getDopeCount__Q24Game8PlayDataFi
@@ -7253,13 +7261,9 @@ updateMainMapScreen__Q24Game17SingleGameSectionFv:
 /* 80155940 00152880  80 6D 94 90 */	lwz r3, playData__4Game@sda21(r13)
 /* 80155944 00152884  48 09 2A 95 */	bl getDopeCount__Q24Game8PlayDataFi
 /* 80155948 00152888  90 61 00 64 */	stw r3, 0x64(r1)
-/* 8015594C 0015288C  38 80 00 00 */	li r4, 0
-/* 80155950 00152890  80 6D 92 E0 */	lwz r3, naviMgr__4Game@sda21(r13)
-/* 80155954 00152894  81 83 00 00 */	lwz r12, 0(r3)
-/* 80155958 00152898  81 8C 00 24 */	lwz r12, 0x24(r12)
-/* 8015595C 0015289C  7D 89 03 A6 */	mtctr r12
-/* 80155960 001528A0  4E 80 04 21 */	bctrl 
-/* 80155964 001528A4  7C 7D 1B 78 */	mr r29, r3
+
+# life ratio needs navi
+mr r3, r29
 /* 80155968 001528A8  4B FE C6 95 */	bl getLifeRatio__Q24Game4NaviFv
 /* 8015596C 001528AC  D0 21 00 54 */	stfs f1, 0x54(r1)
 /* 80155970 001528B0  7F A3 EB 78 */	mr r3, r29
@@ -7295,13 +7299,21 @@ updateMainMapScreen__Q24Game17SingleGameSectionFv:
 /* 801559DC 0015291C  98 61 00 68 */	stb r3, 0x68(r1)
 /* 801559E0 00152920  98 01 00 80 */	stb r0, 0x80(r1)
 .L_801559E4:
-/* 801559E4 00152924  3C 60 80 51 */	lis r3, formationPikis__Q24Game8GameStat@ha
-/* 801559E8 00152928  38 63 22 EC */	addi r3, r3, formationPikis__Q24Game8GameStat@l
-/* 801559EC 0015292C  85 83 00 20 */	lwzu r12, 0x20(r3)
-/* 801559F0 00152930  81 8C 00 08 */	lwz r12, 8(r12)
-/* 801559F4 00152934  7D 89 03 A6 */	mtctr r12
-/* 801559F8 00152938  4E 80 04 21 */	bctrl 
-/* 801559FC 0015293C  90 61 00 70 */	stw r3, 0x70(r1)
+
+# Louie (Navi 1)
+li r4, 1
+lwz r3, naviMgr__4Game@sda21(r13)
+lwz r12, 0(r3)
+lwz r12, 0x24(r12)
+mtctr r12
+bctrl 
+mr r29, r3
+
+# Louie Disp Data
+mr r3, r29
+bl getFormationPikis__Q24Game4NaviFv
+stw r3, 0x70(r1)
+
 /* 80155A00 00152940  38 80 00 01 */	li r4, 1
 /* 80155A04 00152944  80 6D 94 90 */	lwz r3, playData__4Game@sda21(r13)
 /* 80155A08 00152948  48 09 29 D1 */	bl getDopeCount__Q24Game8PlayDataFi
@@ -7310,13 +7322,9 @@ updateMainMapScreen__Q24Game17SingleGameSectionFv:
 /* 80155A14 00152954  80 6D 94 90 */	lwz r3, playData__4Game@sda21(r13)
 /* 80155A18 00152958  48 09 29 C1 */	bl getDopeCount__Q24Game8PlayDataFi
 /* 80155A1C 0015295C  90 61 00 7C */	stw r3, 0x7c(r1)
-/* 80155A20 00152960  38 80 00 01 */	li r4, 1
-/* 80155A24 00152964  80 6D 92 E0 */	lwz r3, naviMgr__4Game@sda21(r13)
-/* 80155A28 00152968  81 83 00 00 */	lwz r12, 0(r3)
-/* 80155A2C 0015296C  81 8C 00 24 */	lwz r12, 0x24(r12)
-/* 80155A30 00152970  7D 89 03 A6 */	mtctr r12
-/* 80155A34 00152974  4E 80 04 21 */	bctrl 
-/* 80155A38 00152978  7C 7D 1B 78 */	mr r29, r3
+
+# life ratio needs navi
+mr r3, r29
 /* 80155A3C 0015297C  4B FE C5 C1 */	bl getLifeRatio__Q24Game4NaviFv
 /* 80155A40 00152980  D0 21 00 6C */	stfs f1, 0x6c(r1)
 /* 80155A44 00152984  7F A3 EB 78 */	mr r3, r29
@@ -7897,12 +7905,20 @@ updateCaveScreen__Q24Game17SingleGameSectionFv:
 /* 80155DE8 00152D28  41 82 00 08 */	beq .L_80155DF0
 /* 80155DEC 00152D2C  A3 A3 02 DC */	lhz r29, 0x2dc(r3)
 .L_80155DF0:
-/* 80155DF0 00152D30  3C 60 80 51 */	lis r3, formationPikis__Q24Game8GameStat@ha
-/* 80155DF4 00152D34  85 83 22 EC */	lwzu r12, formationPikis__Q24Game8GameStat@l(r3)
-/* 80155DF8 00152D38  81 8C 00 08 */	lwz r12, 8(r12)
-/* 80155DFC 00152D3C  7D 89 03 A6 */	mtctr r12
-/* 80155E00 00152D40  4E 80 04 21 */	bctrl 
-/* 80155E04 00152D44  90 61 00 58 */	stw r3, 0x58(r1)
+
+# Olimar (Navi 0)
+li r4, 0
+lwz r3, naviMgr__4Game@sda21(r13)
+lwz r12, 0(r3)
+lwz r12, 0x24(r12)
+mtctr r12
+bctrl 
+mr r30, r3
+
+# Olimar Disp Data
+bl getFormationPikis__Q24Game4NaviFv
+stw r3, 0x58(r1)
+
 /* 80155E08 00152D48  38 80 00 01 */	li r4, 1
 /* 80155E0C 00152D4C  80 6D 94 90 */	lwz r3, playData__4Game@sda21(r13)
 /* 80155E10 00152D50  48 09 25 C9 */	bl getDopeCount__Q24Game8PlayDataFi
@@ -7911,13 +7927,9 @@ updateCaveScreen__Q24Game17SingleGameSectionFv:
 /* 80155E1C 00152D5C  80 6D 94 90 */	lwz r3, playData__4Game@sda21(r13)
 /* 80155E20 00152D60  48 09 25 B9 */	bl getDopeCount__Q24Game8PlayDataFi
 /* 80155E24 00152D64  90 61 00 64 */	stw r3, 0x64(r1)
-/* 80155E28 00152D68  38 80 00 00 */	li r4, 0
-/* 80155E2C 00152D6C  80 6D 92 E0 */	lwz r3, naviMgr__4Game@sda21(r13)
-/* 80155E30 00152D70  81 83 00 00 */	lwz r12, 0(r3)
-/* 80155E34 00152D74  81 8C 00 24 */	lwz r12, 0x24(r12)
-/* 80155E38 00152D78  7D 89 03 A6 */	mtctr r12
-/* 80155E3C 00152D7C  4E 80 04 21 */	bctrl 
-/* 80155E40 00152D80  7C 7E 1B 78 */	mr r30, r3
+
+# life ratio needs navi
+mr r3, r30
 /* 80155E44 00152D84  4B FE C1 B9 */	bl getLifeRatio__Q24Game4NaviFv
 /* 80155E48 00152D88  D0 21 00 54 */	stfs f1, 0x54(r1)
 /* 80155E4C 00152D8C  7F C3 F3 78 */	mr r3, r30
@@ -7953,13 +7965,20 @@ updateCaveScreen__Q24Game17SingleGameSectionFv:
 /* 80155EB8 00152DF8  98 61 00 68 */	stb r3, 0x68(r1)
 /* 80155EBC 00152DFC  98 01 00 80 */	stb r0, 0x80(r1)
 .L_80155EC0:
-/* 80155EC0 00152E00  3C 60 80 51 */	lis r3, formationPikis__Q24Game8GameStat@ha
-/* 80155EC4 00152E04  38 63 22 EC */	addi r3, r3, formationPikis__Q24Game8GameStat@l
-/* 80155EC8 00152E08  85 83 00 20 */	lwzu r12, 0x20(r3)
-/* 80155ECC 00152E0C  81 8C 00 08 */	lwz r12, 8(r12)
-/* 80155ED0 00152E10  7D 89 03 A6 */	mtctr r12
-/* 80155ED4 00152E14  4E 80 04 21 */	bctrl 
-/* 80155ED8 00152E18  90 61 00 70 */	stw r3, 0x70(r1)
+
+# Louie (Navi 1)
+li r4, 1
+lwz r3, naviMgr__4Game@sda21(r13)
+lwz r12, 0(r3)
+lwz r12, 0x24(r12)
+mtctr r12
+bctrl 
+mr r30, r3
+
+# Louie Disp Data
+bl getFormationPikis__Q24Game4NaviFv
+stw r3, 0x70(r1)
+
 /* 80155EDC 00152E1C  38 80 00 01 */	li r4, 1
 /* 80155EE0 00152E20  80 6D 94 90 */	lwz r3, playData__4Game@sda21(r13)
 /* 80155EE4 00152E24  48 09 24 F5 */	bl getDopeCount__Q24Game8PlayDataFi
@@ -7968,13 +7987,9 @@ updateCaveScreen__Q24Game17SingleGameSectionFv:
 /* 80155EF0 00152E30  80 6D 94 90 */	lwz r3, playData__4Game@sda21(r13)
 /* 80155EF4 00152E34  48 09 24 E5 */	bl getDopeCount__Q24Game8PlayDataFi
 /* 80155EF8 00152E38  90 61 00 7C */	stw r3, 0x7c(r1)
-/* 80155EFC 00152E3C  38 80 00 01 */	li r4, 1
-/* 80155F00 00152E40  80 6D 92 E0 */	lwz r3, naviMgr__4Game@sda21(r13)
-/* 80155F04 00152E44  81 83 00 00 */	lwz r12, 0(r3)
-/* 80155F08 00152E48  81 8C 00 24 */	lwz r12, 0x24(r12)
-/* 80155F0C 00152E4C  7D 89 03 A6 */	mtctr r12
-/* 80155F10 00152E50  4E 80 04 21 */	bctrl 
-/* 80155F14 00152E54  7C 7E 1B 78 */	mr r30, r3
+
+# life ratio needs navi
+mr r3, r30
 /* 80155F18 00152E58  4B FE C0 E5 */	bl getLifeRatio__Q24Game4NaviFv
 /* 80155F1C 00152E5C  D0 21 00 6C */	stfs f1, 0x6c(r1)
 /* 80155F20 00152E60  7F C3 F3 78 */	mr r3, r30

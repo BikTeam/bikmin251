@@ -185,6 +185,7 @@ struct Navi : public FakePiki, virtual public PelletView {
 
 	f32 getActionRadius();
 	void swapNavi();
+	int getFormationPikis();
 
 	inline void setCalcs()
 	{

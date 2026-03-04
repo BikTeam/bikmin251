@@ -167,6 +167,32 @@ void Navi::platCallback(PlatEvent& plat)
 	}
 }
 
+// getFormationPikis__Q24Game4NaviFv
+// used in singleGameSection.s ~0x8015592C, 0x80155A00, 0x80155E08, 0x80155EDC
+int Navi::getFormationPikis()
+{
+	if (!m_cPlateMgr) {
+		return 0;
+	}
+
+	u32 count = 0;
+	Iterator<Creature> iter(m_cPlateMgr);
+	CI_LOOP(iter)
+	{
+		Piki* piki = static_cast<Piki*>(*iter);
+		if (!piki->isPiki() || !piki->m_currentState) {
+			continue;
+		}
+
+		int currStateID = piki->getStateID();
+		if (piki->m_currentState->callable() || currStateID == PIKISTATE_Hanged || currStateID == PIKISTATE_WaterHanged) {
+			count++;
+		}
+	}
+
+	return count;
+}
+
 }; // namespace Game
 
 #include "Game/Entities/ItemTreasure.h"
