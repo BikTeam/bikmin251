@@ -1104,6 +1104,7 @@ MODDING:=\
 	$(BUILD_DIR)/src/moddingU/pelletGoalPlus.o\
 	$(BUILD_DIR)/src/moddingU/purpleHipdropFix.o\
 	$(BUILD_DIR)/src/moddingU/pikiAIPlus.o\
+	$(BUILD_DIR)/src/moddingU/spookyDamage.o\
 	$(BUILD_DIR)/src/plugProjectDroughtU/GoHereMap.o\
 	$(BUILD_DIR)/src/plugProjectDroughtU/GoHereNavi.o\
 	$(BUILD_DIR)/src/plugProjectDroughtU/FastPathfinder.o\

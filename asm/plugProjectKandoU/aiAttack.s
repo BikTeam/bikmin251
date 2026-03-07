@@ -320,8 +320,12 @@ initStickAttack__Q26PikiAI9ActAttackFv:
 /* 801A0778 0019D6B8  90 01 00 34 */	stw r0, 0x34(r1)
 /* 801A077C 0019D6BC  93 E1 00 2C */	stw r31, 0x2c(r1)
 /* 801A0780 0019D6C0  7C 7F 1B 78 */	mr r31, r3
-/* 801A0784 0019D6C4  80 63 00 04 */	lwz r3, 4(r3)
-/* 801A0788 0019D6C8  4B FA 8D 65 */	bl getAttackDamage__Q24Game4PikiFv
+
+# MODDED: spooky attack modifier
+lwz r3, 4(r3)
+lwz r4, 0x10(r31)
+bl getAttackDamageModifier__Q24Game4PikiFPQ24Game8Creature
+
 /* 801A078C 0019D6CC  80 BF 00 10 */	lwz r5, 0x10(r31)
 /* 801A0790 0019D6D0  3C 60 80 4B */	lis r3, __vt__Q26PikiAI9ActionArg@ha
 /* 801A0794 0019D6D4  38 03 05 30 */	addi r0, r3, __vt__Q26PikiAI9ActionArg@l
@@ -997,8 +1001,12 @@ exec__Q26PikiAI9ActAttackFv:
 /* 801A1134 0019E074  A0 1F 00 18 */	lhz r0, 0x18(r31)
 /* 801A1138 0019E078  28 00 00 01 */	cmplwi r0, 1
 /* 801A113C 0019E07C  40 82 00 64 */	bne .L_801A11A0
-/* 801A1140 0019E080  80 7F 00 04 */	lwz r3, 4(r31)
-/* 801A1144 0019E084  4B FA 83 A9 */	bl getAttackDamage__Q24Game4PikiFv
+
+# MODDED: spooky attack modifier
+lwz r3, 4(r31)
+lwz r4, 0x10(r31)
+bl getAttackDamageModifier__Q24Game4PikiFPQ24Game8Creature
+
 /* 801A1148 0019E088  80 BF 00 10 */	lwz r5, 0x10(r31)
 /* 801A114C 0019E08C  3C 60 80 4B */	lis r3, __vt__Q26PikiAI9ActionArg@ha
 /* 801A1150 0019E090  38 03 05 30 */	addi r0, r3, __vt__Q26PikiAI9ActionArg@l
@@ -1300,8 +1308,12 @@ collisionCallback__Q26PikiAI9ActAttackFPQ24Game4PikiRQ24Game9CollEvent:
 /* 801A1594 0019E4D4  7F C3 F3 78 */	mr r3, r30
 /* 801A1598 0019E4D8  80 BF 00 04 */	lwz r5, 4(r31)
 /* 801A159C 0019E4DC  4B FF D9 59 */	bl startStick__Q24Game8CreatureFPQ24Game8CreatureP8CollPart
-/* 801A15A0 0019E4E0  80 7D 00 04 */	lwz r3, 4(r29)
-/* 801A15A4 0019E4E4  4B FA 7F 49 */	bl getAttackDamage__Q24Game4PikiFv
+
+# MODDED: spooky attack modifier
+lwz r3, 4(r29)
+lwz r4, 0x10(r29)
+bl getAttackDamageModifier__Q24Game4PikiFPQ24Game8Creature
+
 /* 801A15A8 0019E4E8  80 BD 00 10 */	lwz r5, 0x10(r29)
 /* 801A15AC 0019E4EC  3C 60 80 4B */	lis r3, __vt__Q26PikiAI9ActionArg@ha
 /* 801A15B0 0019E4F0  38 03 05 30 */	addi r0, r3, __vt__Q26PikiAI9ActionArg@l

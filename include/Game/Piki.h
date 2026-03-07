@@ -220,7 +220,8 @@ struct Piki : public FakePiki {
 	void updateGasInvincible();
 	void updateDope();
 	void updateColor();
-	void initNewFields();
+
+	f32 getAttackDamageModifier(Creature*);
 
 	inline PikiParms* getParms() { return static_cast<PikiParms*>(m_parms); }
 
