@@ -19,8 +19,9 @@ Onyon* Pellet::getPelletGoal()
 	}
 
 	u32 maxCount   = 0;
-	int minCount   = 100;
+	u32 minCount   = (u32)-1;
 	u8 minimumType = ONYON_TYPE_RED;
+	OSReport("initial mincount %i\n", minCount);
 
 	for (u8 i = 0; i < OnyonCount; i++) {
 		// Ignore unbooted onions.
@@ -35,11 +36,14 @@ Onyon* Pellet::getPelletGoal()
 
 		// Get the onion with the least pikmin for later use.
 		int containerPikis = GameStat::getAllPikmins(i);
+		OSReport("onyon %i, count %i\n", i, containerPikis);
 		if (minCount > containerPikis) {
 			minimumType = i;
 			minCount    = containerPikis;
 		}
 	}
+
+	OSReport("min type: %i\n", minimumType);
 
 	u8 selectedType = selectRandomGoalWinner(maxCount);
 
