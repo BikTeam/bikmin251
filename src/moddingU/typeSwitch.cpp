@@ -239,7 +239,7 @@ void NaviWalkState::exec(Navi* navi)
 		navi->control();
 		navi->findNextThrowPiki();
 
-		// Vent Chamber floor 1 uses shrunk cplate
+		// Vent Chamber floor 1 and Roche Limit floor 5 uses shrunk cplate
 		if (gameSystem && gameSystem->m_inCave && gameSystem->isStoryMode()) {
 			SingleGameSection* section = static_cast<SingleGameSection*>(gameSystem->m_section);
 			if (section) {

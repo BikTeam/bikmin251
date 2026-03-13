@@ -46,6 +46,8 @@ struct J3DShape {
 	void makeVcdVatCmd();
 	void makeVtxArrayCmd();
 
+	inline void setTexMtxLoadType(u32 type) { m_flags = (m_flags & 0xFFFF0FFF) | type; }
+
 	// VTBL _00
 	J3DMaterial* _04;              // _04
 	u16 m_id;                      // _08

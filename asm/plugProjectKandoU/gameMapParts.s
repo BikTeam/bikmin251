@@ -1108,7 +1108,11 @@ makeUnit__Q24Game10MapUnitMgrFPQ24Game7MapUnitPc:
 /* 801B6A7C 001B39BC  4B E7 3B C5 */	bl panic_f__12JUTExceptionFPCciPCce
 .L_801B6A80:
 /* 801B6A80 001B39C0  7F 43 D3 78 */	mr r3, r26
-/* 801B6A84 001B39C4  3C 80 20 00 */	lis r4, 0x2100
+
+/* cave unit j3d flags */
+lis r4, 0x2100
+addi r4, r4, 0x30
+
 /* 801B6A88 001B39C8  4B EB 8E 0D */	bl load__22J3DModelLoaderDataBaseFPCvUl
 /* 801B6A8C 001B39CC  90 7F 00 0C */	stw r3, 0xc(r31)
 /* 801B6A90 001B39D0  3C 80 00 04 */	lis r4, 4
@@ -1116,6 +1120,11 @@ makeUnit__Q24Game10MapUnitMgrFPQ24Game7MapUnitPc:
 /* 801B6A98 001B39D8  4B EC CE 41 */	bl newSharedDisplayList__12J3DModelDataFUl
 /* 801B6A9C 001B39DC  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 801B6AA0 001B39E0  4B EC CF 91 */	bl makeSharedDL__12J3DModelDataFv
+
+/* setTexMtxLoadType */
+lwz r3, 0xc(r31)
+bl setModelDataEnvMapFix__3modFP12J3DModelData
+
 /* 801B6AA4 001B39E4  7F A3 EB 78 */	mr r3, r29
 /* 801B6AA8 001B39E8  38 9E 00 E0 */	addi r4, r30, 0xe0
 /* 801B6AAC 001B39EC  81 9D 00 00 */	lwz r12, 0(r29)
@@ -8014,7 +8023,10 @@ makeOneRoom__Q24Game10RoomMapMgrFfffPcsPQ24Game8RoomLinkPQ24Game16ObjectLayoutIn
 /* 801BCE0C 001B9D4C  38 80 00 00 */	li r4, 0
 /* 801BCE10 001B9D50  80 7F 01 3C */	lwz r3, 0x13c(r31)
 /* 801BCE14 001B9D54  80 63 00 08 */	lwz r3, 8(r3)
-/* 801BCE18 001B9D58  4B EA 99 51 */	bl newDifferedTexMtx__8J3DModelF14J3DTexDiffFlag
+
+/* MODDED: removed this because idk wtf it actually does but it breaks stuff */
+/* 801BCE18 001B9D58  4B EA 99 51 */	# bl newDifferedTexMtx__8J3DModelF14J3DTexDiffFlag
+
 /* 801BCE1C 001B9D5C  80 7F 01 3C */	lwz r3, 0x13c(r31)
 /* 801BCE20 001B9D60  38 80 02 00 */	li r4, 0x200
 /* 801BCE24 001B9D64  80 63 00 08 */	lwz r3, 8(r3)

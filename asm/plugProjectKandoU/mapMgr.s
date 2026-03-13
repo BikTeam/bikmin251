@@ -1274,13 +1274,22 @@ load__Q24Game11ShapeMapMgrFRQ34Game11ShapeMapMgr7LoadArg:
 /* 80163220 00160160  4B EC 74 21 */	bl panic_f__12JUTExceptionFPCciPCce
 .L_80163224:
 /* 80163224 00160164  7F 63 DB 78 */	mr r3, r27
-/* 80163228 00160168  3C 80 20 04 */	lis r4, 0x2004
+
+/* overworld map j3d flags */
+lis r4, 0x2004
+addi r4, r4, 0x30
+
 /* 8016322C 0016016C  4B F0 C6 69 */	bl load__22J3DModelLoaderDataBaseFPCvUl
 /* 80163230 00160170  3C 80 00 04 */	lis r4, 4
 /* 80163234 00160174  7C 7B 1B 78 */	mr r27, r3
 /* 80163238 00160178  4B F2 06 A1 */	bl newSharedDisplayList__12J3DModelDataFUl
 /* 8016323C 0016017C  7F 63 DB 78 */	mr r3, r27
 /* 80163240 00160180  4B F2 07 F1 */	bl makeSharedDL__12J3DModelDataFv
+
+/* setTexMtxLoadType */
+mr r3, r27
+bl setModelDataEnvMapFix__3modFP12J3DModelData
+
 /* 80163244 00160184  38 60 00 14 */	li r3, 0x14
 /* 80163248 00160188  4B EC 0C 5D */	bl __nw__FUl
 /* 8016324C 0016018C  7C 60 1B 79 */	or. r0, r3, r3
