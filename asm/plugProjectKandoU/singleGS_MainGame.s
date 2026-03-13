@@ -8495,10 +8495,6 @@ updateRepayDemo__Q34Game10SingleGame9GameStateFv:
 /* 80217418 00214358  90 01 00 14 */	stw r0, 0x14(r1)
 /* 8021741C 0021435C  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80217420 00214360  7C 7F 1B 78 */	mr r31, r3
-lbz r0, isBobuMovieQueued__3mod@sda21(r13)
-cmplwi r0, 1
-li r3, 4
-beq .L_802174A4
 lbz r0, 0x19(r31)
 /* 80217428 00214368  28 00 00 00 */	cmplwi r0, 0
 /* 8021742C 0021436C  41 82 00 74 */	beq .L_802174A0

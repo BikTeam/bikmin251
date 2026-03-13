@@ -914,6 +914,17 @@ exec__Q34Game10SingleGame15CaveResultStateFPQ24Game17SingleGameSection:
 /* 8021B288 002181C8  41 82 00 08 */	beq .L_8021B290
 /* 8021B28C 002181CC  48 00 00 B4 */	b .L_8021B340
 .L_8021B290:
+
+/* Transit to BobuDemoState if queued */
+lbz r0, isBobuMovieQueued__3mod@sda21(r13)
+cmplwi r0, 1
+bne .L_loadMap
+mr r3, r29 # CaveResultState*
+mr r4, r30 # SingleGameSecion*
+bl transitToBobuDemoState__Q24Game10SingleGameFPQ34Game10SingleGame15CaveResultStatePQ24Game17SingleGameSection
+b .L_8021B350 # return branch
+
+.L_loadMap:
 /* 8021B290 002181D0  A0 BD 00 10 */	lhz r5, 0x10(r29)
 /* 8021B294 002181D4  38 80 00 00 */	li r4, 0
 /* 8021B298 002181D8  38 00 00 01 */	li r0, 1

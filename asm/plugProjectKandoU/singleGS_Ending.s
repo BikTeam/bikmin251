@@ -1035,19 +1035,6 @@ exec__Q34Game10SingleGame11EndingStateFPQ24Game17SingleGameSection:
 /* 80232BD4 0022FB14  98 1D 00 11 */	stb r0, 0x11(r29)
 /* 80232BD8 0022FB18  48 00 06 84 */	b .L_8023325C
 .L_80232BDC:
-lbz r0, isBobuMovieQueued__3mod@sda21(r13)
-cmplwi r0, 1
-bne is_complete
-li r3, 8
-li r0, 1
-stb r3, 0x11(r29)
-li r4, 0xb
-stb r0, 0x20(r29)
-lwz r3, 0x1c(r29)
-bl load__Q24Game9THPPlayerFQ34Game9THPPlayer11EMovieIndex
-b .L_8023325C
-# actual completion thp
-is_complete:
 /* 80232BDC 0022FB1C  88 1D 00 10 */	lbz r0, 0x10(r29)
 /* 80232BE0 0022FB20  54 00 07 BD */	rlwinm. r0, r0, 0, 0x1e, 0x1e
 /* 80232BE4 0022FB24  41 82 00 24 */	beq .L_80232C08
@@ -1331,17 +1318,6 @@ is_complete:
 /* 80232FF4 0022FF34  41 82 02 68 */	beq .L_8023325C
 /* 80232FF8 0022FF38  80 7D 00 1C */	lwz r3, 0x1c(r29)
 /* 80232FFC 0022FF3C  48 21 D5 61 */	bl stop__Q24Game9THPPlayerFv
-lbz r0, isBobuMovieQueued__3mod@sda21(r13)
-cmplwi r0, 1
-li r0, 0
-stb r0, isBobuMovieQueued__3mod@sda21(r13)
-beq gotoTitle
-b bormal
-gotoTitle:
-bl __TRK_reset
-#mr r3, r30
-#bl flow_goto_title__Q24Game17SingleGameSectionFv
-bormal:
 /* 80233000 0022FF40  80 9D 00 2C */	lwz r4, 0x2c(r29)
 /* 80233004 0022FF44  38 61 00 38 */	addi r3, r1, 0x38
 /* 80233008 0022FF48  80 DD 00 14 */	lwz r6, 0x14(r29)

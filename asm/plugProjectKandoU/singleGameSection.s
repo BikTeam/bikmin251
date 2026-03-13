@@ -678,7 +678,10 @@ isGameScene__Q23PSM9SceneBaseFv:
 init__Q34Game10SingleGame3FSMFPQ24Game17SingleGameSection:
 /* 80152284 0014F1C4  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80152288 0014F1C8  7C 08 02 A6 */	mflr r0
-/* 8015228C 0014F1CC  38 80 00 0C */	li r4, 0xc
+
+/* State Count */
+li r4, 0xd
+
 /* 80152290 0014F1D0  90 01 00 14 */	stw r0, 0x14(r1)
 /* 80152294 0014F1D4  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 80152298 0014F1D8  7C 7F 1B 78 */	mr r31, r3
@@ -850,6 +853,11 @@ init__Q34Game10SingleGame3FSMFPQ24Game17SingleGameSection:
 .L_80152504:
 /* 80152504 0014F444  7F E3 FB 78 */	mr r3, r31
 /* 80152508 0014F448  48 00 3F FD */	bl "registerState__Q24Game40StateMachine<Q24Game17SingleGameSection>FPQ24Game36FSMState<Q24Game17SingleGameSection>"
+
+/* register BobuDemoState */
+mr r3, r31
+bl registerBobuDemoState__Q24Game10SingleGameFPQ34Game10SingleGame3FSM
+
 /* 8015250C 0014F44C  80 01 00 14 */	lwz r0, 0x14(r1)
 /* 80152510 0014F450  83 E1 00 0C */	lwz r31, 0xc(r1)
 /* 80152514 0014F454  83 C1 00 08 */	lwz r30, 8(r1)

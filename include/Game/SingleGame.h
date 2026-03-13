@@ -50,6 +50,7 @@ enum StateID {
 	SGS_Movie      = 9,
 	SGS_Zukan      = 10,
 	SGS_Ending     = 11,
+	SGS_BobuDemo   = 12,
 	SGS_StateCount,
 };
 
@@ -513,7 +514,7 @@ struct ZukanState : public State {
 	IllustratedBook::Camera* _98;      // _98
 	CMode _9C;                         // _9C
 	int m_tekiInfoIndex;               // _A0
-	Creature* m_currentCreature;                     // _A4
+	Creature* m_currentCreature;       // _A4
 	int _A8;                           // _A8
 	Creature* _AC;                     // _AC
 	JUTTexture* _B0;                   // _B0
@@ -540,6 +541,22 @@ struct ZukanState : public State {
 	int _110;                          // _110
 	int _114;                          // _114
 };
+
+struct BobuDemoState : public State {
+	BobuDemoState();
+
+	virtual void init(SingleGameSection*, StateArg*);
+	virtual void exec(SingleGameSection*);
+	virtual void cleanup(SingleGameSection*);
+	virtual void draw(SingleGameSection*, Graphics&);
+
+	JKRHeap* mCurrentHeap;
+	JKRHeap* mMovieHeap;
+	THPPlayer* mThpPlayer;
+	THPPlayer::EMovieIndex mMovieIndex;
+	bool mIsMoviePlaying;
+};
+
 } // namespace SingleGame
 } // namespace Game
 

@@ -2128,9 +2128,11 @@ checkMovie__Q24Game15PelletGoalStateFPQ24Game6Pellet:
 /* 801A4E84 001A1DC4  80 6D 9A EC */	lwz r3, sys@sda21(r13)
 /* 801A4E88 001A1DC8  48 27 E0 A9 */	bl getPlayCommonData__6SystemFv
 /* 801A4E8C 001A1DCC  48 08 F9 55 */	bl enableLouieRescue__Q24Game14PlayCommonDataFv
+
 # queue bobu movie
 li r3, 1
 stb r3, isBobuMovieQueued__3mod@sda21(r13)
+
 /* 801A4E90 001A1DD0  80 6D 9A EC */	lwz r3, sys@sda21(r13)
 /* 801A4E94 001A1DD4  38 00 00 01 */	li r0, 1
 /* 801A4E98 001A1DD8  80 63 00 60 */	lwz r3, 0x60(r3)
