@@ -49,7 +49,6 @@ struct NaviGoHereState : public NaviState {
 	Drought::PathNode* mCurrNode;
 	Drought::Path* mPath;
 	f32 mCurrWalkSpeed;
-	u32 mCurrPikiCount;
 };
     
 } // namespace Game

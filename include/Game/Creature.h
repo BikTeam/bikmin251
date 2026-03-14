@@ -295,6 +295,19 @@ struct Creature : public CellObject {
 		distanceResult.y = getPosition().z - creature->getPosition().z;
 	}
 
+	/**
+	 * @brief Calculates the distance between the current creature and the target creature.
+	 *
+	 * @param target The target creature.
+	 * @return The distance between the current creature and the target creature.
+	 */
+	inline f32 getDistanceTo(Creature* target)
+	{
+		Vector3f sep   = getPosition() - target->getPosition();
+		Vector3f sep2D = Vector3f(sep.x, 0.0f, sep.z);
+		return sep2D.length();
+	}
+
 	inline bool isCreatureWithinRange(Creature* c, f32 range)
 	{
 		Vector2f delta;

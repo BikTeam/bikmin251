@@ -73,9 +73,6 @@ void NaviGoHereState::init(Navi* navi, StateArg* arg)
 	mPosition = goHereArg->mPosition;
 	mPath     = goHereArg->mPath;
 	mCurrNode = goHereArg->mPath->mRoot;
-
-	mCurrWalkSpeed = calcMinPikiSpeed(navi);
-	mCurrPikiCount = GameStat::formationPikis.getTotal(navi->m_naviIndex);
 }
 
 // usually inlined, plays the navi's voice line when swapped
@@ -111,12 +108,7 @@ void NaviGoHereState::exec(Navi* navi)
 		return;
 	}
 
-	int formationPikiCount = GameStat::formationPikis.getTotal(navi->m_naviIndex);
-	if (formationPikiCount != mCurrPikiCount) {
-		mCurrWalkSpeed = calcMinPikiSpeed(navi);
-		mCurrPikiCount = formationPikiCount;
-	}
-
+	mCurrWalkSpeed = calcMinPikiSpeed(navi);
 	navi->m_cPlateMgr->shrink();
 
 	if (mCurrNode) {
@@ -151,15 +143,16 @@ void NaviGoHereState::exec(Navi* navi)
 // calculates the minimum speed of pikmin in party
 f32 NaviGoHereState::calcMinPikiSpeed(Navi* navi)
 {
-	f32 minSpeed = 128000.0f;
+	f32 maxDist = 0.0f;
 
+	// get distance from furthest piki
 	Iterator<Creature> iterator(navi->m_cPlateMgr);
 	CI_LOOP(iterator)
 	{
-		Piki* piki    = static_cast<Piki*>(*iterator);
-		f32 pikiSpeed = piki->getSpeed(1.0f);
-		if (minSpeed > pikiSpeed) {
-			minSpeed = pikiSpeed;
+		Piki* piki = static_cast<Piki*>(*iterator);
+		f32 dist   = navi->getDistanceTo(piki);
+		if (maxDist < dist) {
+			maxDist = dist;
 		}
 	}
 
@@ -169,11 +162,7 @@ f32 NaviGoHereState::calcMinPikiSpeed(Navi* navi)
 		walkSpeed = parms->m_naviParms.m_q006.m_value;
 	}
 
-	if (minSpeed > walkSpeed) {
-		minSpeed = walkSpeed;
-	}
-
-	return minSpeed;
+	return walkSpeed;
 }
 
 // moves the navi to the nearest waypoint
