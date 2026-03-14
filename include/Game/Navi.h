@@ -24,6 +24,13 @@
 
 struct Controller;
 
+enum NaviIndex {
+	NAVIID_Olimar      = 0,
+	NAVIID_Louie       = 1, // or president
+	NAVIID_Multiplayer = 2,
+	NAVIID_Both        = 2,
+};
+
 namespace PSM {
 struct DirectorUpdator;
 struct Navi;

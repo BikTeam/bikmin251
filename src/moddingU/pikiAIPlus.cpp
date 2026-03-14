@@ -190,21 +190,25 @@ Game::Navi* Brain::searchOrima()
 		searchDist = m_piki->getParms()->m_pikiParms.m_p040.m_value;
 	}
 
-	f32 minDist              = 128000.0f;
+	f32 minSqrDist              = 128000.0f;
 	Game::Navi* targetPlayer = nullptr;
 	for (int i = 0; i < 2; i++) {
 		Game::Navi* currentPlayer = Game::naviMgr->getAt(i);
 		if (!currentPlayer->isAlive() || currentPlayer->m_padinput == nullptr) {
 			continue;
 		}
+		
+		Vector3f playerPos = currentPlayer->getPosition();
+		f32 currentDist    = m_piki->getPosition().sqrDistance2D(playerPos);
 
-		f32 currentDist = m_piki->m_shadowParam.m_position.sqrDistance2D(currentPlayer->m_shadowParam.m_position);
-		if (currentDist >= SQUARE(searchDist) || currentDist >= SQUARE(minDist)) {
+		if (currentDist >= SQUARE(searchDist)) {
 			continue;
 		}
 
-		minDist      = currentDist;
-		targetPlayer = currentPlayer;
+		if (currentDist < minSqrDist) {
+			minSqrDist      = currentDist;
+			targetPlayer = currentPlayer;
+		}
 	}
 
 	return targetPlayer;
