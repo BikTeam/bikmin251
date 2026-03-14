@@ -10,6 +10,7 @@
 #include "Game/Interaction.h"
 
 #include "PikiAI.h"
+#include "TwoPlayer.h"
 
 namespace PikiAI {
 
@@ -33,7 +34,10 @@ ActFree::ActFree(Game::Piki* p)
  */
 void ActFree::init(ActionArg* settings)
 {
-	m_parent->m_navi = nullptr;
+	// in multiplayer, dont ever clear the navi (important for determining ownership)
+	if (!TwoPlayer::twoPlayerActive && !Game::gameSystem->isMultiplayerMode()) {
+		m_parent->m_navi = nullptr;
+	}
 	m_parent->m_soundObj->becomeFree();
 
 	ActFreeArg* freeArg = static_cast<ActFreeArg*>(settings);

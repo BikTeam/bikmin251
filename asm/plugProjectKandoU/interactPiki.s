@@ -992,6 +992,15 @@ actPiki__Q24Game11InteractFueFPQ24Game4Piki:
 .L_801936EC:
 /* 801936EC 0019062C  54 80 06 3F */	clrlwi. r0, r4, 0x18
 /* 801936F0 00190630  40 82 00 20 */	bne .L_80193710
+
+# MODDED: make pikmin unable to be whistled by non-owner player in multiplayer
+mr r3, r31
+lwz r4, 0x4(r25)
+bl isPiki2PlayerOwned__4GameFPQ24Game4PikiPQ24Game4Navi
+cmplwi r3, 1
+li r3, 0
+beq .L_801938E4
+
 /* 801936F4 00190634  7F 83 E3 78 */	mr r3, r28
 /* 801936F8 00190638  7F E4 FB 78 */	mr r4, r31
 /* 801936FC 0019063C  81 9C 00 00 */	lwz r12, 0(r28)
