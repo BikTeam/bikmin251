@@ -107,7 +107,7 @@ struct PikiAbsorbState : public PikiState {
 	virtual void exec(Piki*);                                  // _0C
 	virtual void cleanup(Piki*);                               // _10
 	virtual void onKeyEvent(Piki*, const SysShape::KeyEvent&); // _30
-	virtual bool callable();
+	virtual void onFlute(Piki*, Navi*);
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
@@ -115,7 +115,6 @@ struct PikiAbsorbState : public PikiState {
 	Creature* mAbsorbingCreature; // _14
 	u8 mHasAbsorbed;              // _18
 	u8 mAbsorbTimer;              // _19
-	Piki* mPiki;
 };
 
 struct PikiAutoNukiState : public PikiState {
@@ -499,12 +498,11 @@ struct PikiGrowupState : public PikiState {
 	virtual void exec(Piki*);                                  // _0C
 	virtual void cleanup(Piki*);                               // _10
 	virtual void onKeyEvent(Piki*, const SysShape::KeyEvent&); // _30
-	virtual bool callable();
+	virtual void onFlute(Piki*, Navi*);
 
 	// _00     = VTBL
 	// _00-_10 = PikiState
 	s16 mAnimIdx; // _10
-	Piki* mPiki;
 };
 
 struct PikiHangedState : public PikiState, virtual SysShape::MotionListener {

@@ -28,6 +28,7 @@ void leafBluePikmin(Piki& pikmin)
 	}
 }
 
+// I deleted the asm like an idiot so this is here without changes
 void PikiAbsorbState::init(Piki* piki, StateArg* stateArg)
 {
 	AbsorbStateArg* absorbArg = static_cast<AbsorbStateArg*>(stateArg);
@@ -43,25 +44,21 @@ void PikiAbsorbState::init(Piki* piki, StateArg* stateArg)
 	P2ASSERTLINE(4219, mAbsorbingCreature->getJAIObject());
 	piki->m_soundObj->startPikiSound(mAbsorbingCreature->getJAIObject(), PSSE_PK_VC_DRINK, 0);
 	mAbsorbTimer = 0;
-
-	// assign piki ref
-	mPiki = piki;
 }
 
 // allow pikmin to be whistled out of drinking nectar
-bool PikiAbsorbState::callable()
+void PikiAbsorbState::onFlute(Piki* piki, Navi* navi)
 {
-	if (mHasAbsorbed == true) {
-		if (mPiki->m_happaKind != Flower) {
-			mPiki->m_happaKind = Flower;
-			mPiki->m_navi->m_cPlateMgr->changeFlower(mPiki);
+	if (mHasAbsorbed && (piki->m_navi == navi || piki->m_navi == nullptr)) {
+		if (piki->m_pikiKind != Blue && piki->m_happaKind != Flower) {
+			piki->m_happaKind = Flower;
+			navi->m_cPlateMgr->changeFlower(piki);
 		}
-		transit(mPiki, PIKISTATE_LookAt, nullptr);
+		transit(piki, PIKISTATE_LookAt, nullptr);
 	}
-
-	return mHasAbsorbed;
 }
 
+// I deleted the asm like an idiot so this is here without changes
 void PikiGrowupState::init(Piki* piki, StateArg* stateArg)
 {
 	if (randFloat() > 0.5f) {
@@ -75,21 +72,18 @@ void PikiGrowupState::init(Piki* piki, StateArg* stateArg)
 	if (!piki->assertMotion(mAnimIdx)) {
 		transit(piki, PIKISTATE_Walk, nullptr);
 	}
-
-	// assign piki reference
-	mPiki = piki;
 }
 
 // allow pikmin to be whistled out of growup
-bool PikiGrowupState::callable()
+void PikiGrowupState::onFlute(Piki* piki, Navi* navi)
 {
-	if (mPiki->m_happaKind != Flower) {
-		mPiki->m_happaKind = Flower;
-		mPiki->m_navi->m_cPlateMgr->changeFlower(mPiki);
+	if (piki->m_navi == navi || piki->m_navi == nullptr) {
+		if (piki->m_pikiKind != Blue && piki->m_happaKind != Flower) {
+			piki->m_happaKind = Flower;
+			navi->m_cPlateMgr->changeFlower(piki);
+		}
+		transit(piki, PIKISTATE_LookAt, nullptr);
 	}
-
-	transit(mPiki, PIKISTATE_LookAt, nullptr);
-	return true;
 }
 
 // canAbsorbHoney__4GameFPQ24Game7PikiFSMPQ24Game4PikiiPQ24Game14AbsorbStateArg
