@@ -8,6 +8,7 @@
 #include "Game/CPlate.h"
 #include "Game/PikiState.h"
 #include "Game/PikiMgr.h"
+#include "TwoPlayer.h"
 
 namespace PikiAI {
 
@@ -185,19 +186,25 @@ void ActExit::cleanup()
 
 Game::Navi* Brain::searchOrima()
 {
+	if (TwoPlayer::twoPlayerActive || Game::gameSystem->isMultiplayerMode()) {
+		if (m_piki->m_navi != nullptr) {
+			return m_piki->m_navi;
+		}
+	}
+
 	f32 searchDist = m_piki->getParms()->m_pikiParms.m_p036.m_value;
 	if (m_actionId == ACT_Exit) {
 		searchDist = m_piki->getParms()->m_pikiParms.m_p040.m_value;
 	}
 
-	f32 minSqrDist              = 128000.0f;
+	f32 minSqrDist           = 128000.0f;
 	Game::Navi* targetPlayer = nullptr;
 	for (int i = 0; i < 2; i++) {
 		Game::Navi* currentPlayer = Game::naviMgr->getAt(i);
 		if (!currentPlayer->isAlive() || currentPlayer->m_padinput == nullptr) {
 			continue;
 		}
-		
+
 		Vector3f playerPos = currentPlayer->getPosition();
 		f32 currentDist    = m_piki->getPosition().sqrDistance2D(playerPos);
 
@@ -206,7 +213,7 @@ Game::Navi* Brain::searchOrima()
 		}
 
 		if (currentDist < minSqrDist) {
-			minSqrDist      = currentDist;
+			minSqrDist   = currentDist;
 			targetPlayer = currentPlayer;
 		}
 	}

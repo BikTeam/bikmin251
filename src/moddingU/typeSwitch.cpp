@@ -45,11 +45,14 @@ void Navi::findNextThrowPiki()
 		Vector3f naviPos = getPosition();
 		Vector3f diff    = naviPos - piki->getPosition();
 		f32 dist         = diff.qLength2D();
-		if (piki->m_navi == this && dist < minDist && piki->getStateID() == PIKISTATE_Walk && piki->isThrowable()) {
+
+		bool isThrowable = piki->getStateID() == PIKISTATE_Walk && piki->getCurrActionID() == PikiAI::ACT_Formation;
+		if (piki->m_navi == this && dist < minDist && isThrowable) {
 			m_nextThrowPiki = piki;
 			minDist         = dist;
 		}
 	}
+
 	if (!m_nextThrowPiki) {
 		CI_LOOP(iterator)
 		{
@@ -57,7 +60,9 @@ void Navi::findNextThrowPiki()
 			Vector3f naviPos = getPosition();
 			Vector3f diff    = naviPos - piki->getPosition();
 			f32 dist         = diff.qLength2D();
-			if (piki->m_navi == this && dist < minDist && piki->getStateID() == PIKISTATE_Walk && piki->isThrowable()) {
+
+			bool isThrowable = piki->getStateID() == PIKISTATE_Walk && piki->getCurrActionID() == PikiAI::ACT_Formation;
+			if (piki->m_navi == this && dist < minDist && isThrowable) {
 				m_nextThrowPiki = piki;
 				minDist         = dist;
 			}
@@ -229,6 +234,29 @@ bool Navi::releasePikis(Piki* discriminator, bool doSplitHalf)
 	return true;
 }
 
+inline void doShrinkCplate(Navi* navi)
+{
+	// Vent Chamber floor 1 and Roche Limit floor 5 uses shrunk cplate
+	if (gameSystem && gameSystem->m_inCave && gameSystem->isStoryMode()) {
+		SingleGameSection* section = static_cast<SingleGameSection*>(gameSystem->m_section);
+		if (section) {
+			bool doShrink = false;
+			switch (section->getCaveID()) {
+			case 'y_03':
+				doShrink = section->m_currentFloor == 0;
+				break;
+			case 'l_03':
+				doShrink = section->m_currentFloor == 4;
+				break;
+			}
+
+			if (doShrink) {
+				navi->m_cPlateMgr->shrink();
+			}
+		}
+	}
+}
+
 void NaviWalkState::exec(Navi* navi)
 {
 	if (mCollisionTimer) {
@@ -239,25 +267,7 @@ void NaviWalkState::exec(Navi* navi)
 		navi->control();
 		navi->findNextThrowPiki();
 
-		// Vent Chamber floor 1 and Roche Limit floor 5 uses shrunk cplate
-		if (gameSystem && gameSystem->m_inCave && gameSystem->isStoryMode()) {
-			SingleGameSection* section = static_cast<SingleGameSection*>(gameSystem->m_section);
-			if (section) {
-				bool doShrink = false;
-				switch (section->getCaveID()) {
-				case 'y_03':
-					doShrink = section->m_currentFloor == 0;
-					break;
-				case 'l_03':
-					doShrink = section->m_currentFloor == 4;
-					break;
-				}
-
-				if (doShrink) {
-					navi->m_cPlateMgr->shrink();
-				}
-			}
-		}
+		doShrinkCplate(navi);
 
 		if (!navi->m_padinput && !navi->isMovieActor()) {
 			if (mAIState == WALKAI_Control) {

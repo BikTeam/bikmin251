@@ -41,29 +41,46 @@ bool isPiki2PlayerOwned(Piki* piki, Navi* owner)
 	int action = piki->getCurrActionID();
 	if (action == PikiAI::ACT_Attack || action == PikiAI::ACT_Bridge || action == PikiAI::ACT_BreakGate
 	    || action == PikiAI::ACT_BreakRock) {
-		// unclaimed pikmin can be claimed freely
-		if (piki->m_navi == nullptr) {
-			return false;
-		}
-
-		// if the owner is not the current owner, it cannot be claimed
-		if (piki->m_navi != owner) {
-			return true;
-		}
-
-		// if player is outside search range, it can be claimed by other players
-		Vector3f naviPos = owner->getPosition();
-		f32 sqrDist      = piki->getPosition().sqrDistance2D(naviPos);
-
-		PikiParms* parms      = static_cast<PikiParms*>(piki->m_parms);
-		f32 playerSearchRange = parms->m_pikiParms.m_p036.m_value;
-		if (sqrDist > SQUARE(playerSearchRange)) {
-			piki->m_navi = owner;
-		}
+		// players cannot whistle pikmin if they arent their owner in certain actions
+		return piki->m_navi != nullptr && piki->m_navi != owner;
 	}
 
 	// pikmin outside selected actions or pikmin already owned by the given navi can be claimed freely
 	return false;
+}
+
+void clearPikiOwnerOutsideRange(Piki* piki)
+{
+	// only applies in multiplayer and to owned pikmin
+	if (piki->m_navi == nullptr || !(TwoPlayer::twoPlayerActive && gameSystem->isMultiplayerMode())) {
+		return;
+	}
+
+	int action = piki->getCurrActionID();
+	if (action == PikiAI::ACT_Attack || action == PikiAI::ACT_Bridge || action == PikiAI::ACT_BreakGate
+	    || action == PikiAI::ACT_BreakRock) {
+		// if the navi exists and dismisses, clear the owner
+		if (piki->m_navi->m_padinput && piki->m_navi->m_padinput->isButtonDown(PAD_BUTTON_X)) {
+			piki->m_navi = nullptr;
+			return;
+		}
+
+		// if player is outside search range, it can be claimed by other players
+		Vector3f naviPos = piki->m_navi->getPosition();
+		f32 sqrDist      = piki->getPosition().sqrDistance2D(naviPos);
+
+		PikiParms* parms      = static_cast<PikiParms*>(piki->m_parms);
+		f32 playerSearchRange = parms->m_pikiParms.m_p036.m_value;
+		if (sqrDist >= SQUARE(playerSearchRange)) {
+			piki->m_navi = nullptr;
+		}
+	}
+}
+
+void PikiWalkState::exec(Piki* piki)
+{
+	piki->m_brain->exec();
+	clearPikiOwnerOutsideRange(piki);
 }
 
 // I deleted the asm like an idiot so this is here without changes

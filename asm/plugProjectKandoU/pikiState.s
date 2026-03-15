@@ -2305,17 +2305,17 @@ init__Q24Game13PikiWalkStateFPQ24Game4PikiPQ24Game8StateArg:
 /* 8018A0B8 00186FF8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8018A0BC 00186FFC  4E 80 00 20 */	blr 
 
-.global exec__Q24Game13PikiWalkStateFPQ24Game4Piki
-exec__Q24Game13PikiWalkStateFPQ24Game4Piki:
-/* 8018A0C0 00187000  94 21 FF F0 */	stwu r1, -0x10(r1)
-/* 8018A0C4 00187004  7C 08 02 A6 */	mflr r0
-/* 8018A0C8 00187008  90 01 00 14 */	stw r0, 0x14(r1)
-/* 8018A0CC 0018700C  80 64 02 94 */	lwz r3, 0x294(r4)
-/* 8018A0D0 00187010  48 00 CC 55 */	bl exec__Q26PikiAI5BrainFv
-/* 8018A0D4 00187014  80 01 00 14 */	lwz r0, 0x14(r1)
-/* 8018A0D8 00187018  7C 08 03 A6 */	mtlr r0
-/* 8018A0DC 0018701C  38 21 00 10 */	addi r1, r1, 0x10
-/* 8018A0E0 00187020  4E 80 00 20 */	blr 
+# .global exec__Q24Game13PikiWalkStateFPQ24Game4Piki
+# exec__Q24Game13PikiWalkStateFPQ24Game4Piki:
+# /* 8018A0C0 00187000  94 21 FF F0 */	stwu r1, -0x10(r1)
+# /* 8018A0C4 00187004  7C 08 02 A6 */	mflr r0
+# /* 8018A0C8 00187008  90 01 00 14 */	stw r0, 0x14(r1)
+# /* 8018A0CC 0018700C  80 64 02 94 */	lwz r3, 0x294(r4)
+# /* 8018A0D0 00187010  48 00 CC 55 */	bl exec__Q26PikiAI5BrainFv
+# /* 8018A0D4 00187014  80 01 00 14 */	lwz r0, 0x14(r1)
+# /* 8018A0D8 00187018  7C 08 03 A6 */	mtlr r0
+# /* 8018A0DC 0018701C  38 21 00 10 */	addi r1, r1, 0x10
+# /* 8018A0E0 00187020  4E 80 00 20 */	blr 
 
 .global cleanup__Q24Game13PikiWalkStateFPQ24Game4Piki
 cleanup__Q24Game13PikiWalkStateFPQ24Game4Piki:
