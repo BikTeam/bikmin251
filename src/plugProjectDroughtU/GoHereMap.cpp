@@ -24,7 +24,7 @@ namespace Drought {
 namespace Screen {
 
 // sets whether you can rotate the map with shoulder L/R
-const bool cAllowMapRotation = false;
+const bool cAllowMapRotation = true;
 
 AlteredMapMenu::AlteredMapMenu(const char* name)
     : og::newScreen::ObjSMenuMap(name)
@@ -256,18 +256,20 @@ void AlteredMapMenu::doDraw(Graphics& gfx)
 	J2DPerspGraph* graf = &gfx.m_perspGraph;
 	drawMap(gfx);
 
-	drawPath(gfx);
-
 	Graphics gfx2;
-
 	m_iconScreen->draw(gfx2, *graf);
 
-	graf->setPort();
-	j3dSys.drawInit();
-	gfx.initPrimDraw(nullptr);
-	setupTextureDraw(gfx);
-	drawButton(gfx);
-	drawArrow(gfx);
+	// dont draw gohere in multiplayer
+	if (!TwoPlayer::twoPlayerActive) {
+		drawPath(gfx);
+
+		graf->setPort();
+		j3dSys.drawInit();
+		gfx.initPrimDraw(nullptr);
+		setupTextureDraw(gfx);
+		drawButton(gfx);
+		drawArrow(gfx);
+	}
 
 	if (m_compassPic && m_pane_Ncompas) {
 		PSMTXCopy(m_pane_Ncompas->m_globalMatrix, m_compassPic->m_positionMatrix);
@@ -281,8 +283,6 @@ void AlteredMapMenu::doDraw(Graphics& gfx)
 
 bool AlteredMapMenu::doUpdate()
 {
-	PathfindUpdate();
-
 	if (cAllowMapRotation) {
 		if (m_controller->m_padButton.m_analogR > 0.0f) {
 			m_mapAngle += 90.0f * sys->m_deltaTime * m_controller->m_padButton.m_analogR;
@@ -292,6 +292,13 @@ bool AlteredMapMenu::doUpdate()
 		}
 	}
 
+	// dont update in twoplayer
+	if (TwoPlayer::twoPlayerActive) {
+		return og::newScreen::ObjSMenuMap::doUpdate();
+	}
+
+	PathfindUpdate();
+
 	og::newScreen::SceneSMenuBase* scene = static_cast<og::newScreen::SceneSMenuBase*>(getOwner());
 
 	// allows the pathfind process to start if everything is setup
@@ -299,7 +306,7 @@ bool AlteredMapMenu::doUpdate()
 	bool ret = false;
 
 	// dont do go here in 2 player
-	if (!TwoPlayer::twoPlayerActive && mCanStartPathfind && !mHasNoPath && mPathfindState == PATHFIND_DONE
+	if (mCanStartPathfind && !mHasNoPath && mPathfindState == PATHFIND_DONE
 	    && scene->getGamePad()->m_padButton.m_buttonDown & (Controller::PRESS_A)) {
 
 		Vector2f center;

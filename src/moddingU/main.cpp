@@ -395,17 +395,6 @@ void updateDispMember()
 	}
 }
 
-// setModelDataEnvMapFix__3modFP12J3DModelData
-// in mapMgr.s and gameMapParts.s
-void setModelDataEnvMapFix(J3DModelData* modelData)
-{
-	J3DShape* shape;
-	for (u16 j = 0; j < modelData->getShapeCount(); j++) {
-		shape = modelData->m_shapeTable.m_items[j];
-		shape->setTexMtxLoadType(0x2000);
-	}
-}
-
 }; // namespace mod
 
 bool Game::InteractTroll::actPiki(Game::Piki* piki)
