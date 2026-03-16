@@ -1111,7 +1111,7 @@ makeUnit__Q24Game10MapUnitMgrFPQ24Game7MapUnitPc:
 
 /* cave unit j3d flags */
 lis r4, 0x2100
-addi r4, r4, 0x30
+addi r4, r4, 0x10
 
 /* 801B6A88 001B39C8  4B EB 8E 0D */	bl load__22J3DModelLoaderDataBaseFPCvUl
 /* 801B6A8C 001B39CC  90 7F 00 0C */	stw r3, 0xc(r31)
@@ -1120,11 +1120,6 @@ addi r4, r4, 0x30
 /* 801B6A98 001B39D8  4B EC CE 41 */	bl newSharedDisplayList__12J3DModelDataFUl
 /* 801B6A9C 001B39DC  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 801B6AA0 001B39E0  4B EC CF 91 */	bl makeSharedDL__12J3DModelDataFv
-
-/* setTexMtxLoadType */
-lwz r3, 0xc(r31)
-bl setModelDataEnvMapFix__3modFP12J3DModelData
-
 /* 801B6AA4 001B39E4  7F A3 EB 78 */	mr r3, r29
 /* 801B6AA8 001B39E8  38 9E 00 E0 */	addi r4, r30, 0xe0
 /* 801B6AAC 001B39EC  81 9D 00 00 */	lwz r12, 0(r29)
@@ -2195,6 +2190,12 @@ doEntry__Q24Game7MapRoomFv:
 /* 801B7990 001B48D0  80 7F 01 3C */	lwz r3, 0x13c(r31)
 /* 801B7994 001B48D4  80 63 00 08 */	lwz r3, 8(r3)
 /* 801B7998 001B48D8  4B EA F2 D5 */	bl diff__8J3DModelFv
+
+/* MODDED: calcDiffTexMtx call necessary to update multiplayer views */
+lwz r3, 0x13c(r31)
+lwz r3, 8(r3)
+bl calcDiffTexMtx__8J3DModelFv
+
 .L_801B799C:
 /* 801B799C 001B48DC  BB 61 00 0C */	lmw r27, 0xc(r1)
 /* 801B79A0 001B48E0  80 01 00 24 */	lwz r0, 0x24(r1)
@@ -8014,7 +8015,10 @@ makeOneRoom__Q24Game10RoomMapMgrFfffPcsPQ24Game8RoomLinkPQ24Game16ObjectLayoutIn
 /* 801BCDEC 001B9D2C  7C 60 1B 79 */	or. r0, r3, r3
 /* 801BCDF0 001B9D30  41 82 00 18 */	beq .L_801BCE08
 /* 801BCDF4 001B9D34  80 95 00 0C */	lwz r4, 0xc(r21)
-/* 801BCDF8 001B9D38  3C A0 00 02 */	lis r5, 2
+
+/* SysShape::Model ct flags */
+lis r5, 2
+
 /* 801BCDFC 001B9D3C  38 C0 00 02 */	li r6, 2
 /* 801BCE00 001B9D40  48 28 13 D9 */	bl __ct__Q28SysShape5ModelFP12J3DModelDataUlUl
 /* 801BCE04 001B9D44  7C 60 1B 78 */	mr r0, r3
@@ -8023,10 +8027,7 @@ makeOneRoom__Q24Game10RoomMapMgrFfffPcsPQ24Game8RoomLinkPQ24Game16ObjectLayoutIn
 /* 801BCE0C 001B9D4C  38 80 00 00 */	li r4, 0
 /* 801BCE10 001B9D50  80 7F 01 3C */	lwz r3, 0x13c(r31)
 /* 801BCE14 001B9D54  80 63 00 08 */	lwz r3, 8(r3)
-
-/* MODDED: removed this because idk wtf it actually does but it breaks stuff */
-/* 801BCE18 001B9D58  4B EA 99 51 */	# bl newDifferedTexMtx__8J3DModelF14J3DTexDiffFlag
-
+/* 801BCE18 001B9D58  4B EA 99 51 */	bl newDifferedTexMtx__8J3DModelF14J3DTexDiffFlag
 /* 801BCE1C 001B9D5C  80 7F 01 3C */	lwz r3, 0x13c(r31)
 /* 801BCE20 001B9D60  38 80 02 00 */	li r4, 0x200
 /* 801BCE24 001B9D64  80 63 00 08 */	lwz r3, 8(r3)
