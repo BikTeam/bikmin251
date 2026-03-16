@@ -52,7 +52,7 @@ bool isPiki2PlayerOwned(Piki* piki, Navi* owner)
 void clearPikiOwnerOutsideRange(Piki* piki)
 {
 	// only applies in multiplayer and to owned pikmin
-	if (piki->m_navi == nullptr || !(TwoPlayer::twoPlayerActive && gameSystem->isMultiplayerMode())) {
+	if (piki->m_navi == nullptr || !(TwoPlayer::twoPlayerActive || gameSystem->isMultiplayerMode())) {
 		return;
 	}
 
