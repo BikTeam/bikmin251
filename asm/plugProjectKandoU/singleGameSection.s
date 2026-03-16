@@ -6682,7 +6682,7 @@ updateMainMapScreen__Q24Game17SingleGameSectionFv:
 /* 80155654 00152594  D0 21 00 10 */	stfs f1, 0x10(r1)
 /* 80155658 00152598  C0 22 A2 B8 */	lfs f1, lbl_80518618@sda21(r2)
 /* 8015565C 0015259C  D0 01 00 14 */	stfs f0, 0x14(r1)
-/* 80155660 001525A0  48 0C 91 15 */	bl "calcNearestTreasure__Q25Radar3MgrFR10Vector3<f>fR10Vector3<f>Rf"
+/* 80155660 001525A0  48 0C 91 15 */	bl "calcNearestTreasureMultiplayer__4GameFPQ25Radar3MgrR10Vector3<f>fR10Vector3<f>Rf"
 /* 80155664 001525A4  7C 7D 1B 78 */	mr r29, r3
 /* 80155668 001525A8  2C 1D 00 02 */	cmpwi r29, 2
 /* 8015566C 001525AC  40 82 00 28 */	bne .L_80155694
@@ -7059,7 +7059,7 @@ updateMainMapScreen__Q24Game17SingleGameSectionFv:
 /* 80155654 00152594  D0 21 00 10 */	stfs f1, 0x10(r1)
 /* 80155658 00152598  C0 22 A2 B8 */	lfs f1, lbl_80518618@sda21(r2)
 /* 8015565C 0015259C  D0 01 00 14 */	stfs f0, 0x14(r1)
-/* 80155660 001525A0  48 0C 91 15 */	bl "calcNearestTreasure__Q25Radar3MgrFR10Vector3<f>fR10Vector3<f>Rf"
+/* 80155660 001525A0  48 0C 91 15 */	bl "calcNearestTreasureMultiplayer__4GameFPQ25Radar3MgrR10Vector3<f>fR10Vector3<f>Rf"
 /* 80155664 001525A4  7C 7D 1B 78 */	mr r29, r3
 /* 80155668 001525A8  2C 1D 00 02 */	cmpwi r29, 2
 /* 8015566C 001525AC  40 82 00 28 */	bne .L_80155694
@@ -7434,7 +7434,7 @@ updateCaveScreen__Q24Game17SingleGameSectionFv:
 /* 80155BA4 00152AE4  D0 21 00 10 */	stfs f1, 0x10(r1)
 /* 80155BA8 00152AE8  C0 22 A2 B8 */	lfs f1, lbl_80518618@sda21(r2)
 /* 80155BAC 00152AEC  D0 01 00 14 */	stfs f0, 0x14(r1)
-/* 80155BB0 00152AF0  48 0C 8B C5 */	bl "calcNearestTreasure__Q25Radar3MgrFR10Vector3<f>fR10Vector3<f>Rf"
+/* 80155BB0 00152AF0  48 0C 8B C5 */	bl "calcNearestTreasureMultiplayer__4GameFPQ25Radar3MgrR10Vector3<f>fR10Vector3<f>Rf"
 /* 80155BB4 00152AF4  7C 7E 1B 78 */	mr r30, r3
 /* 80155BB8 00152AF8  2C 1E 00 02 */	cmpwi r30, 2
 /* 80155BBC 00152AFC  40 82 00 28 */	bne .L_80155BE4
@@ -7760,7 +7760,7 @@ updateCaveScreen__Q24Game17SingleGameSectionFv:
 /* 80155BA4 00152AE4  D0 21 00 10 */	stfs f1, 0x10(r1)
 /* 80155BA8 00152AE8  C0 22 A2 B8 */	lfs f1, lbl_80518618@sda21(r2)
 /* 80155BAC 00152AEC  D0 01 00 14 */	stfs f0, 0x14(r1)
-/* 80155BB0 00152AF0  48 0C 8B C5 */	bl "calcNearestTreasure__Q25Radar3MgrFR10Vector3<f>fR10Vector3<f>Rf"
+/* 80155BB0 00152AF0  48 0C 8B C5 */	bl "calcNearestTreasureMultiplayer__4GameFPQ25Radar3MgrR10Vector3<f>fR10Vector3<f>Rf"
 /* 80155BB4 00152AF4  7C 7E 1B 78 */	mr r30, r3
 /* 80155BB8 00152AF8  2C 1E 00 02 */	cmpwi r30, 2
 /* 80155BBC 00152AFC  40 82 00 28 */	bne .L_80155BE4

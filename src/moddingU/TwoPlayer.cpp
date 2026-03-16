@@ -11,6 +11,7 @@
 #include "Game/SingleGameSection.h"
 #include "Screen/Game2DMgr.h"
 #include "PSM/ObjCalc.h"
+#include "Radar.h"
 
 namespace TwoPlayer {
 bool useTwoPlayer       = false;
@@ -25,9 +26,7 @@ void initTwoPlayer()
 	twoPlayerActive = useTwoPlayer = tempData && Game::gameSystem->isStoryMode();
 }
 
-bool isUsingTwoPlayer() {
-	return useTwoPlayer && Game::gameSystem->isStoryMode();
-}
+bool isUsingTwoPlayer() { return useTwoPlayer && Game::gameSystem->isStoryMode(); }
 
 void setTwoPlayer(bool set)
 {
@@ -49,7 +48,7 @@ void setModeInCutscene()
 		if (section->m_prevNaviIdx == 1 && alive != 2) {
 			OSReport("Second Mode\n");
 			// section->setPlayerMode(1);
-			if (alive == 2)
+			if (alive == 2 || alive == 0)
 				section->setSplitter(false);
 			TwoPlayer::twoPlayerActive    = false;
 			Game::moviePlayer->m_viewport = sys->m_gfx->getViewport(1);
@@ -59,7 +58,7 @@ void setModeInCutscene()
 			OSReport("First Mode\n");
 			TwoPlayer::twoPlayerActive = false;
 			// section->setPlayerMode(0);
-			if (alive == 2)
+			if (alive == 2 || alive == 0)
 				section->setSplitter(false);
 			Game::moviePlayer->m_viewport     = sys->m_gfx->getViewport(0);
 			Game::moviePlayer->m_actingCamera = section->m_olimarCamera;
@@ -256,6 +255,27 @@ void BaseGameSection::setCamController()
 	on_setCamController(m_prevNaviIdx);
 }
 
+// "calcNearestTreasureMultiplayer__4GameFPQ25Radar3MgrR10Vector3<f>fR10Vector3<f>Rf"
+int calcNearestTreasureMultiplayer(Radar::Mgr* mgr, Vector3f& onePlayerPos, f32 searchDist, Vector3f& treasurePos, f32& treasureDist)
+{
+	int searchResult = mgr->calcNearestTreasure(onePlayerPos, searchDist, treasurePos, treasureDist);
+
+	if (TwoPlayer::isUsingTwoPlayer()) {
+		Navi* navi            = naviMgr->getAt(1); // player two
+		Vector3f twoPlayerPos = navi->getPosition();
+
+		f32 treasureDist2;
+		int searchResult2 = Radar::mgr->calcNearestTreasure(twoPlayerPos, searchDist, treasurePos, treasureDist2);
+
+		if (treasureDist2 < treasureDist) {
+			treasureDist = treasureDist2;
+			searchResult = searchResult2;
+		}
+	}
+
+	return searchResult;
+}
+
 } // namespace Game
 
 #include "og/Screen/ScaleMgr.h"
@@ -301,10 +321,10 @@ void PikminCounterCave::setCallBackNoDay(JKRArchive* arc)
 
 } // namespace og
 
-namespace PSM
-{
+namespace PSM {
 
-u8 ObjCalc_SingleGame::getPlayerNo(PSM::Creature* obj) { 
+u8 ObjCalc_SingleGame::getPlayerNo(PSM::Creature* obj)
+{
 	if (!TwoPlayer::twoPlayerActive || obj == nullptr) {
 		return m_currCameraIndex;
 	}
@@ -312,7 +332,8 @@ u8 ObjCalc_SingleGame::getPlayerNo(PSM::Creature* obj) {
 	return reinterpret_cast<ObjCalc_2PGame*>(this)->ObjCalc_2PGame::getPlayerNo(obj);
 }
 
-u8 ObjCalc_SingleGame::getPlayerNo(Vec& vec) {
+u8 ObjCalc_SingleGame::getPlayerNo(Vec& vec)
+{
 	if (!TwoPlayer::twoPlayerActive) {
 		return m_currCameraIndex;
 	}
