@@ -12,6 +12,10 @@
 #include "Game/gameStat.h"
 #include "TwoPlayer.h"
 
+#define FURTHEST_ALLOWED_DIST (150.0f)
+#define ACCEPTABLE_DIST       (100.0f)
+#define ACCELERATION_RATE     (75.0f)
+
 namespace Game {
 
 bool CheckAllPikisBlue(Navi* navi)
@@ -73,6 +77,9 @@ void NaviGoHereState::init(Navi* navi, StateArg* arg)
 	mPosition = goHereArg->mPosition;
 	mPath     = goHereArg->mPath;
 	mCurrNode = goHereArg->mPath->mRoot;
+
+	mIsSlowDown    = false;
+	mCurrWalkSpeed = getNaviWalkSpeed(navi);
 }
 
 // usually inlined, plays the navi's voice line when swapped
@@ -108,7 +115,7 @@ void NaviGoHereState::exec(Navi* navi)
 		return;
 	}
 
-	mCurrWalkSpeed = calcMinPikiSpeed(navi);
+	calcMinPikiSpeed(navi);
 	navi->m_cPlateMgr->shrink();
 
 	if (mCurrNode) {
@@ -140,22 +147,8 @@ void NaviGoHereState::exec(Navi* navi)
 	}
 }
 
-// calculates the minimum speed of pikmin in party
-f32 NaviGoHereState::calcMinPikiSpeed(Navi* navi)
+f32 NaviGoHereState::getNaviWalkSpeed(Navi* navi)
 {
-	f32 maxDist = 0.0f;
-
-	// get distance from furthest piki
-	Iterator<Creature> iterator(navi->m_cPlateMgr);
-	CI_LOOP(iterator)
-	{
-		Piki* piki = static_cast<Piki*>(*iterator);
-		f32 dist   = navi->getDistanceTo(piki);
-		if (maxDist < dist) {
-			maxDist = dist;
-		}
-	}
-
 	NaviParms* parms = static_cast<NaviParms*>(navi->m_parms);
 	f32 walkSpeed    = parms->m_naviParms.m_p004.m_value;
 	if (navi->getOlimarData()->hasItem(OlimarData::ODII_RepugnantAppendage)) {
@@ -163,6 +156,56 @@ f32 NaviGoHereState::calcMinPikiSpeed(Navi* navi)
 	}
 
 	return walkSpeed;
+}
+
+// calculates the minimum speed of pikmin in party
+void NaviGoHereState::calcMinPikiSpeed(Navi* navi)
+{
+	f32 maxSqrDist = 0.0f;
+	f32 minSpeed   = 12800.0f;
+
+	Iterator<Creature> iterator(navi->m_cPlateMgr);
+	CI_LOOP(iterator)
+	{
+		Piki* piki = static_cast<Piki*>(*iterator);
+
+		Vector3f pikiPos = piki->getPosition();
+		f32 sqrDist      = navi->getPosition().sqrDistance2D(pikiPos);
+		if (maxSqrDist < sqrDist) {
+			maxSqrDist = sqrDist;
+		}
+
+		f32 speed = piki->getSpeed(1.0f);
+		if (minSpeed > speed) {
+			minSpeed = speed;
+		}
+	}
+
+	f32 walkSpeed = getNaviWalkSpeed(navi);
+	if (walkSpeed > minSpeed) {
+		walkSpeed = minSpeed;
+	}
+
+	if (mIsSlowDown) {
+		walkSpeed *= 0.8f;
+		if (maxSqrDist < SQUARE(ACCEPTABLE_DIST)) {
+			mIsSlowDown = false;
+		}
+
+		mCurrWalkSpeed -= ACCELERATION_RATE * sys->m_deltaTime;
+		if (mCurrWalkSpeed < walkSpeed) {
+			mCurrWalkSpeed = walkSpeed;
+		}
+	} else {
+		mCurrWalkSpeed += ACCELERATION_RATE * sys->m_deltaTime;
+		if (mCurrWalkSpeed > walkSpeed) {
+			mCurrWalkSpeed = walkSpeed;
+		}
+
+		if (maxSqrDist > SQUARE(FURTHEST_ALLOWED_DIST)) {
+			mIsSlowDown = true;
+		}
+	}
 }
 
 // moves the navi to the nearest waypoint
