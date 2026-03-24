@@ -1953,7 +1953,16 @@ getMiddleBossBgm__Q26PSGame8PikSceneFv:
 /* 803356D4 00332614  38 84 FA D0 */	addi r4, r4, lbl_8048FAD0@l
 /* 803356D8 00332618  4B D9 4F E9 */	bl strcmp
 /* 803356DC 0033261C  2C 03 00 00 */	cmpwi r3, 0
-/* 803356E0 00332620  40 82 00 2C */	bne .L_8033570C
+
+# Jump past next check if l_boss
+beq .L_803356E4
+
+# Jump to fail if not equal to s_boss
+mr r3, r31
+bl isSpecialBossBms__6PSGameFPCc
+cmpwi r3, 1
+bne .L_8033570C
+
 .L_803356E4:
 /* 803356E4 00332624  7F C3 F3 78 */	mr r3, r30
 /* 803356E8 00332628  81 9E 00 10 */	lwz r12, 0x10(r30)
@@ -2651,6 +2660,21 @@ initBossBgm__Q26PSGame11PikSceneMgrFRQ26PSGame9SceneInfoPUc:
 /* 803360C0 00333000  4E 80 04 21 */	bctrl 
 /* 803360C4 00333004  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 803360C8 00333008  41 82 00 30 */	beq .L_803360F8
+
+# check for special boss and jump to next case if not equal
+bl isSpecialBoss__6PSGameFv
+cmpwi r3, 1
+bne .L_803360CC
+
+# create sequence (r3 = PikSceneMgr*, r4 = SoundInfo&, r5 = u8* wScene)
+mr r3, r29
+addi r4, r1, 8
+mr r5, r30
+bl createSpecialBossBgm__6PSGameFPQ26PSGame11PikSceneMgrRQ27JAInter9SoundInfoPUc
+mr r30, r3
+b .L_80336118
+
+.L_803360CC:
 /* 803360CC 0033300C  7F A3 EB 78 */	mr r3, r29
 /* 803360D0 00333010  38 9F 01 B8 */	addi r4, r31, 0x1b8
 /* 803360D4 00333014  81 9D 00 00 */	lwz r12, 0(r29)

@@ -9,6 +9,8 @@ namespace PSM {
  * @size = 0x100
  */
 struct EnemyBoss : public EnemyBase {
+	EnemyBoss(Game::EnemyBase*);
+
 	virtual ~EnemyBoss();                   // _14 (weak)
 	virtual CreatureCastType getCastType(); // _1C (weak)
 	virtual void exec();                    // _20
@@ -53,9 +55,9 @@ struct EnemyMidBoss : public EnemyBoss {
 	virtual void postPikiAttack(bool);      // _D8
 	virtual void onAppear1st();             // _E8
 
-	u8 _100[0x4];    // _100 - unknown
+	u32 _100;    // _100 - unknown
 	float _104;      // _104
-	JSUPtrLink _108; // _108 - could be JSULink<PSM::EnemyBoss>
+	JSULink<PSM::EnemyBoss> _108; // _108 - could be JSULink<PSM::EnemyBoss>
 	u8 _118;         // _118
 	u8 _119[0x3];    // _119 - unknown
 };

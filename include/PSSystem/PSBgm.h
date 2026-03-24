@@ -50,6 +50,12 @@ struct DirectedBgm : public BgmSeq {
 	void initChildTrack_onPlaying(JASTrack*, u8);
 	void getDirectorP(u8);
 
+	inline void assertValidTrack()
+	{
+		bool check = _B4 == 1 && _70;
+		P2ASSERTLINE(415, check);
+	}
+
 	// _00-_10  = JSULink<SeqBase>
 	// _10      = VTABLE
 	// _14-_6C  = BgmSeq

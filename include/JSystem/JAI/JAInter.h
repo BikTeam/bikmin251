@@ -272,17 +272,13 @@ struct SeqParameter : MoveParaSet {
 };
 
 struct SoundInfo {
-	int unk1; // _00
-	union count_t {
-		unsigned long v1;
-		unsigned char v2[4];
-		unsigned short v3[2];
-	} count;             // _04
-	unsigned long pitch; // _08
-	union volume_t {
-		unsigned long v1;
-		unsigned char v2;
-	} volume; // _0C
+	u32 mFlag;     // _00
+	u8 mPriority;  // _04
+	u8 _05;        // _05
+	u16 mOffsetNo; // _06
+	f32 mPitch;    // _08
+	u8 mVolume;    // _0C
+	u8 mFxMix;     // _0D
 };
 
 namespace SoundTable {

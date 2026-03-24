@@ -4789,6 +4789,11 @@ __ct__Q23PSM12EnemyMidBossFPQ24Game9EnemyBase:
 /* 804601B0 0045D0F0  90 1B 01 00 */	stw r0, 0x100(r27)
 /* 804601B4 0045D0F4  48 00 C8 05 */	bl "appendTarget__Q33PSM12BossBgmFader3MgrFP25JSULink<Q23PSM9EnemyBoss>"
 .L_804601B8:
+
+# enemybase obj
+mr r3, r31
+bl setSpecialBossActive__6PSGameFPQ24Game9EnemyBase
+
 /* 804601B8 0045D0F8  7F 63 DB 78 */	mr r3, r27
 /* 804601BC 0045D0FC  BB 21 00 14 */	lmw r25, 0x14(r1)
 /* 804601C0 0045D100  80 01 00 34 */	lwz r0, 0x34(r1)

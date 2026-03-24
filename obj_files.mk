@@ -1106,6 +1106,7 @@ MODDING:=\
 	$(BUILD_DIR)/src/moddingU/pikiAIPlus.o\
 	$(BUILD_DIR)/src/moddingU/spookyDamage.o\
 	$(BUILD_DIR)/src/moddingU/bobuDemoState.o\
+	$(BUILD_DIR)/src/moddingU/specialBossMusic.o\
 	$(BUILD_DIR)/src/plugProjectDroughtU/GoHereMap.o\
 	$(BUILD_DIR)/src/plugProjectDroughtU/GoHereNavi.o\
 	$(BUILD_DIR)/src/plugProjectDroughtU/FastPathfinder.o\

@@ -789,7 +789,17 @@ newDirectedBgm__Q23PSM8SceneMgrFPCcRQ27JAInter9SoundInfo:
 /* 8045A318 00457258  3B 60 00 00 */	li r27, 0
 /* 8045A31C 0045725C  4B C7 03 A5 */	bl strcmp
 /* 8045A320 00457260  2C 03 00 00 */	cmpwi r3, 0
-/* 8045A324 00457264  40 82 00 4C */	bne .L_8045A370
+
+# Jump past second check if strings are equal
+beq .L_8045A328
+
+# Check if bms is special boss, jump to next case if not equal
+mr r3, r30
+bl isSpecialBossBms__6PSGameFPCc
+cmpwi r3, 1
+bne .L_8045A370
+
+.L_8045A328:
 /* 8045A328 00457268  38 60 00 24 */	li r3, 0x24
 /* 8045A32C 0045726C  4B BC 9B 79 */	bl __nw__FUl
 /* 8045A330 00457270  7C 7C 1B 79 */	or. r28, r3, r3
