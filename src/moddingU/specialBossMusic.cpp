@@ -11,11 +11,7 @@ static bool sIsSpecialBoss = false;
 static const char* s_boss  = "new_20.bms";
 
 // isSpecialBossBms__6PSGameFPCc
-bool isSpecialBossBms(const char* str) { 
-	bool out = strcmp(str, s_boss) == 0; 
-	OSReport("special bms %i (%s, %s)\n", out, str, s_boss);
-	return out;
-}
+bool isSpecialBossBms(const char* str) { return strcmp(str, s_boss) == 0; }
 
 // isSpecialBoss__6PSGameFv
 bool isSpecialBoss() { return sIsSpecialBoss; }
@@ -32,7 +28,6 @@ void setSpecialBossActive(Game::EnemyBase* obj)
 // createSpecialBossBgm__6PSGameFPQ26PSGame11PikSceneMgrRQ27JAInter9SoundInfoPUc
 PSSystem::DirectedBgm* createSpecialBossBgm(PikSceneMgr* mgr, JAInter::SoundInfo& soundInfo, u8* wScene)
 {
-	OSReport("creation is special %i\n", isSpecialBoss());
 	*wScene = 57; // wScene57 (special boss)
 	return (PSSystem::DirectedBgm*)mgr->newDirectedBgm("new_20.bms", soundInfo);
 }
