@@ -1110,7 +1110,7 @@ makeUnit__Q24Game10MapUnitMgrFPQ24Game7MapUnitPc:
 /* 801B6A80 001B39C0  7F 43 D3 78 */	mr r3, r26
 
 /* cave unit j3d flags */
-lis r4, 0x2100
+lis r4, 0x2104
 addi r4, r4, 0x10
 
 /* 801B6A88 001B39C8  4B EB 8E 0D */	bl load__22J3DModelLoaderDataBaseFPCvUl
