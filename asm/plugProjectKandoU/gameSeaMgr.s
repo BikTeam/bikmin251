@@ -385,7 +385,11 @@ attachModel__Q24Game12AABBWaterBoxFP12J3DModelDataPQ23Sys15MatTexAnimationf:
 /* 801AE5B4 001AB4F4  38 A0 00 00 */	li r5, 0
 /* 801AE5B8 001AB4F8  38 C0 00 02 */	li r6, 2
 /* 801AE5BC 001AB4FC  48 28 FC 1D */	bl __ct__Q28SysShape5ModelFP12J3DModelDataUlUl
-/* 801AE5C0 001AB500  7C 60 1B 78 */	mr r0, r3
+
+# MODDED: load diff flags
+bl createDiffedWaterboxModel__4GameFPQ28SysShape5Model
+mr r0, r3
+
 .L_801AE5C4:
 /* 801AE5C4 001AB504  90 1F 00 50 */	stw r0, 0x50(r31)
 /* 801AE5C8 001AB508  38 00 00 01 */	li r0, 1
@@ -977,6 +981,11 @@ bne .L_WATERBOX0
 /* 801AE8EC 001AB82C  81 8C 00 14 */	lwz r12, 0x14(r12)
 /* 801AE8F0 001AB830  7D 89 03 A6 */	mtctr r12
 /* 801AE8F4 001AB834  4E 80 04 21 */	bctrl 
+
+# MODDED: call changeMaterial
+mr r3, r31
+bl waterBoxChangeMaterial__4GameFPQ24Game12AABBWaterBox
+
 /* 801AE8F8 001AB838  80 7F 00 50 */	lwz r3, 0x50(r31)
 /* 801AE8FC 001AB83C  80 63 00 08 */	lwz r3, 8(r3)
 /* 801AE900 001AB840  81 83 00 00 */	lwz r12, 0(r3)
@@ -1113,6 +1122,11 @@ bne .L_WATERBOX1
 /* 801AEAF8 001ABA38  81 8C 00 14 */	lwz r12, 0x14(r12)
 /* 801AEAFC 001ABA3C  7D 89 03 A6 */	mtctr r12
 /* 801AEB00 001ABA40  4E 80 04 21 */	bctrl 
+
+# MODDED: call changeMaterial
+mr r3, r31
+bl waterBoxChangeMaterial__4GameFPQ24Game12AABBWaterBox
+
 /* 801AEB04 001ABA44  80 7F 00 50 */	lwz r3, 0x50(r31)
 /* 801AEB08 001ABA48  80 63 00 08 */	lwz r3, 8(r3)
 /* 801AEB0C 001ABA4C  81 83 00 00 */	lwz r12, 0(r3)
@@ -1265,6 +1279,11 @@ bne .L_WATERBOX1
 /* 801AED54 001ABC94  7C 03 00 50 */	subf r0, r3, r0
 /* 801AED58 001ABC98  90 03 00 0C */	stw r0, 0xc(r3)
 .L_801AED5C:
+
+# MODDED: call changeMaterial
+mr r3, r31
+bl waterBoxChangeMaterial__4GameFPQ24Game12AABBWaterBox
+
 /* 801AED5C 001ABC9C  80 7F 00 50 */	lwz r3, 0x50(r31)
 /* 801AED60 001ABCA0  80 63 00 08 */	lwz r3, 8(r3)
 /* 801AED64 001ABCA4  81 83 00 00 */	lwz r12, 0(r3)

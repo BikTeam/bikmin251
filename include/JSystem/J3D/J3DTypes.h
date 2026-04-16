@@ -46,6 +46,52 @@ typedef u32 J3DModelLoaderFlags;
 #define J3DMLF_31                         0x40000000
 #define J3DMLF_32                         0x80000000
 
+/*
+ * J3DModelDiffFlags is an enumeration that defines different flags for 3D model differences.
+ * Each flag represents a different aspect of the model that can be different.
+ *
+ * J3DMDF_DiffMatColor:     This flag is set if the material color is different. It corresponds to the 1st bit.
+ * J3DMDF_DiffLight:        This flag is set if the light settings are different. It corresponds to the 2nd bit.
+ * J3DMDF_DiffTexGen:       This flag is set if the TexCoordGen is different. It corresponds to the 13th bit.
+ * J3DMDF_Unknown:          This flag is reserved for a flag that isn't yet understood. It corresponds to the 18th bit.
+ * J3DMDF_DiffColorReg:     This flag is set if the color registers (TEV) are different. It corresponds to the 25th bit.
+ * J3DMDF_DiffKonstColor:   This flag is set if the Konst colors are different. It corresponds to the 26th bit.
+ * J3DMDF_DiffTevOrderFull: This flag is set if the full TevOrder (TexMap and TexCoordIdx) is different. It corresponds to the 27th bit.
+ * J3DMDF_DiffIndTevStage:  This flag is set if the indirect TevStages are different. It corresponds to the 28th bit.
+ * J3DMDF_DiffFog:          This flag is set if the fog settings are different. It corresponds to the 29th bit.
+ * J3DMDF_DiffBlend:        This flag is set if the blend settings are different. It corresponds to the 30th bit.
+ *
+ * The CREATE_DIFF_FLAG macro is used to create a u32 value with specific flags set.
+ * It takes four parameters: lightObjNum, texGenNum, texCoordNum, and tevStageNum. Each parameter is expected to be a 4-bit value.
+ * The parameters are shifted to their respective positions in the u32 value and combined using the bitwise OR operator.
+ *
+ * lightObjNum: This value is shifted to bits 4 - 7.
+ * texGenNum:   This value is shifted to bits 8 - 11.
+ * texCoordNum:    This value is shifted to bits 16 - 19.
+ * tevStageNum: This value is shifted to bits 20 - 23.
+ */
+enum J3DModelDiffFlags {
+	J3DMDF_DiffMatColor = 0x00000001, // Diff material color
+	J3DMDF_DiffLight    = 0x00000002, // Diff light settings
+	J3DMDF_DiffTexGen   = 0x00001000, // Diff TexCoordGen
+
+	J3DMDF_TexCoord0 = 0x000010000, // TexCoord0
+	J3DMDF_TexCoord1 = 0x000020000, // TexCoord1
+	J3DMDF_TexCoord2 = 0x000030000, // TexCoord2
+	J3DMDF_TexCoord3 = 0x000040000, // TexCoord3
+	J3DMDF_TexCoord4 = 0x000050000, // TexCoord4
+	J3DMDF_TexCoord5 = 0x000060000, // TexCoord5
+	J3DMDF_TexCoord6 = 0x000070000, // TexCoord6
+	J3DMDF_TexCoord7 = 0x000080000, // TexCoord7
+
+	J3DMDF_DiffColorReg         = 0x01000000, // Diff color registers (TEV)
+	J3DMDF_DiffKonstColor       = 0x02000000, // Diff Konst colors
+	J3DMDF_DiffTexCoordScale    = 0x04000000, // Diff TexCoord scales
+	J3DMDF_DiffTevStageIndirect = 0x08000000, // Diff indirect TevStages
+	J3DMDF_DiffFog              = 0x10000000, // Diff fog settings
+	J3DMDF_DiffBlend            = 0x20000000  // Diff blend settings
+};
+
 #define CREATE_DIFF_FLAG(lightObjNum, texGenNum, texCoordNum, tevStageNum) \
 	(((lightObjNum & 0xf) << 4) | ((texGenNum & 0xf) << 8) | ((texCoordNum & 0xf) << 16) | ((tevStageNum & 0xf) << 20))
 
