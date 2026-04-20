@@ -19,10 +19,10 @@ void waterBoxChangeMaterial(AABBWaterBox* waterBox)
 {
 	J3DModelData* modelData = waterBox->m_model->m_j3dModel->m_modelData;
 
-	J3DGXColorS10 sColor(0, 0, 0, 0);
+	J3DGXColorS10 sColor(255, 255, 255, 255);
 	if (gameSystem->m_section->getCurrentCourseInfo()->m_courseIndex == 2) {
 		// Load different water color in Course index 2 (Yakushima)
-		sColor = J3DGXColorS10(26, 22, 4, 0);
+		sColor = J3DGXColorS10(221, 152, 33, 127);
 	}
 
 	for (int i = 0; i < modelData->getMaterialCount1(); i++) {
