@@ -1394,8 +1394,14 @@ exec__Q24Game18NaviCarryBombStateFPQ24Game4Navi:
 /* 8017E144 0017B084  28 03 00 00 */	cmplwi r3, 0
 /* 8017E148 0017B088  41 82 00 30 */	beq .L_8017E178
 /* 8017E14C 0017B08C  80 03 00 1C */	lwz r0, 0x1c(r3)
-/* 8017E150 0017B090  54 00 05 AD */	rlwinm. r0, r0, 0, 0x16, 0x16
+#/* 8017E150 0017B090  54 00 05 AD */	rlwinm. r0, r0, 0, 0x16, 0x16
+										#press X to release bomb free
+										andi. r0, r0, 0x600
 /* 8017E154 0017B094  41 82 00 24 */	beq .L_8017E178
+										#store stupid thing in bomb if held X
+										lwz r3, 0x10(r30)
+										srwi r0, r0, 10
+										stb r0, 0x2be(r3)
 /* 8017E158 0017B098  7F C3 F3 78 */	mr r3, r30
 /* 8017E15C 0017B09C  7F E4 FB 78 */	mr r4, r31
 /* 8017E160 0017B0A0  81 9E 00 00 */	lwz r12, 0(r30)

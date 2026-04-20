@@ -349,7 +349,8 @@ onEndCapture__Q34Game4Bomb3ObjFv:
 /* 8034A338 00347278  7C 7F 1B 78 */	mr r31, r3
 /* 8034A33C 0034727C  4B DB D4 31 */	bl constraintOff__Q24Game9EnemyBaseFv
 /* 8034A340 00347280  80 9F 01 E0 */	lwz r4, 0x1e0(r31)
-/* 8034A344 00347284  38 60 00 01 */	li r3, 1
+/* 8034A344 00347284  38 60 00 01 */	lbz r3, 0x2be(r31) # new dependencies
+										xori r3, r3, 1 # flip it
 /* 8034A348 00347288  38 00 00 00 */	li r0, 0
 /* 8034A34C 0034728C  54 84 00 3C */	rlwinm r4, r4, 0, 0, 0x1e
 /* 8034A350 00347290  90 9F 01 E0 */	stw r4, 0x1e0(r31)
@@ -393,7 +394,7 @@ onInit__Q34Game4Bomb3ObjFPQ24Game15CreatureInitArg:
 /* 8034A3D0 00347310  80 7F 01 E0 */	lwz r3, 0x1e0(r31)
 /* 8034A3D4 00347314  54 63 06 2C */	rlwinm r3, r3, 0, 0x18, 0x16
 /* 8034A3D8 00347318  90 7F 01 E0 */	stw r3, 0x1e0(r31)
-/* 8034A3DC 0034731C  98 1F 02 BC */	stb r0, 0x2bc(r31)
+/* 8034A3DC 0034731C  98 1F 02 BC */	stw r0, 0x2bc(r31) # initialize fully
 /* 8034A3E0 00347320  98 1F 02 BD */	stb r0, 0x2bd(r31)
 /* 8034A3E4 00347324  98 1F 02 C8 */	stb r0, 0x2c8(r31)
 /* 8034A3E8 00347328  90 1F 02 C0 */	stw r0, 0x2c0(r31)
