@@ -181,7 +181,14 @@ void PikiMgr::load(int viewNum)
 {
 	JKRHeap* heap = JKRHeap::sCurrentHeap;
 	heap->getFreeSize();
-	JKRArchive* arc = JKRArchive::mount("/user/Kando/piki/pikis.szs", JKRArchive::EMM_Mem, sys->mSysHeap, JKRArchive::EMD_Head);
+	JKRArchive* arc;
+	
+	int* isClean =  (int*)0x80000f98;
+	if (*isClean)
+		arc = JKRArchive::mount("/user/Kando/piki/pclns.szs", JKRArchive::EMM_Mem, sys->mSysHeap, JKRArchive::EMD_Head);
+	else 
+		arc = JKRArchive::mount("/user/Kando/piki/pikis.szs", JKRArchive::EMM_Mem, sys->mSysHeap, JKRArchive::EMD_Head);
+
 	m_modelArchive   = arc;
 	heap->getFreeSize();
 

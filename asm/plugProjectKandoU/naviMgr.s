@@ -463,6 +463,9 @@ lbl_8047D648:
 	.4byte 0x6D640000
 	.4byte 0x00000000
 
+lbl_plcns:
+	.asciz "/user/Kando/piki/pclns.szs"
+
 .section .data, "wa"  # 0x8049E220 - 0x804EFC20
 .balign 8
 .global __vt__Q24Game7NaviMgr
@@ -2571,6 +2574,13 @@ load__Q24Game7NaviMgrFv:
 /* 8015AE24 00157D64  48 2C 85 39 */	bl heapStatusStart__6SystemFPcP7JKRHeap
 /* 8015AE28 00157D68  80 AD 9A EC */	lwz r5, sys@sda21(r13)
 /* 8015AE2C 00157D6C  38 7F 06 0C */	addi r3, r31, 0x60c
+										lis r4, 0x8000
+										lwz r4, 0x0f98(r4)
+										cmpwi r4, 1
+										bne .L_sus2
+										lis r3, lbl_plcns@h
+										ori r3, r3, lbl_plcns@l 
+										.L_sus2:
 /* 8015AE30 00157D70  38 80 00 01 */	li r4, 1
 /* 8015AE34 00157D74  38 C0 00 01 */	li r6, 1
 /* 8015AE38 00157D78  80 A5 00 38 */	lwz r5, 0x38(r5)
@@ -2743,6 +2753,13 @@ loadResources_float__Q24Game7NaviMgrFv:
 /* 8015B0AC 00157FEC  93 C1 00 08 */	stw r30, 8(r1)
 /* 8015B0B0 00157FF0  3B C5 D0 88 */	addi r30, r5, lbl_8047D088@l
 /* 8015B0B4 00157FF4  38 7E 06 0C */	addi r3, r30, 0x60c
+										lis r4, 0x8000
+										lwz r4, 0x0f98(r4)
+										cmpwi r4, 1
+										bne .L_sus
+										lis r3, lbl_plcns@h
+										ori r3, r3, lbl_plcns@l 
+										.L_sus:
 /* 8015B0B8 00157FF8  80 8D 9A EC */	lwz r4, sys@sda21(r13)
 /* 8015B0BC 00157FFC  80 A4 00 38 */	lwz r5, 0x38(r4)
 /* 8015B0C0 00158000  38 80 00 01 */	li r4, 1

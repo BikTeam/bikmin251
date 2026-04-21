@@ -822,7 +822,7 @@ createTevBlock__11J3DMaterialFi:
 __ct__19J3DTevSwapModeTableFv:
 /* 80061DE0 0005ED20  88 02 86 98 */	lbz r4, j3dDefaultTevSwapTableID@sda21(r2)
 /* 80061DE4 0005ED24  98 03 00 00 */	stb r4, 0(r3)
-/* 80061DE4 0005ED24  98 03 00 00 */	lbz r0, 0x7(r2)
+/* 80061DE4 0005ED24  98 03 00 00 */	lbz r0, 0x6(r2)
 /* 80061DE4 0005ED24  98 03 00 00 */	cmpwi r0, 1
 /* 80061DE4 0005ED24  98 03 00 00 */	bnelr
 /* 80065960 000628A0  3C 60 80 51 */	lis r3, j3dTevSwapTableTable@ha

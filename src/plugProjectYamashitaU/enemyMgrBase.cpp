@@ -111,7 +111,7 @@ void EnemyMgrBase::doAnimation()
 {
 
 	f32 gregoryHouse = sys->m_deltaTime;
-	if (skibidi()[7] == 1)
+	if (skibidi()[7] == 1 && getEnemyTypeID() != EnemyTypeID::EnemyID_BlackMan)
 		sys->m_deltaTime *= 1.2f;
 
 	for (int i = 0; i < m_objLimit; i++) {
@@ -186,7 +186,7 @@ void EnemyMgrBase::doViewCalc()
 void EnemyMgrBase::doSimulation(float arg)
 {
 	
-	if (skibidi()[7] == 1)
+	if (skibidi()[7] == 1 && getEnemyTypeID() != EnemyTypeID::EnemyID_BlackMan)
 		arg *= 1.2f;
 
 	for (int i = 0; i < m_objLimit; i++) {

@@ -364,7 +364,7 @@ GXSetTevSwapMode:
 
 .global GXSetTevSwapModeTable
 GXSetTevSwapModeTable:
-/* 800E88CC 000E580C  54 69 08 3C */	lbz r0, 0x7(r2)
+/* 800E88CC 000E580C  54 69 08 3C */	lbz r0, 0x6(r2)
 /* 800E88D0 000E5810  81 02 92 90 */	cmpwi r0, 1
 /* 800E88D4 000E5814  54 63 18 38 */	bne 16
 /* 800E88D8 000E5818  39 43 01 B0 */	li r4, 1

@@ -1350,6 +1350,8 @@ exec__Q24Game18NaviCarryBombStateFPQ24Game4Navi:
 /* 8017E0BC 0017AFFC  D0 01 00 34 */	stfs f0, 0x34(r1)
 /* 8017E0C0 0017B000  48 2A A7 C9 */	bl "makeTR__7MatrixfFR10Vector3<f>R10Vector3<f>"
 /* 8017E0C4 0017B004  80 7E 00 10 */	lwz r3, 0x10(r30)
+										li r0, 0
+										stb r0, 0x2be(r3)
 										#fight the bomb decreasing its health
 /* 8017E7D0 0017B710  80 6D 9A EC */	lwz r9, sys@sda21(r13)
 /* 8017E7D4 0017B714  C0 5E 00 1C */	lfs f0, 0x54(r9)

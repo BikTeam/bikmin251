@@ -2271,6 +2271,10 @@ doUpdate__Q28Morimura8THiScoreFv:
 /* 8037E354 0037B294  38 00 00 01 */	li r0, 1
 /* 8037E2DC 0037B21C  38 00 00 01 */	lbz r12, 0x7(r2)
 /* 8037E2DC 0037B21C  38 00 00 01 */	ori r12, r12, 0x1
+										lwz r3, sys@sda21(r13)
+										lwz r3, 0x60(r3)
+										lbz r3, 0x3d(r3)
+										stb r3, 0x6(r2)
 /* 8037E2DC 0037B21C  38 00 00 01 */	stb r12, 0x7(r2)
 /* 8037E2E0 0037B220  38 80 18 07 */	li r4, 0x1835
 /* 8037E35C 0037B29C  98 1F 01 C6 */	stb r0, 0x1c6(r31)

@@ -101,6 +101,7 @@ lbl_8049B330:
 lbl_8049B354:
 	.asciz "titlelogo.bti"
 
+
 .section .data, "wa"	# 0x8049E220 - 0x804EFC20
 .balign 8
 govNAN___Q24Game5P2JST:
@@ -817,7 +818,7 @@ loadResident__Q25Title7SectionFv:
 /* 8044A61C 0044755C  7F A3 EB 78 */	mr r3, r29
 /* 8044A620 00447560  38 A0 00 00 */	li r5, 0
 /* 8044A624 00447564  38 C0 00 01 */	li r6, 1
-/* 8044A628 00447568  4B BD 0B 09 */	bl mount__10JKRArchiveFPCcQ210JKRArchive10EMountModeP7JKRHeapQ210JKRArchive15EMountDirection
+/* 8044A628 00447568  4B BD 0B 09 */	li r3, 1 #bl mount__10JKRArchiveFPCcQ210JKRArchive10EMountModeP7JKRHeapQ210JKRArchive15EMountDirection
 /* 8044A62C 0044756C  28 03 00 00 */	cmplwi r3, 0
 /* 8044A630 00447570  40 82 00 1C */	bne .L_8044A64C
 /* 8044A634 00447574  7F A6 EB 78 */	mr r6, r29
@@ -888,7 +889,7 @@ loadResident__Q25Title7SectionFv:
 /* 8044A61C 0044755C  7F A3 EB 78 */	mr r3, r29
 /* 8044A620 00447560  38 A0 00 00 */	li r5, 0
 /* 8044A624 00447564  38 C0 00 01 */	li r6, 1
-/* 8044A628 00447568  4B BD 0B 09 */	bl mount__10JKRArchiveFPCcQ210JKRArchive10EMountModeP7JKRHeapQ210JKRArchive15EMountDirection
+/* 8044A628 00447568  4B BD 0B 09 */	li r3, 1 #bl mount__10JKRArchiveFPCcQ210JKRArchive10EMountModeP7JKRHeapQ210JKRArchive15EMountDirection
 /* 8044A62C 0044756C  28 03 00 00 */	cmplwi r3, 0
 /* 8044A630 00447570  40 82 00 1C */	bne .L_8044A64C
 /* 8044A634 00447574  7F A6 EB 78 */	mr r6, r29

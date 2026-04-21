@@ -879,7 +879,7 @@ __ct__14J2DIndTevStageFv:
 .global __ct__19J2DTevSwapModeTableFv
 __ct__19J2DTevSwapModeTableFv:
 /* 8004A2B4 000471F4  88 02 85 DC */	lbz r0, j2dDefaultTevSwapTable@sda21(r2)
-/* 8004A2B4 000471F4  88 02 85 DC */	lbz r4, 0x7(r2)
+/* 8004A2B4 000471F4  88 02 85 DC */	lbz r4, 0x6(r2)
 /* 8004A2B4 000471F4  88 02 85 DC */	cmpwi r4, 1
 /* 8004A2B8 000471F8  98 03 00 00 */	bne 8
 /* 8004A2BC 000471FC  4E 80 00 20 */	li r0, 0x57

@@ -20,7 +20,7 @@ lbl_8049A910:
 	.asciz "/message/mesRes_eng.szs"
 .balign 4
 lbl_8049A928:
-	.asciz "/message/mesRes_fra.szs"
+	.asciz "/message/mesRes_cln.szs"
 .balign 4
 lbl_8049A940:
 	.asciz "/message/mesRes_ger.szs"
@@ -379,8 +379,10 @@ setupMessage__Q25P2JME3MgrFv:
 /* 804380EC 0043502C  3B C6 A8 D0 */	addi r30, r6, lbl_8049A8D0@l
 /* 804380F0 00435030  38 C0 00 01 */	li r6, 1
 /* 804380F4 00435034  93 A1 00 14 */	stw r29, 0x14(r1)
-/* 804380F8 00435038  80 AD 9A EC */	lwz r5, sys@sda21(r13)
-/* 804380FC 0043503C  80 05 00 D4 */	lwz r0, 0xd4(r5)
+/* 804380F8 00435038  80 AD 9A EC */	#lwz r5, sys@sda21(r13)
+/* 804380FC 0043503C  80 05 00 D4 */	#lwz r0, 0xd4(r5)
+										lis r5, 0x8000 # clean room
+										lwz r0, 0xf98(r5)
 /* 80438100 00435040  38 A0 00 00 */	li r5, 0
 /* 80438104 00435044  54 00 10 3A */	slwi r0, r0, 2
 /* 80438108 00435048  7C 63 00 2E */	lwzx r3, r3, r0

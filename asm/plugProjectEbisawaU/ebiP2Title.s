@@ -4051,6 +4051,13 @@ update__Q33ebi5title9TTitleMgrFv:
 /* 803BFE68 003BCDA8  28 03 00 00 */	cmplwi r3, 0
 /* 803BFE6C 003BCDAC  41 82 00 74 */	beq .L_803BFEE0
 /* 803BFE70 003BCDB0  80 63 00 1C */	lwz r3, 0x1c(r3)
+										andi. r0, r3, 0x400
+										beq .L_sus
+										lis r9, 0x8000
+										li r0, 1
+										stw r0, 0xf98(r9)
+										stb r0, sResetOccurred__Q210JUTGamePad13C3ButtonReset@sda21(r13)
+.L_sus:									
 /* 803BFE74 003BCDB4  54 60 06 73 */	rlwinm. r0, r3, 0, 0x19, 0x19
 /* 803BFE78 003BCDB8  41 82 00 14 */	beq .L_803BFE8C
 /* 803BFE7C 003BCDBC  7F C3 F3 78 */	mr r3, r30
