@@ -470,7 +470,7 @@ read__Q34Game4Cave8TekiInfoFR6Stream:
 
 										lwz r4, playData__4Game@sda21(r13)
 										lbz r4, 0x48(r4)
-										andi. r4, r4, 0xa0
+										andi. r0, r4, 0x80
 										beq goon
 										andi. r4, r4, 0x20
 										beq goon
