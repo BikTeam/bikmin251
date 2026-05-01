@@ -1301,10 +1301,10 @@ lis r5, 2
 /* 80163268 001601A8  90 1F 00 34 */	stw r0, 0x34(r31)
 
 # MODDED: create differedTexMtx
-li r4, 0
-lwz r3, 0x34(r31)
-lwz r3, 8(r3)
-bl newDifferedTexMtx__8J3DModelF14J3DTexDiffFlag
+#li r4, 0
+#lwz r3, 0x34(r31)
+#lwz r3, 8(r3)
+#bl newDifferedTexMtx__8J3DModelF14J3DTexDiffFlag
 
 /* 8016326C 001601AC  38 80 02 00 */	li r4, 0x200
 /* 80163270 001601B0  80 7F 00 34 */	lwz r3, 0x34(r31)
@@ -1822,9 +1822,9 @@ do_update__Q24Game11ShapeMapMgrFv:
 /* 801639D8 00160918  4B F0 32 95 */	bl diff__8J3DModelFv
 
 # MODDED: calcDiffTexMtx call necessary to update multiplayer views
-lwz r3, 0x34(r29)
-lwz r3, 8(r3)
-bl calcDiffTexMtx__8J3DModelFv
+#lwz r3, 0x34(r29)
+#lwz r3, 8(r3)
+#bl calcDiffTexMtx__8J3DModelFv
 
 .L_801639DC:
 /* 801639DC 0016091C  80 01 00 24 */	lwz r0, 0x24(r1)

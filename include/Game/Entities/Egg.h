@@ -72,6 +72,8 @@ struct Obj : public EnemyBase {
 	// _00 		= VTBL
 	// _00-_2BC	= EnemyBase
 	bool m_isFalling; // _2BC, set when released from capture
+	bool dummy;
+	bool isNotBreak;
 	FSM* m_FSM;       // _2C0
 	                  // _2C4 = PelletView
 };

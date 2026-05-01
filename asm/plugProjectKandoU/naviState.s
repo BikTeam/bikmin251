@@ -1185,6 +1185,7 @@ updateMatrix__Q24Game18NaviCarryBombStateFPQ24Game4Navi:
 /* 8017DE4C 0017AD8C  81 8C 00 64 */	lwz r12, 0x64(r12)
 /* 8017DE50 0017AD90  7D 89 03 A6 */	mtctr r12
 /* 8017DE54 0017AD94  4E 80 04 21 */	bctrl 
+
 /* 8017DE58 0017AD98  FC 40 08 90 */	fmr f2, f1
 /* 8017DE5C 0017AD9C  C0 02 A8 80 */	lfs f0, lbl_80518BE0@sda21(r2)
 /* 8017DE60 0017ADA0  D0 21 00 18 */	stfs f1, 0x18(r1)
@@ -5899,11 +5900,28 @@ init__Q24Game13NaviDopeStateFPQ24Game4NaviPQ24Game8StateArg:
 /* 80182EAC 0017FDEC  40 82 FE C4 */	bne .L_80182D70
 /* 80182EB0 0017FDF0  80 9D 00 10 */	lwz r4, 0x10(r29)
 /* 80182EB4 0017FDF4  2C 04 00 01 */	cmpwi r4, 1
-/* 80182EB8 0017FDF8  41 82 00 0C */	beq .L_80182EC4
+/* 80182EB8 0017FDF8  41 82 00 0C */	bne piki_count_check
+	lwz r3, generalEnemyMgr__4Game@sda21(r13)
+	li r4, 0x24
+	bl getEnemyMgr__Q24Game15GeneralEnemyMgrFi
+	or. r3, r3, r3
+	beq error_bomb # this should never happen (?)
+	lwz r0, 0x2c(r3)
+	lwz r3, 0x30(r3)
+	cmpw r0, r3
+	bne .L_80182EC4 # we haven't hit max capacity yet
+	error_bomb:
+	lwz r3, spSysIF__8PSSystem@sda21(r13)
+	li r4, 0x180d # error noise
+	li r5, 0
+	bl playSystemSe__Q28PSSystem5SysIFFUlUl
+	b .L_80183188 #goto end
+piki_count_check:
 /* 80182EBC 0017FDFC  2C 1F 00 00 */	cmpwi r31, 0
 /* 80182EC0 0017FE00  40 81 02 C8 */	ble .L_80183188
 .L_80182EC4:
 /* 80182EC4 0017FE04  7F C3 F3 78 */	mr r3, r30
+										lwz r4, 0x10(r29)
 /* 80182EC8 0017FE08  4B FB DF 65 */	bl hasDope__Q24Game4NaviFi
 /* 80182ECC 0017FE0C  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80182ED0 0017FE10  41 82 02 B8 */	beq .L_80183188
@@ -6140,6 +6158,18 @@ exec__Q24Game13NaviDopeStateFPQ24Game4Navi:
 /* 80183224 00180164  4E 80 04 21 */	bctrl 
 /* 80183228 00180168  48 00 00 38 */	b .L_80183260
 .L_8018322C:
+
+										lwz r0, 0x10(r30) 
+										cmpwi r0, 1 # bitter
+										bne .L_dontbomb
+										li r0, 0 
+										stw r0, 0x10(r30)
+										mr r3, r31
+										mr r4, r30
+										bl naviBomb
+										b .L_80183260
+.L_dontbomb:
+
 /* 8018322C 0018016C  7F E3 FB 78 */	mr r3, r31
 /* 80183230 00180170  38 80 00 13 */	li r4, 0x13
 /* 80183234 00180174  4B FB 9C F9 */	bl assertMotion__Q24Game8FakePikiFi
@@ -13139,11 +13169,13 @@ __sinit_naviState_cpp:
 
 .global naviBomb
 naviBomb:
-/* 802B3130 002B0070  94 21 FF B0 */	stwu r1, -0x50(r1)
+/* 802B3130 002B0070  94 21 FF B0 */	stwu r1, -0x60(r1)
 /* 802B3134 002B0074  7C 08 02 A6 */	mflr r0
-/* 802B3138 002B0078  90 01 00 54 */	stw r0, 0x54(r1)
+/* 802B3138 002B0078  90 01 00 54 */	stw r0, 0x64(r1)
 /* 802B313C 002B007C  93 E1 00 4C */	stw r31, 0x4c(r1)
 /* 802B3140 002B0080  93 C1 00 48 */	stw r30, 0x48(r1)
+										stw r29, 0x58(r1)
+										mr r29, r4 # navistate 
 /* 802B3144 002B0084  7C 7E 1B 78 */	mr r30, r3
 /* 802B3154 002B0094  80 6D 91 E0 */	lwz r3, generalEnemyMgr__4Game@sda21(r13)
 /* 802B3158 002B0098  38 80 00 24 */	li r4, 0x24
@@ -13181,12 +13213,38 @@ naviBomb:
 /* 802B31D8 002B0118  80 7E 02 D8 */	lwz r3, 0xb8(r30)
 /* 802B31DC 002B011C  93 C3 02 CC */	stw r30, 0x2cc(r3)
 bl endCapturea__Q24Game8CreatureFv
+
+
+#if we don't have the ability to pick up da bomb don't put it in our hand. 
+
+li r4, 0
+lwz r5, playData__4Game@sda21(r13)
+addi r3, r5, 0x48
+bl hasItem__Q24Game10OlimarDataFi
+cmplwi r3, 1
+bne lbl_802B31E0_a
+
+											lwz r3, 0xb8(r30)
+											lis r4, 0xdead#lwz r4, 0xc8(r30)
+											stw r4, 0xc8(r3) # bomb needs floor triangle for proper behaviour 
+											stw r3, 0x54(r1)
+	/* 80183240 00180180  7F C3 F3 78 */	mr r3, r29
+	/* 80183244 00180184  7F E4 FB 78 */	mr r4, r30
+	/* 80183248 00180188  81 9E 00 00 */	lwz r12, 0(r29)
+	/* 8018324C 0018018C  38 A0 00 00 */	li r5, 24 # bomb carry 
+	/* 80183250 00180190  38 C0 00 00 */	addi r6, r1, 0x54 
+	/* 80183254 00180194  81 8C 00 1C */	lwz r12, 0x1c(r12)
+	/* 80183258 00180198  7D 89 03 A6 */	mtctr r12
+	/* 8018325C 0018019C  4E 80 04 21 */	bctrl 
+										
+
 lbl_802B31E0_a:
-/* 802B31E0 002B0120  80 01 00 54 */	lwz r0, 0x54(r1)
+/* 802B31E0 002B0120  80 01 00 54 */	lwz r0, 0x64(r1)
 /* 802B31E4 002B0124  83 E1 00 4C */	lwz r31, 0x4c(r1)
 /* 802B31E8 002B0128  83 C1 00 48 */	lwz r30, 0x48(r1)
+										lwz r29, 0x58(r1)
 /* 802B31EC 002B012C  7C 08 03 A6 */	mtlr r0
-/* 802B31F0 002B0130  38 21 00 50 */	addi r1, r1, 0x50
+/* 802B31F0 002B0130  38 21 00 50 */	addi r1, r1, 0x60
 /* 802B31F4 002B0134  4E 80 00 20 */	blr 
 
 .global endCapturea__Q24Game8CreatureFv

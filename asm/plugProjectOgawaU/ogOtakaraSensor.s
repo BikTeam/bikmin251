@@ -517,7 +517,7 @@ updateInit__Q32og6Screen13OtakaraSensorFv:
 /* 8032DE30 0032AD70  93 C1 00 08 */	stw r30, 8(r1)
 /* 8032DE34 0032AD74  88 03 00 6D */	lbz r0, 0x6d(r3)
 /* 8032DE38 0032AD78  28 00 00 00 */	cmplwi r0, 0
-/* 8032DE3C 0032AD7C  40 82 01 24 */	bne .L_8032DF60
+/* 8032DE3C 0032AD7C  40 82 01 24 */	#bne .L_8032DF60 removing this fixes the radar shutting down for some reason?
 /* 8032DE40 0032AD80  38 80 00 01 */	li r4, 1
 /* 8032DE44 0032AD84  98 83 00 6D */	stb r4, 0x6d(r3)
 /* 8032DE48 0032AD88  88 03 00 84 */	lbz r0, 0x84(r3)

@@ -410,6 +410,9 @@ void Obj::shotPikmin()
  */
 void Obj::changePomColor()
 {
+
+
+
 	if (getEnemyTypeID() == EnemyTypeID::EnemyID_RandPom) {
 		SingleGameSection* section;
 		if (!(gameSystem->m_mode == GSM_PIKLOPEDIA)) {
@@ -438,7 +441,12 @@ void Obj::changePomColor()
 					return;
 				}
 			}
-		} else {
+		} else if (gameSystem->m_timeMgr != nullptr && ((gameSystem->m_timeMgr->m_dayCount + 1) % 15) == 0
+		           && m_queenColorTimer > C_PROPERPARMS.m_colorChangeTime.m_value) {
+			   setPomColor(5 - ((m_pikiKind == 5) * 4));
+			   m_queenColorTimer = 0.0f;
+
+		}  else {
 			m_queenColorTimer += sys->m_deltaTime;
 		}
 	}

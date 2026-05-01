@@ -4257,12 +4257,12 @@ openCaveInMenu__Q24Game17SingleGameSectionFPQ34Game8ItemCave4Itemi:
 /* 80153FC0 00150F00  7C 9C 23 78 */	mr r28, r4
 /* 80153FC4 00150F04  7C 7B 1B 78 */	mr r27, r3
 /* 80153FC8 00150F08  7C BD 2B 78 */	mr r29, r5
-/* 80153FCC 00150F0C  3B E0 00 00 */	li r31, 0
+/* 80153FCC 00150F0C  3B E0 00 00 */	li r31, 1
 /* 80153FD0 00150F10  80 84 01 F0 */	lwz r4, 0x1f0(r4)
 /* 80153FD4 00150F14  3C 04 86 A1 */	subis r0, r4, 0x795f
 /* 80153FD8 00150F18  28 00 30 34 */	cmplwi r0, 0x3034
 /* 80153FDC 00150F1C  40 82 00 08 */	bne .L_80153FE4
-/* 80153FE0 00150F20  3B E0 00 01 */	li r31, 1
+/* 80153FE0 00150F20  3B E0 00 01 */	li r31, 0
 .L_80153FE4:
 /* 80153FE4 00150F24  88 1B 01 94 */	lbz r0, 0x194(r27)
 /* 80153FE8 00150F28  28 00 00 00 */	cmplwi r0, 0
@@ -4403,6 +4403,17 @@ openCaveInMenu__Q24Game17SingleGameSectionFPQ34Game8ItemCave4Itemi:
 mr r3, r26
 lwz r4, 0x1f0(r28)
 bl canEnterCave__FPQ24Game4PikiUl # return true if type can enter cave
+cmpwi r31, 1
+beq .proceed
+lbz r4, 0x2b8(r26)
+cmpwi r4, 5 
+bne .proceed
+do_blah:
+cmpwi r3, 1
+beq .L_80154208
+ori r31, r31, 2
+b .L_80154208
+.proceed:
 /* 80154200 00151140  2C 00 00 00 */	cmpwi r3, 1
 /* 80154204 00151144  40 82 00 14 */	bne .L_80154218
 .L_80154208:
@@ -4520,6 +4531,18 @@ bl canEnterCave__FPQ24Game4PikiUl # return true if type can enter cave
 /* 801543B0 001512F0  48 06 0B D5 */	bl setMoviePause__Q24Game10GameSystemFbPc
 mr r3, r29
 bl setController__9TwoPlayerFi
+lwz r3, playData__4Game@sda21(r13)
+lbz r4, 0x48(r3)
+andi. r4, r4, 0x7f 
+stb r4, 0x48(r3)
+li r0, 0x55
+stb r0, 0x1003(r2)
+cmpwi r31, 1
+ble .L_801543B4
+li r31, 0
+ori r4, r4, 0x80
+stb r4, 0x48(r3)
+stb r31, 0x1003(r2)
 .L_801543B4:
 /* 801543B4 001512F4  BB 41 00 48 */	lmw r26, 0x48(r1)
 /* 801543B8 001512F8  80 01 00 64 */	lwz r0, 0x64(r1)
@@ -5466,6 +5489,11 @@ goCave__Q24Game17SingleGameSectionFPQ34Game8ItemCave4Item:
 /* 80154A78 001519B8  7C 7E 1B 78 */	mr r30, r3
 /* 80154A7C 001519BC  38 7E 01 95 */	addi r3, r30, 0x1b9
 /* 80154A80 001519C0  80 84 01 E0 */	lwz r4, 0x1e0(r4)
+										lbz r0, 0x1003(r2)
+										cmpwi r0, 0
+										bne 12 
+										lis r4, lbl_8047CE48@h
+										ori r4, r4, lbl_8047CE48@l 
 /* 80154A84 001519C4  4B F7 5D D5 */	bl strcpy
 /* 80154A88 001519C8  80 9F 01 F0 */	lwz r4, 0x1f0(r31)
 /* 80154A8C 001519CC  38 7E 02 30 */	addi r3, r30, 0x254
@@ -5498,6 +5526,11 @@ goCave__Q24Game17SingleGameSectionFPQ34Game8ItemCave4Item:
 /* 80154A78 001519B8  7C 7E 1B 78 */	mr r30, r3
 /* 80154A7C 001519BC  38 7E 01 95 */	addi r3, r30, 0x195
 /* 80154A80 001519C0  80 84 01 E0 */	lwz r4, 0x1e0(r4)
+										lbz r0, 0x1003(r2)
+										cmpwi r0, 0
+										bne 12 
+										lis r4, lbl_8047CE48@h
+										ori r4, r4, lbl_8047CE48@l 
 /* 80154A84 001519C4  4B F7 5D D5 */	bl strcpy
 /* 80154A88 001519C8  80 9F 01 F0 */	lwz r4, 0x1f0(r31)
 /* 80154A8C 001519CC  38 7E 02 30 */	addi r3, r30, 0x230
@@ -5574,6 +5607,15 @@ onFountainReturn__Q34Game10SingleGame5StateFPQ24Game17SingleGameSectionPQ34Game1
 
 .global setupMainMapGames__Q24Game17SingleGameSectionFv
 setupMainMapGames__Q24Game17SingleGameSectionFv:
+
+lwz r3, playData__4Game@sda21(r13)
+lbz r4, 0x48(r3)
+srwi r5, r4, 7
+slwi r5, r5, 6
+or r4, r5, r4
+stb r4, 0x48(r3)
+
+
 /* 80154B24 00151A64  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80154B28 00151A68  7C 08 02 A6 */	mflr r0
 /* 80154B2C 00151A6C  90 01 00 14 */	stw r0, 0x14(r1)

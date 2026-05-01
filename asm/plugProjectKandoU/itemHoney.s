@@ -2107,7 +2107,7 @@ onLoadResources__Q34Game9ItemHoney3MgrFv:
 /* 801D41A4 001D10E4  7F C4 F3 78 */	mr r4, r30
 /* 801D41A8 001D10E8  4B FF 90 A9 */	bl closeTextArc__Q24Game11BaseItemMgrFP10JKRArchive
 /* 801D41AC 001D10EC  7F A3 EB 78 */	mr r3, r29
-/* 801D41B0 001D10F0  38 80 00 18 */	li r4, 0x18
+/* 801D41B0 001D10F0  38 80 00 18 */	li r4, 32 #higher number now 
 /* 801D41B4 001D10F4  3C A0 00 08 */	lis r5, 8
 /* 801D41B8 001D10F8  48 00 19 55 */	bl "createMgr__Q24Game40FixedSizeItemMgr<Q34Game9ItemHoney4Item>FiUl"
 /* 801D41BC 001D10FC  80 6D 9A EC */	lwz r3, sys@sda21(r13)

@@ -1484,6 +1484,16 @@ earthquakeCallBack__Q34Game4Tyre3ObjFPQ24Game8Creaturef:
 /* 803AD378 003AA2B8  4B D5 A0 7D */	bl getStateID__Q24Game9EnemyBaseFv
 /* 803AD37C 003AA2BC  2C 03 00 00 */	cmpwi r3, 0
 /* 803AD380 003AA2C0  40 82 00 24 */	bne .L_803AD3A4
+
+bl isFinalFloor__Q34Game8BlackMan3ObjFv
+cmpwi r3, 1
+beq thequake
+/* 80141600 0013E540  80 6D 94 90 */	lwz r3, playData__4Game@sda21(r13)
+/* 80141604 0013E544  38 80 00 01 */	li r4, 15
+/* 80141608 0013E548  38 63 00 48 */	lbz r3, 0x48(r3)
+/* 8014160C 0013E54C  48 0A 49 C5 */	andi. r3, r3, 0x80 
+bne .L_803AD3A4  
+thequake:
 /* 803AD384 003AA2C4  80 7F 03 04 */	lwz r3, 0x304(r31)
 /* 803AD388 003AA2C8  7F E4 FB 78 */	mr r4, r31
 /* 803AD38C 003AA2CC  38 A0 00 02 */	li r5, 2

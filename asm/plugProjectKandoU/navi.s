@@ -2306,8 +2306,6 @@ sendMessage__Q24Game15BaseGameSectionFRQ24Game11GameMessage:
 /* 80141038 0013DF78  90 E1 00 3C */	stw r7, 0x3c(r1)
 /* 8014103C 0013DF7C  90 C1 00 40 */	stw r6, 0x40(r1)
 /* 80141040 0013DF80  90 01 00 44 */	stw r0, 0x44(r1)
-mr r3, r29
-bl naviBomb
 /* 80141048 0013DF88  48 00 02 2C */	b .L_80141274
 .L_8014104C:
 /* 8014104C 0013DF8C  80 7D 02 54 */	lwz r3, 0x254(r29)

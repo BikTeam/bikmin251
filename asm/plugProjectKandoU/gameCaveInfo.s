@@ -466,7 +466,19 @@ read__Q34Game4Cave8TekiInfoFR6Stream:
 /* 801D6348 001D3288  38 A0 00 04 */	li r5, 4
 /* 801D634C 001D328C  80 6D 91 E0 */	lwz r3, generalEnemyMgr__4Game@sda21(r13)
 /* 801D6350 001D3290  4B F3 72 55 */	bl getEnemyID__Q24Game15GeneralEnemyMgrFPci
-/* 801D6354 001D3294  90 7D 00 18 */	stw r3, 0x18(r29)
+/* 801D6354 001D3294  90 7D 00 18 */	#stw r3, 0x18(r29)
+
+										lwz r4, playData__4Game@sda21(r13)
+										lbz r4, 0x48(r4)
+										andi. r4, r4, 0xa0
+										beq goon
+										andi. r4, r4, 0x20
+										beq goon
+										cmpwi r3, 37
+										bne goon
+										li r3, 99
+goon:
+										stw r3, 0x18(r29)
 /* 801D6358 001D3298  88 01 00 08 */	lbz r0, 8(r1)
 /* 801D635C 001D329C  7C 00 07 75 */	extsb. r0, r0
 /* 801D6360 001D32A0  41 82 00 14 */	beq .L_801D6374

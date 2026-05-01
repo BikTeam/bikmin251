@@ -4,6 +4,7 @@
 #include "Game/gameStages.h"
 #include "Game/MapMgr.h"
 #include "MapCollision.h"
+#include "Game/Navi.h"
 
 const char gameStages[] = "gameStages";
 
@@ -278,6 +279,15 @@ void CourseInfo::read(Stream& stream)
 	m_groundOtakaraMax = stream.readInt();
 }
 
+// clang-format off
+asm char* disbelief() 
+{ 
+	nofralloc 
+	mr r3, r2 
+	blr 
+}
+// clang-format on
+
 /*
  * --INFO--
  * Address:	801ADA54
@@ -320,6 +330,10 @@ int CourseInfo::getCaveIndex_FromID(ID32& id) { return m_caveOtakaraInfo.getCave
  */
 char* CourseInfo::getCaveinfoFilename_FromID(ID32& id)
 {
+
+	if (id.getID() == 'y_04' && playData->m_olimarData->hasItem(15))
+		return "singleGameSection.cpp";
+
 	CaveOtakara* caveNode = m_caveOtakaraInfo.get_id(id);
 	P2ASSERTLINE(282, caveNode);
 	return caveNode->m_filename;

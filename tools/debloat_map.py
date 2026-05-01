@@ -1,6 +1,7 @@
 import sys
 
 def remove_linker_section(buffer: str) -> str:
+    return
     keyword = ".init section layout"
     try:
         index = buffer.index(keyword)
@@ -9,6 +10,7 @@ def remove_linker_section(buffer: str) -> str:
         exit()
 
 if __name__ == "__main__":
+    return
     with open(sys.argv[1], "r") as f:
         buffer: str = f.read()
     

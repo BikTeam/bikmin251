@@ -38,6 +38,7 @@ void Obj::onInit(CreatureInitArg* initArg)
 	setEmotionNone();
 	setEvent(0, EB_BitterImmune);
 	m_isFalling = false;
+	isNotBreak  = false;
 	m_FSM->start(this, 0, nullptr);
 
 	if (!isBirthTypeDropGroup()) {
@@ -77,6 +78,11 @@ Obj::Obj()
  */
 void Obj::doUpdate()
 {
+
+	if (playData->m_olimarData->hasItem(14)) {
+		playData->m_olimarData->getItem(13);
+	}
+
 	if (m_curTriangle) {
 		m_simVelocity = Vector3f(0.0f);
 	} else {
@@ -234,7 +240,7 @@ void Obj::onStartCapture()
 void Obj::onEndCapture()
 {
 	constraintOff();
-	m_isFalling = true;
+	m_isFalling = !isNotBreak; // yes this is inverted...
 	setEvent(0, EB_Cullable);
 }
 
@@ -290,6 +296,19 @@ void Obj::genItem()
 			dropType = EGGDROP_SingleNectar;
 		}
 	}
+
+
+	if (playData->m_olimarData->hasItem(15) && gameSystem->m_section->getCurrFloor() == 0) {
+		dropType = EGGDROP_Spicy;
+		if (rand() % 2)
+			dropType = EGGDROP_Bitter;
+
+		//You come here multiple times dumby
+		if (playData->m_olimarData->hasItem(14))
+			dropType = EGGDROP_SingleNectar;
+
+	}
+
 
 	//mititeGroup = nullptr;
 	Pellet* pellet;

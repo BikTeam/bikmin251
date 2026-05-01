@@ -34,11 +34,14 @@ EnemyBase* Mgr::birth(EnemyBirthArg& birthArg)
 	if (gameSystem && gameSystem->m_inCave && gameSystem->m_mode == GSM_STORY_MODE) {
 		GameSystem* gs = gameSystem;
 
+		if (gs->m_section && gs->m_section->getCurrFloor() == 0 && playData->m_olimarData->hasItem(14) && gs->m_section->getCaveID() == 'y_04')
+			return nullptr;
+
 		if (birthArg.m_typeID == EnemyTypeID::EnemyID_BlackPom) { // PURPLE CANDYPOP
 			BaseGameSection* section = gs->m_section;
 
 			// Emergence cave
-			if (section && (section->getCurrFloor() < 2 || section->getCaveID() == 't_01')) {
+			if (section && (section->getCurrFloor() < 0 || section->getCaveID() == 't_01')) {
 				const s32 cavePikis = playData->m_caveSaveData.m_cavePikis.getColorSum(Purple);
 				const s32 purpPikis = GameStat::getAllPikmins(Purple);
 
@@ -53,7 +56,7 @@ EnemyBase* Mgr::birth(EnemyBirthArg& birthArg)
 			if (section) {
 				if (playData->hasMetPikmin(White)) {
 					// White flower garden
-					if (section->getCurrFloor() < 2 || section->getCaveID() == 't_01') {
+					if (section->getCurrFloor() < 0 || section->getCaveID() == 't_01') {
 						const s32 cavePikis  = playData->m_caveSaveData.m_cavePikis.getColorSum(White);
 						const s32 whitePikis = GameStat::getAllPikmins(White);
 
